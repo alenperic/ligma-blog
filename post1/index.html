@@ -22,104 +22,90 @@
         margin: 0;
         padding: 0;
       }
+
       canvas.scene {
         position: fixed;
         top: 0;
         left: 0;
-        width: 133%;
+        width: 100%;
         height: 100%;
-        transform: translateX(33%);
-        z-index: 1;
+        z-index: -1; /* Ensure it stays behind all content */
+        background: #121212; /* Fallback background color */
       }
+
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI',
           Roboto, sans-serif;
         color: white;
         overflow-x: hidden;
         background-color: #121212; /* Dark background for better contrast */
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
+
       /* Logo styling */
       .logo {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
+        margin: 20px auto;
         color: white;
         font-size: 42px;
         text-align: center;
         white-space: nowrap;
       }
-      /* Navigation bar styling */
+
+      /* Hide navbar */
       .navbar {
-        position: absolute;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        display: flex;
-        gap: 30px;
+        display: none;
       }
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        transition: color 0.3s;
-      }
-      .navbar a:hover {
-        text-decoration: underline;
-      }
+
       /* Blog content styling */
       .blog-content {
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 50;
+        flex: 1;
+        margin: 20px auto;
         width: 90%;
         max-width: 800px;
         background-color: rgba(0, 0, 0, 0.7);
         padding: 30px;
         border-radius: 10px;
       }
-      .blog-post {
-        margin-bottom: 30px;
-      }
+
       .blog-post h2 {
         margin: 0 0 10px 0;
         font-size: 24px;
       }
+
       .blog-post p {
         margin: 0 0 10px 0;
         font-size: 16px;
         line-height: 1.5;
       }
+
       .blog-post a.read-more {
         color: #1e90ff;
         text-decoration: none;
         font-weight: bold;
       }
+
       .blog-post a.read-more:hover {
         text-decoration: underline;
       }
+
       /* Social and contact section styling */
       .social-contact {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
         display: flex;
         flex-direction: column; /* Stack elements vertically */
         align-items: center;
         gap: 10px;
+        margin-bottom: 20px;
       }
+
       /* "Homepage" link styling */
       .social-contact a.homepage {
         font-size: 18px;
         text-decoration: none; /* Remove underline */
         color: white; /* Set text color to white */
       }
+
       /* Container for contact and social links */
       .contact-links {
         display: flex;
@@ -128,6 +114,7 @@
         gap: 20px;
         flex-wrap: nowrap;
       }
+
       /* Social media icon links styling */
       .social-contact a.linkedin,
       .social-contact a.github {
@@ -135,14 +122,15 @@
         text-decoration: none;
         display: flex;
         align-items: center;
-        /* Removed gap between icon and text since text is removed */
       }
+
       /* Social media icons styling */
       .social-contact img {
-        width: 68px; /* Increased size to 2x */
+        width: 68px; /* 2x size */
         height: auto;
         vertical-align: middle;
       }
+
       /* Contact and number links styling */
       .social-contact a.contact,
       .social-contact a.number {
@@ -153,68 +141,46 @@
         align-items: center;
         gap: 5px;
       }
+
       /* Responsive adjustments */
       @media screen and (max-width: 800px) {
         .logo {
           font-size: 24px;
-          top: 10px;
+          margin: 10px auto;
         }
-        .navbar {
-          top: 50px;
-          gap: 15px;
-        }
-        .navbar a {
-          font-size: 16px;
-        }
+
         .blog-content {
-          top: 90px;
+          margin: 10px auto;
           padding: 20px;
         }
+
         .blog-post h2 {
           font-size: 20px;
         }
+
         .blog-post p {
           font-size: 14px;
         }
-        .social-contact {
-          gap: 8px;
-        }
+
         .social-contact a.homepage {
           font-size: 16px;
         }
+
         .contact-links {
           gap: 10px;
         }
+
         .social-contact img {
-          width: 102px; /* Increased size to 3x for mobile */
+          width: 102px; /* 3x size for mobile */
         }
+
         .social-contact a.contact,
         .social-contact a.number {
           font-size: 16px;
         }
       }
     </style>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const serviceItems = document.querySelectorAll('.services li');
-
-        let lastHoveredItem = null;
-
-        serviceItems.forEach((item) => {
-          item.addEventListener('mouseenter', function () {
-            if (lastHoveredItem && lastHoveredItem !== this) {
-              lastHoveredItem.classList.remove('hovered');
-            }
-            this.classList.add('hovered');
-            lastHoveredItem = this;
-          });
-          item.addEventListener('mouseleave', function () {
-            this.classList.remove('hovered');
-            lastHoveredItem = null;
-          });
-        });
-      });
-    </script>
+    <!-- Removed unnecessary JavaScript to prevent errors -->
     <script
       type="module"
       crossorigin
@@ -226,8 +192,7 @@
     <canvas class="scene"></canvas>
     <div class="logo">Understanding the Basics of Cybersecurity</div>
     <div class="navbar">
-      <!-- Removed "Home" and "Contact" links as per instructions -->
-      <!-- If you wish to add other navigation links in the future, do so here -->
+      <!-- Removed "Home" and "Contact" links -->
     </div>
     <main>
       <div class="blog-content">
@@ -284,10 +249,10 @@
       </div>
     </main>
     <div class="social-contact">
-      <!-- 1. Replaced "Security Blog" with "Homepage", made it white and without underline -->
+      <!-- "Homepage" link -->
       <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
       
-      <!-- 2. LinkedIn and GitHub icons without text labels, increased their size -->
+      <!-- Social Media Icons -->
       <div class="contact-links">
         <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin" aria-label="LinkedIn Profile">
           <img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
@@ -295,7 +260,7 @@
         <a href="https://github.com/alenperic" target="_blank" class="github" aria-label="GitHub Profile">
           <img src="../img/github-icon.png" alt="GitHub Profile Icon" />
         </a>
-        <!-- 3. Contact and Number links remain unchanged -->
+        <!-- Contact and Number links -->
         <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
         <a href="tel:5485881420" class="number">📱 Number</a>
       </div>
