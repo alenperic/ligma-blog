@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Alen Peric" />
+    <meta
+      name="description"
+      content="Understanding the Basics of Cybersecurity: A comprehensive guide to the fundamental concepts of cybersecurity and its importance in today's digital age."
+    />
+    <meta
+      name="keywords"
+      content="Cybersecurity, Basics, Security Fundamentals, IT Security, Alen Peric"
+    />
+    <title>Understanding the Basics of Cybersecurity</title>
+    <link rel="icon" type="image/x-icon" href="../img/favicon.svg" />
+    <style>
+      /* Reset and base styles */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      canvas.scene {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 133%;
+        height: 100%;
+        transform: translateX(33%);
+        z-index: 1;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI',
+          Roboto, sans-serif;
+        color: white;
+        overflow-x: hidden;
+        background-color: #121212; /* Dark background for better contrast */
+      }
+      /* Logo styling */
+      .logo {
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        color: white;
+        font-size: 42px;
+        text-align: center;
+        white-space: nowrap;
+      }
+      /* Navigation bar styling */
+      .navbar {
+        position: absolute;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: flex;
+        gap: 30px;
+      }
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+      }
+      .navbar a:hover {
+        text-decoration: underline;
+      }
+      /* Blog content styling */
+      .blog-content {
+        position: absolute;
+        top: 120px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 50;
+        width: 90%;
+        max-width: 800px;
+        background-color: rgba(0, 0, 0, 0.7);
+        padding: 30px;
+        border-radius: 10px;
+      }
+      .blog-post {
+        margin-bottom: 30px;
+      }
+      .blog-post h2 {
+        margin: 0 0 10px 0;
+        font-size: 24px;
+      }
+      .blog-post p {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+      .blog-post a.read-more {
+        color: #1e90ff;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .blog-post a.read-more:hover {
+        text-decoration: underline;
+      }
+      /* Social and contact section styling */
+      .social-contact {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 100;
+        display: flex;
+        flex-direction: column; /* Stack elements vertically */
+        align-items: center;
+        gap: 10px;
+      }
+      /* "Homepage" link styling */
+      .social-contact a.homepage {
+        font-size: 18px;
+        text-decoration: none; /* Remove underline */
+        color: white; /* Set text color to white */
+      }
+      /* Container for contact and social links */
+      .contact-links {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: nowrap;
+      }
+      /* Social media icon links styling */
+      .social-contact a.linkedin,
+      .social-contact a.github {
+        color: white;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        /* Removed gap between icon and text since text is removed */
+      }
+      /* Social media icons styling */
+      .social-contact img {
+        width: 68px; /* Increased size to 2x */
+        height: auto;
+        vertical-align: middle;
+      }
+      /* Contact and number links styling */
+      .social-contact a.contact,
+      .social-contact a.number {
+        color: white;
+        text-decoration: none;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      /* Responsive adjustments */
+      @media screen and (max-width: 800px) {
+        .logo {
+          font-size: 24px;
+          top: 10px;
+        }
+        .navbar {
+          top: 50px;
+          gap: 15px;
+        }
+        .navbar a {
+          font-size: 16px;
+        }
+        .blog-content {
+          top: 90px;
+          padding: 20px;
+        }
+        .blog-post h2 {
+          font-size: 20px;
+        }
+        .blog-post p {
+          font-size: 14px;
+        }
+        .social-contact {
+          gap: 8px;
+        }
+        .social-contact a.homepage {
+          font-size: 16px;
+        }
+        .contact-links {
+          gap: 10px;
+        }
+        .social-contact img {
+          width: 102px; /* Increased size to 3x for mobile */
+        }
+        .social-contact a.contact,
+        .social-contact a.number {
+          font-size: 16px;
+        }
+      }
+    </style>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const serviceItems = document.querySelectorAll('.services li');
+
+        let lastHoveredItem = null;
+
+        serviceItems.forEach((item) => {
+          item.addEventListener('mouseenter', function () {
+            if (lastHoveredItem && lastHoveredItem !== this) {
+              lastHoveredItem.classList.remove('hovered');
+            }
+            this.classList.add('hovered');
+            lastHoveredItem = this;
+          });
+          item.addEventListener('mouseleave', function () {
+            this.classList.remove('hovered');
+            lastHoveredItem = null;
+          });
+        });
+      });
+    </script>
+    <script
+      type="module"
+      crossorigin
+      src="../assets/index-b7d38c76.js"
+    ></script>
+    <link rel="stylesheet" href="../assets/index-5884692c.css" />
+  </head>
+  <body>
+    <canvas class="scene"></canvas>
+    <div class="logo">Understanding the Basics of Cybersecurity</div>
+    <div class="navbar">
+      <!-- Removed "Home" and "Contact" links as per instructions -->
+      <!-- If you wish to add other navigation links in the future, do so here -->
+    </div>
+    <main>
+      <div class="blog-content">
+        <div class="blog-post">
+          <h2>Understanding the Basics of Cybersecurity</h2>
+          <p>
+            Cybersecurity is essential in today's digital age. This post explores the fundamental concepts of cybersecurity and why it's crucial for individuals and businesses alike.
+          </p>
+          <p><strong>What is Cybersecurity?</strong></p>
+          <p>
+            Cybersecurity refers to the practices, technologies, and processes designed to protect networks, devices, programs, and data from unauthorized access, attacks, or damage. It encompasses a wide range of activities aimed at ensuring the confidentiality, integrity, and availability of information.
+          </p>
+          <p><strong>Why is Cybersecurity Important?</strong></p>
+          <ol>
+            <li><strong>Protection of Sensitive Data:</strong> Whether it's personal information like Social Security numbers or business-critical data, cybersecurity measures protect against data breaches and unauthorized access.</li>
+            <li><strong>Maintaining Trust:</strong> Organizations that prioritize cybersecurity foster trust among customers, partners, and stakeholders, enhancing their reputation and credibility.</li>
+            <li><strong>Preventing Financial Losses:</strong> Cyber attacks can lead to significant financial losses due to data theft, system downtimes, and recovery costs.</li>
+            <li><strong>Ensuring Business Continuity:</strong> Effective cybersecurity ensures that businesses can operate smoothly without disruptions caused by cyber threats.</li>
+          </ol>
+          <p><strong>Key Concepts in Cybersecurity</strong></p>
+          <ul>
+            <li><strong>Confidentiality:</strong> Ensuring that information is accessible only to those authorized to view it. Techniques like encryption and access controls are used to maintain confidentiality.</li>
+            <li><strong>Integrity:</strong> Maintaining the accuracy and reliability of data. This involves protecting data from being altered or tampered with by unauthorized entities.</li>
+            <li><strong>Availability:</strong> Ensuring that information and resources are accessible to authorized users when needed. This includes measures to prevent denial-of-service (DoS) attacks and system failures.</li>
+            <li><strong>Authentication:</strong> Verifying the identity of users and devices to ensure that only legitimate entities can access systems and data.</li>
+            <li><strong>Authorization:</strong> Granting users permission to access specific resources based on their verified identities.</li>
+          </ul>
+          <p><strong>Common Cybersecurity Threats</strong></p>
+          <ol>
+            <li><strong>Malware:</strong> Malicious software designed to damage, disrupt, or gain unauthorized access to computer systems. Examples include viruses, worms, and ransomware.</li>
+            <li><strong>Phishing:</strong> Fraudulent attempts to obtain sensitive information by disguising as trustworthy entities, often through deceptive emails or websites.</li>
+            <li><strong>Man-in-the-Middle (MitM) Attacks:</strong> When attackers intercept and possibly alter communication between two parties without their knowledge.</li>
+            <li><strong>Denial-of-Service (DoS) Attacks:</strong> Overwhelming a system with traffic to render it unavailable to users.</li>
+            <li><strong>SQL Injection:</strong> Exploiting vulnerabilities in a website's database by injecting malicious SQL code to manipulate or access data.</li>
+          </ol>
+          <p><strong>Basic Cybersecurity Practices</strong></p>
+          <ol>
+            <li><strong>Use Strong Passwords:</strong> Create complex passwords using a mix of letters, numbers, and symbols. Avoid using easily guessable information.</li>
+            <li><strong>Enable Multi-Factor Authentication (MFA):</strong> Adds an extra layer of security by requiring additional verification beyond just a password.</li>
+            <li><strong>Regular Software Updates:</strong> Keep operating systems, applications, and antivirus software up to date to protect against known vulnerabilities.</li>
+            <li><strong>Backup Important Data:</strong> Regularly back up data to prevent loss in case of cyber attacks or system failures.</li>
+            <li><strong>Educate and Train Employees:</strong> Ensure that all members of an organization understand cybersecurity best practices and recognize potential threats.</li>
+          </ol>
+          <p><strong>The Future of Cybersecurity</strong></p>
+          <p>
+            As technology evolves, so do cyber threats. Emerging technologies like artificial intelligence (AI) and the Internet of Things (IoT) present new challenges and opportunities in the realm of cybersecurity. Staying informed about the latest trends and continuously adapting security measures is crucial for effective protection.
+          </p>
+          <p><strong>Conclusion</strong></p>
+          <p>
+            Understanding the basics of cybersecurity is the first step toward protecting yourself and your organization from the ever-growing landscape of cyber threats. By implementing fundamental security practices and staying vigilant, you can significantly reduce the risk of cyber attacks and ensure the safety of your digital assets.
+          </p>
+          <a href="../" class="read-more">← Back to Blog</a>
+        </div>
+      </div>
+    </main>
+    <div class="social-contact">
+      <!-- 1. Replaced "Security Blog" with "Homepage", made it white and without underline -->
+      <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+      
+      <!-- 2. LinkedIn and GitHub icons without text labels, increased their size -->
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin" aria-label="LinkedIn Profile">
+          <img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
+        </a>
+        <a href="https://github.com/alenperic" target="_blank" class="github" aria-label="GitHub Profile">
+          <img src="../img/github-icon.png" alt="GitHub Profile Icon" />
+        </a>
+        <!-- 3. Contact and Number links remain unchanged -->
+        <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+        <a href="tel:5485881420" class="number">📱 Number</a>
+      </div>
+    </div>
+  </body>
+</html>
