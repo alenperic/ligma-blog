@@ -15,112 +15,100 @@
     <title>Top 5 Security Practices for Small Businesses</title>
     <link rel="icon" type="image/x-icon" href="../img/favicon.svg" />
     <style>
-      /* Reset and base styles */
+      /* Reset and Base Styles */
       html,
       body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
+
+      /* Background Canvas */
       canvas.scene {
         position: fixed;
         top: 0;
         left: 0;
-        width: 133%;
+        width: 100%;
         height: 100%;
-        transform: translateX(33%);
-        z-index: 1;
+        z-index: -1; /* Ensure it stays behind all content */
+        background: #121212; /* Fallback background color */
       }
+
+      /* Body Styles */
       body {
         font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI',
           Roboto, sans-serif;
         color: white;
         overflow-x: hidden;
         background-color: #121212; /* Dark background for better contrast */
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
       }
-      /* Logo styling */
+
+      /* Logo Styling */
       .logo {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
+        margin: 20px auto;
         color: white;
         font-size: 42px;
         text-align: center;
         white-space: nowrap;
       }
-      /* Navigation bar styling */
+
+      /* Hide Navbar */
       .navbar {
-        position: absolute;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        display: flex;
-        gap: 30px;
+        display: none;
       }
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        transition: color 0.3s;
-      }
-      .navbar a:hover {
-        text-decoration: underline;
-      }
-      /* Blog content styling */
+
+      /* Blog Content Styling */
       .blog-content {
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 50;
+        flex: 1;
+        margin: 20px auto;
         width: 90%;
         max-width: 800px;
         background-color: rgba(0, 0, 0, 0.7);
         padding: 30px;
         border-radius: 10px;
       }
-      .blog-post {
-        margin-bottom: 30px;
-      }
+
       .blog-post h2 {
         margin: 0 0 10px 0;
         font-size: 24px;
       }
+
       .blog-post p {
         margin: 0 0 10px 0;
         font-size: 16px;
         line-height: 1.5;
       }
+
       .blog-post a.read-more {
         color: #1e90ff;
         text-decoration: none;
         font-weight: bold;
       }
+
       .blog-post a.read-more:hover {
         text-decoration: underline;
       }
-      /* Social and contact section styling */
+
+      /* Social and Contact Section Styling */
       .social-contact {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
         display: flex;
         flex-direction: column; /* Stack elements vertically */
         align-items: center;
         gap: 10px;
+        margin-bottom: 20px;
       }
-      /* "Homepage" link styling */
+
+      /* "Homepage" Link Styling */
       .social-contact a.homepage {
         font-size: 18px;
         text-decoration: none; /* Remove underline */
         color: white; /* Set text color to white */
       }
-      /* Container for contact and social links */
+
+      /* Container for Contact and Social Links */
       .contact-links {
         display: flex;
         align-items: center;
@@ -128,22 +116,24 @@
         gap: 20px;
         flex-wrap: nowrap;
       }
-      /* Social media icon links styling */
+
+      /* Social Media Icon Links Styling */
       .social-contact a.linkedin,
       .social-contact a.github {
         color: white;
         text-decoration: none;
         display: flex;
         align-items: center;
-        /* Removed gap between icon and text since text is removed */
       }
-      /* Social media icons styling */
+
+      /* Social Media Icons Styling */
       .social-contact img {
-        width: 68px; /* Increased size to 2x */
+        width: 68px; /* 2x size */
         height: auto;
         vertical-align: middle;
       }
-      /* Contact and number links styling */
+
+      /* Contact and Number Links Styling */
       .social-contact a.contact,
       .social-contact a.number {
         color: white;
@@ -153,68 +143,46 @@
         align-items: center;
         gap: 5px;
       }
-      /* Responsive adjustments */
+
+      /* Responsive Adjustments */
       @media screen and (max-width: 800px) {
         .logo {
           font-size: 24px;
-          top: 10px;
+          margin: 10px auto;
         }
-        .navbar {
-          top: 50px;
-          gap: 15px;
-        }
-        .navbar a {
-          font-size: 16px;
-        }
+
         .blog-content {
-          top: 90px;
+          margin: 10px auto;
           padding: 20px;
         }
+
         .blog-post h2 {
           font-size: 20px;
         }
+
         .blog-post p {
           font-size: 14px;
         }
-        .social-contact {
-          gap: 8px;
-        }
+
         .social-contact a.homepage {
           font-size: 16px;
         }
+
         .contact-links {
           gap: 10px;
         }
+
         .social-contact img {
-          width: 102px; /* Increased size to 3x for mobile */
+          width: 102px; /* 3x size for mobile */
         }
+
         .social-contact a.contact,
         .social-contact a.number {
           font-size: 16px;
         }
       }
     </style>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const serviceItems = document.querySelectorAll('.services li');
-
-        let lastHoveredItem = null;
-
-        serviceItems.forEach((item) => {
-          item.addEventListener('mouseenter', function () {
-            if (lastHoveredItem && lastHoveredItem !== this) {
-              lastHoveredItem.classList.remove('hovered');
-            }
-            this.classList.add('hovered');
-            lastHoveredItem = this;
-          });
-          item.addEventListener('mouseleave', function () {
-            this.classList.remove('hovered');
-            lastHoveredItem = null;
-          });
-        });
-      });
-    </script>
+    <!-- Removed unnecessary JavaScript to prevent errors -->
     <script
       type="module"
       crossorigin
@@ -226,8 +194,7 @@
     <canvas class="scene"></canvas>
     <div class="logo">Top 5 Security Practices for Small Businesses</div>
     <div class="navbar">
-      <!-- Removed "Home" and "Contact" links as per instructions -->
-      <!-- If you wish to add other navigation links in the future, do so here -->
+      <!-- Removed "Home" and "Contact" links -->
     </div>
     <main>
       <div class="blog-content">
@@ -236,7 +203,8 @@
           <p>
             Small businesses are increasingly becoming targets for cybercriminals due to their often limited security measures. Protecting your business from cyber threats is not just an IT concern but a critical aspect of maintaining trust and ensuring long-term success. This post outlines the top five security practices that small businesses should implement to safeguard their digital assets.
           </p>
-          <p><strong>1. Implement Strong Password Policies</strong></p>
+
+          <h3>1. Implement Strong Password Policies</h3>
           <p>
             <strong>Why It Matters:</strong><br />
             Weak or reused passwords are a common entry point for cyber attacks. Ensuring that employees use strong, unique passwords significantly reduces the risk of unauthorized access.
@@ -248,7 +216,8 @@
             <li><strong>Avoid Password Reuse:</strong> Ensure that employees do not reuse passwords across multiple platforms.</li>
             <li><strong>Enable Multi-Factor Authentication (MFA):</strong> Adds an additional layer of security by requiring a second form of verification.</li>
           </ul>
-          <p><strong>2. Keep Software and Systems Updated</strong></p>
+
+          <h3>2. Keep Software and Systems Updated</h3>
           <p>
             <strong>Why It Matters:</strong><br />
             Cybercriminals often exploit known vulnerabilities in software and systems. Regular updates and patches address these vulnerabilities, making it harder for attackers to gain access.
@@ -259,7 +228,8 @@
             <li><strong>Regularly Check for Patches:</strong> Stay informed about the latest security patches and apply them promptly.</li>
             <li><strong>Use Supported Software:</strong> Ensure that all software in use is actively supported and receiving security updates.</li>
           </ul>
-          <p><strong>3. Educate and Train Employees</strong></p>
+
+          <h3>3. Educate and Train Employees</h3>
           <p>
             <strong>Why It Matters:</strong><br />
             Employees are often the first line of defense against cyber threats. Educating them about potential risks and proper security practices can prevent accidental breaches.
@@ -270,7 +240,8 @@
             <li><strong>Simulate Phishing Attacks:</strong> Test employees’ ability to recognize phishing attempts through simulated campaigns.</li>
             <li><strong>Promote a Security-Aware Culture:</strong> Encourage employees to report suspicious activities and prioritize cybersecurity in daily operations.</li>
           </ul>
-          <p><strong>4. Secure Your Network</strong></p>
+
+          <h3>4. Secure Your Network</h3>
           <p>
             <strong>Why It Matters:</strong><br />
             An unsecured network can be easily exploited by cybercriminals to access sensitive information. Proper network security measures protect your business from unauthorized access and data breaches.
@@ -282,7 +253,8 @@
             <li><strong>Segment Your Network:</strong> Divide the network into segments to limit access and contain potential breaches.</li>
             <li><strong>Secure Wi-Fi Networks:</strong> Use strong encryption (WPA3), hide network SSIDs, and change default router passwords.</li>
           </ul>
-          <p><strong>5. Regularly Back Up Your Data</strong></p>
+
+          <h3>5. Regularly Back Up Your Data</h3>
           <p>
             <strong>Why It Matters:</strong><br />
             Data loss can occur due to cyber attacks, hardware failures, or accidental deletions. Regular backups ensure that your business can recover quickly and minimize downtime.
@@ -294,27 +266,39 @@
             <li><strong>Test Backups:</strong> Regularly test backup integrity and the restoration process to ensure data can be recovered effectively.</li>
             <li><strong>Implement a Backup Policy:</strong> Develop and enforce a comprehensive backup policy that outlines backup frequency, storage methods, and responsibilities.</li>
           </ul>
-          <p><strong>Conclusion</strong></p>
+
+          <h3>Conclusion</h3>
           <p>
             Protecting your small business from cyber threats doesn't have to be overwhelming. By implementing these top five security practices—strong password policies, regular software updates, employee education, network security, and data backups—you can significantly enhance your business's cybersecurity posture. Investing in these measures not only safeguards your digital assets but also builds trust with your customers and partners, ensuring the longevity and success of your business.
           </p>
+
           <a href="../" class="read-more">← Back to Blog</a>
         </div>
       </div>
     </main>
     <div class="social-contact">
-      <!-- 1. Replaced "Security Blog" with "Homepage", made it white and without underline -->
+      <!-- "Homepage" Link -->
       <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
-      
-      <!-- 2. LinkedIn and GitHub icons without text labels, increased their size -->
+
+      <!-- Social Media Icons -->
       <div class="contact-links">
-        <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin" aria-label="LinkedIn Profile">
+        <a
+          href="https://www.linkedin.com/in/alen-peric/"
+          target="_blank"
+          class="linkedin"
+          aria-label="LinkedIn Profile"
+        >
           <img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
         </a>
-        <a href="https://github.com/alenperic" target="_blank" class="github" aria-label="GitHub Profile">
+        <a
+          href="https://github.com/alenperic"
+          target="_blank"
+          class="github"
+          aria-label="GitHub Profile"
+        >
           <img src="../img/github-icon.png" alt="GitHub Profile Icon" />
         </a>
-        <!-- 3. Contact and Number links remain unchanged -->
+        <!-- Contact and Number Links -->
         <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
         <a href="tel:5485881420" class="number">📱 Number</a>
       </div>
