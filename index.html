@@ -1,269 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Alen Peric" />
-    <meta
-      name="description"
-      content="Alen Peric's Security Blog offers insights, tips, and updates on cybersecurity, network security, and best practices to protect your digital assets."
-    />
-    <meta
-      name="keywords"
-      content="Alen Peric, Security Blog, Cybersecurity, Network Security, IT Security, Best Practices, Security Tips, Security Updates"
-    />
-    <title>Alen Peric - Security Blog</title>
-    <link rel="icon" type="image/x-icon" href="./img/favicon.svg" />
-    <style>
-      /* Reset and base styles */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      canvas.scene {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 133%;
-        height: 100%;
-        transform: translateX(33%);
-        z-index: 1;
-      }
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI',
-          Roboto, sans-serif;
-        color: white;
-        overflow-x: hidden;
-        background-color: #121212; /* Dark background for better contrast */
-      }
-      /* Logo styling */
-      .logo {
-        position: absolute;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        color: white;
-        font-size: 42px;
-        text-align: center;
-        white-space: nowrap;
-      }
-      /* Navigation bar styling */
-      .navbar {
-        position: absolute;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        display: flex;
-        gap: 30px;
-      }
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        transition: color 0.3s;
-      }
-      .navbar a:hover {
-        text-decoration: underline;
-      }
-      /* Blog content styling */
-      .blog-content {
-        position: absolute;
-        top: 120px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 50;
-        width: 90%;
-        max-width: 800px;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 30px;
-        border-radius: 10px;
-      }
-      .blog-post {
-        margin-bottom: 30px;
-      }
-      .blog-post h2 {
-        margin: 0 0 10px 0;
-        font-size: 24px;
-      }
-      .blog-post p {
-        margin: 0 0 10px 0;
-        font-size: 16px;
-        line-height: 1.5;
-      }
-      .blog-post a.read-more {
-        color: #1e90ff;
-        text-decoration: none;
-        font-weight: bold;
-      }
-      .blog-post a.read-more:hover {
-        text-decoration: underline;
-      }
-      /* Social and contact section styling */
-      .social-contact {
-        position: absolute;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 100;
-        display: flex;
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center;
-        gap: 10px;
-      }
-      /* "Homepage" link styling */
-      .social-contact a.homepage {
-        font-size: 18px;
-        text-decoration: none; /* Remove underline */
-        color: white; /* Set text color to white */
-      }
-      /* Container for contact and social links */
-      .contact-links {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: nowrap;
-      }
-      /* Social media icon links styling */
-      .social-contact a.linkedin,
-      .social-contact a.github {
-        color: white;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        /* Removed gap between icon and text since text is removed */
-      }
-      /* Social media icons styling */
-      .social-contact img {
-        width: 68px; /* Increased size to 2x */
-        height: auto;
-        vertical-align: middle;
-      }
-      /* Contact and number links styling */
-      .social-contact a.contact,
-      .social-contact a.number {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-      /* Responsive adjustments */
-      @media screen and (max-width: 800px) {
-        .logo {
-          font-size: 24px;
-          top: 10px;
-        }
-        .navbar {
-          top: 50px;
-          gap: 15px;
-        }
-        .navbar a {
-          font-size: 16px;
-        }
-        .blog-content {
-          top: 90px;
-          padding: 20px;
-        }
-        .blog-post h2 {
-          font-size: 20px;
-        }
-        .blog-post p {
-          font-size: 14px;
-        }
-        .social-contact {
-          gap: 8px;
-        }
-        .social-contact a.homepage {
-          font-size: 16px;
-        }
-        .contact-links {
-          gap: 10px;
-        }
-        .social-contact img {
-          width: 102px; /* Increased size to 3x for mobile */
-        }
-        .social-contact a.contact,
-        .social-contact a.number {
-          font-size: 16px;
-        }
-      }
-    </style>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const serviceItems = document.querySelectorAll('.services li');
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Alen Peric">
+<meta name="description" content="Alen Peric’s Security & AI Blog ‑ practical write‑ups on cybersecurity, GPU tinkering, and everything in‑between.">
+<meta name="keywords" content="Alen Peric, Security Blog, Cybersecurity, vLLM, RTX 5070 Ti, Blackwell GPU, CUDA 12.8, Best Practices, Security Tips">
+<title>Alen Peric — Security & AI Blog</title>
+<link rel="icon" type="image/x-icon" href="./img/favicon.svg">
+<style>
+html,body{height:100%;margin:0;padding:0;}
+canvas.scene{position:fixed;top:0;left:0;width:133%;height:100%;transform:translateX(33%);z-index:1;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;}
+.logo{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:100;font-size:42px;white-space:nowrap;}
+.navbar{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:30px;}
+.navbar a{color:#fff;text-decoration:none;font-size:18px;transition:color .3s;}
+.navbar a:hover{text-decoration:underline;}
+.blog-content{position:absolute;top:120px;left:50%;transform:translateX(-50%);z-index:50;width:90%;max-width:800px;background:rgba(0,0,0,.7);padding:30px;border-radius:10px;}
+.blog-post{margin-bottom:34px;}
+.blog-post h2{margin:0 0 10px;font-size:24px;}
+.blog-post p{margin:0 0 10px;font-size:16px;line-height:1.55;}
+.blog-post a.read-more{color:#1e90ff;text-decoration:none;font-weight:bold;}
+.blog-post a.read-more:hover{text-decoration:underline;}
+.social-contact{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.social-contact a.homepage{font-size:18px;text-decoration:none;color:#fff;}
+.contact-links{display:flex;align-items:center;gap:20px;}
+.social-contact img{width:68px;height:auto;}
+.social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:5px;}
+@media screen and (max-width:800px){
+.logo{font-size:24px;top:10px;}
+.navbar{top:50px;gap:15px;}
+.navbar a{font-size:16px;}
+.blog-content{top:90px;padding:20px;}
+.blog-post h2{font-size:20px;}
+.blog-post p{font-size:14px;}
+.social-contact{gap:8px;}
+.social-contact a.homepage{font-size:16px;}
+.contact-links{gap:10px;}
+.social-contact img{width:102px;}
+.social-contact a.contact,.social-contact a.number{font-size:16px;}
+}
+</style>
+<script type="module" crossorigin src="./assets/index-b7d38c76.js"></script>
+<link rel="stylesheet" href="./assets/index-5884692c.css">
+</head>
+<body>
+<canvas class="scene"></canvas>
 
-        let lastHoveredItem = null;
+<div class="logo">Alen Peric | Security & AI Blog</div>
 
-        serviceItems.forEach((item) => {
-          item.addEventListener('mouseenter', function () {
-            if (lastHoveredItem && lastHoveredItem !== this) {
-              lastHoveredItem.classList.remove('hovered');
-            }
-            this.classList.add('hovered');
-            lastHoveredItem = this;
-          });
-          item.addEventListener('mouseleave', function () {
-            this.classList.remove('hovered');
-            lastHoveredItem = null;
-          });
-        });
-      });
-    </script>
-    <script
-      type="module"
-      crossorigin
-      src="./assets/index-b7d38c76.js"
-    ></script>
-    <link rel="stylesheet" href="./assets/index-5884692c.css" />
-  </head>
-  <body>
-    <canvas class="scene"></canvas>
-    <div class="logo">Alen Peric Security Blog</div>
-    <div class="navbar">
-      <!-- Removed "Home" and "Contact" links as per instructions -->
-      <!-- If you wish to add other navigation links in the future, do so here -->
-    </div>
-    <main>
-      <div class="blog-content">
-        <div class="blog-post">
-          <h2>Understanding the Basics of Cybersecurity</h2>
-          <p>
-            Cybersecurity is essential in today's digital age. This post explores the fundamental concepts of cybersecurity and why it's crucial for individuals and businesses alike.
-          </p>
-          <a href="https://ligma.blog/post1" class="read-more">Read More</a>
-        </div>
-        <div class="blog-post">
-          <h2>Top 5 Security Practices for Small Businesses</h2>
-          <p>
-            Small businesses are often targets for cyber attacks. Learn the top security practices that can help protect your business from potential threats.
-          </p>
-          <a href="https://ligma.blog/post2" class="read-more">Read More</a>
-        </div>
-        <!-- Add more blog posts as needed -->
-      </div>
-    </main>
-    <div class="social-contact">
-      <!-- 1. Replaced "Security Blog" with "Homepage", made it white and without underline -->
-      <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
-      
-      <!-- 2. LinkedIn and GitHub icons without text labels, increased their size -->
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin">
-          <img src="./img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
-        </a>
-        <a href="https://github.com/alenperic" target="_blank" class="github">
-          <img src="./img/github-icon.png" alt="GitHub Profile Icon" />
-        </a>
-        <!-- 3. Contact and Number links remain unchanged -->
-        <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
-        <a href="tel:5485881420" class="number">📱 Number</a>
-      </div>
-    </div>
-  </body>
+<main>
+<div class="blog-content">
+
+  <div class="blog-post">
+    <h2>Blackwell Brawl — vLLM meets RTX 5070 Ti</h2>
+    <p>
+      Three and a half sleepless nights, one perplexed cat, and countless <em>cmake</em> errors later,
+      I coaxed vLLM to run on a brand‑new Blackwell GPU under Debian 12. Benchmarks, jokes, and full
+      copy‑paste commands included.
+    </p>
+    <a href="./posts/vllm-blackwell.html" class="read-more">Read More</a>
+  </div>
+
+  <div class="blog-post">
+    <h2>Understanding the Basics of Cybersecurity</h2>
+    <p>
+      Cybersecurity is essential in today's digital age. This post explores the fundamental concepts
+      of cybersecurity and why it's crucial for individuals and businesses alike.
+    </p>
+    <a href="https://ligma.blog/post1" class="read-more">Read More</a>
+  </div>
+
+  <div class="blog-post">
+    <h2>Top 5 Security Practices for Small Businesses</h2>
+    <p>
+      Small businesses are often targets for cyber attacks. Learn the top security practices that
+      can help protect your business from potential threats.
+    </p>
+    <a href="https://ligma.blog/post2" class="read-more">Read More</a>
+  </div>
+
+</div>
+</main>
+
+<div class="social-contact">
+  <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+  <div class="contact-links">
+    <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin">
+      <img src="./img/linkedin-icon.png" alt="LinkedIn Profile Icon">
+    </a>
+    <a href="https://github.com/alenperic" target="_blank" class="github">
+      <img src="./img/github-icon.png" alt="GitHub Profile Icon">
+    </a>
+    <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+    <a href="tel:5485881420" class="number">📱 Number</a>
+  </div>
+</div>
+
+</body>
 </html>
