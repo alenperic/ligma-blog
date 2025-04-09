@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Alen Peric">
 <meta name="description" content="Alen Peric’s Security & AI Blog ‑ practical write‑ups on cybersecurity, GPU tinkering, and everything in‑between.">
-<meta name="keywords" content="Alen Peric, Security Blog, Cybersecurity, vLLM, RTX 5070 Ti, Blackwell GPU, CUDA 12.8">
+<meta name="keywords" content="Alen Peric, Security Blog, Cybersecurity, vLLM, RTX 5070 Ti, Blackwell GPU, CUDA 12.8, Best Practices, Security Tips">
 <title>Alen Peric — Security & AI Blog</title>
 <link rel="icon" type="image/x-icon" href="./img/favicon.svg">
 <style>
 html,body{height:100%;margin:0;padding:0;}
-canvas.scene{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;}
+canvas.scene{position:fixed;top:0;left:0;width:133%;height:100%;transform:translateX(33%);z-index:1;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;}
-.logo{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:100;font-size:42px;white-space:normal;text-align:center;max-width:90%;}
+.logo{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:100;font-size:42px;white-space:nowrap;}
 .navbar{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:30px;}
 .navbar a{color:#fff;text-decoration:none;font-size:18px;transition:color .3s;}
 .navbar a:hover{text-decoration:underline;}
@@ -27,27 +27,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;c
 .contact-links{display:flex;align-items:center;gap:20px;}
 .social-contact img{width:68px;height:auto;}
 .social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:5px;}
-/* Tablet / small‑laptop adjustments */
-@media(max-width:800px){
-.logo{font-size:28px;top:12px;}
-.navbar{top:58px;gap:18px;}
+@media screen and (max-width:800px){
+.logo{font-size:24px;top:10px;}
+.navbar{top:50px;gap:15px;}
 .navbar a{font-size:16px;}
-.blog-content{top:100px;padding:22px;}
+.blog-content{top:90px;padding:20px;}
 .blog-post h2{font-size:20px;}
 .blog-post p{font-size:14px;}
-}
-/* Phone portrait */
-@media(max-width:600px){
-canvas.scene{width:100%;height:100%;transform:none;}
-.logo{font-size:22px;top:10px;}
-.navbar{display:none;}
-.blog-content{top:78px;padding:18px;}
-.blog-post h2{font-size:18px;}
-.blog-post p{font-size:13px;}
+.social-contact{gap:8px;}
 .social-contact a.homepage{font-size:16px;}
-.contact-links{gap:14px;}
-.social-contact img{width:56px;}
-.social-contact a.contact,.social-contact a.number{font-size:15px;}
+.contact-links{gap:10px;}
+.social-contact img{width:102px;}
+.social-contact a.contact,.social-contact a.number{font-size:16px;}
 }
 </style>
 <script type="module" crossorigin src="./assets/index-b7d38c76.js"></script>
@@ -56,7 +47,7 @@ canvas.scene{width:100%;height:100%;transform:none;}
 <body>
 <canvas class="scene"></canvas>
 
-<div class="logo">Alen Peric<br>Security&nbsp;&amp;&nbsp;AI Blog</div>
+<div class="logo">Alen Peric | Security & AI Blog</div>
 
 <main>
 <div class="blog-content">
