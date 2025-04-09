@@ -127,7 +127,8 @@ huggingface-cli download TheBloke/WhiteRabbitNeo-13B-AWQ \
   --local-dir /models/WhiteRabbitNeo-13B-AWQ
 huggingface-cli download nvidia/DeepSeek-R1-FP4 \
   --local-dir /models/DeepSeek-R1-FP4</code></pre>
-
+<p>*Small side note: this is a 500Gb download. You have been warned!.</p>
+  
 <h3>Step 5 — Launch vLLM</h3>
 <p>The moment of truth. If this fails, scroll back to Step 1 and pretend you never saw this line.</p>
 <pre><code class="language-bash">docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 \
