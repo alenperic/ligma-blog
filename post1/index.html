@@ -1,187 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Alen Peric" />
-    <meta
-      name="description"
-      content="How I shoe‑horned vLLM onto an RTX 5070 Ti (Blackwell, CUDA 12.8) under Debian 12—full story, full commands, and lessons learned."
-    />
-    <meta
-      name="keywords"
-      content="vLLM, PyTorch, CUDA 12.8, Blackwell GPU, RTX 5070 Ti, Debian 12, FlashInfer, AWQ, FP4, Alen Peric"
-    />
-    <title>vLLM on Debian 12 & RTX 5070 Ti — Full Story & Guide</title>
-    <link rel="icon" type="image/x-icon" href="../img/favicon.svg" />
-
-    <!-- ✨— original base styles —✨ -->
-    <style>
-      html,body{height:100%;margin:0;padding:0;}
-      canvas.scene{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#121212;}
-      body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;display:flex;flex-direction:column;min-height:100vh;}
-      .logo{margin:20px auto;font-size:42px;text-align:center;white-space:nowrap;}
-      .navbar{display:none;}
-      .blog-content{flex:1;margin:20px auto;width:90%;max-width:820px;background:rgba(0,0,0,.72);padding:40px;border-radius:12px;}
-      .blog-post h2{margin-top:0;font-size:28px}
-      .blog-post h3{margin:32px 0 12px;font-size:22px}
-      .blog-post p{margin:0 0 14px;font-size:17px;line-height:1.65}
-      .blog-post ul,.blog-post ol{margin:0 0 14px 22px}
-      .blog-post li{margin-bottom:8px}
-      .blog-post a{color:#1e90ff;text-decoration:none;font-weight:bold}
-      .blog-post a:hover{text-decoration:underline}
-      /* code blocks */
-      pre{background:#1e1e1e;color:#9cf;padding:14px;border-radius:8px;overflow-x:auto;font-size:15px;line-height:1.45}
-      code{font-family:Menlo,Consolas,monospace}
-      /* call‑out boxes */
-      .callout{background:#222;padding:14px;border-left:4px solid #1e90ff;border-radius:6px;margin:18px 0}
-      /* footer links */
-      .social-contact{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:24px}
-      .social-contact a.homepage{font-size:18px;color:#fff;text-decoration:none}
-      .contact-links{display:flex;align-items:center;gap:20px}
-      .social-contact img{width:64px;height:auto}
-      .social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:6px}
-      @media(max-width:800px){
-        .logo{font-size:28px}
-        .blog-content{padding:26px}
-        .blog-post h2{font-size:24px}
-        .blog-post h3{font-size:20px}
-        pre{font-size:14px}
-      }
-    </style>
-
-    <!-- keep your existing JS / CSS assets if used elsewhere -->
-    <script type="module" crossorigin src="../assets/index-b7d38c76.js"></script>
-    <link rel="stylesheet" href="../assets/index-5884692c.css" />
-  </head>
-
-  <body>
-    <canvas class="scene"></canvas>
-    <div class="logo">vLLM + RTX 5070 Ti = 🚀</div>
-
-    <main>
-      <div class="blog-content">
-        <div class="blog-post">
-          <h2>How I Got vLLM Running on a Brand‑New Blackwell GPU (and Survived)</h2>
-
-          <p>
-            Three‑and‑a‑half bleary‑eyed days, a pile of <code>cmake</code> errors, and one
-            <em>very</em> confused cat later, I can finally say: <strong>vLLM now runs on my RTX 5070 Ti
-            under Debian 12 with CUDA 12.8</strong>. If you’re holding a Blackwell card and wondering why
-            nothing “just works,” this post is for you.
-          </p>
-
-          <div class="callout">
-            <strong>Skip the chatter?</strong> All commands live in the repo →&nbsp;
-            <a href="https://github.com/alenperic/Debian-PyTorch-RTX5070Ti" target="_blank">
-              github.com/alenperic/Debian‑PyTorch‑RTX5070Ti
-            </a>
-          </div>
-
-          <h3>Why the pain?</h3>
-          <ul>
-            <li>
-              <strong>No official sm_120 wheel</strong> — PyTorch nightly tops out at Lovelace
-              (<code>sm_90</code>). Blackwell needs <code>sm_120</code>.
-            </li>
-            <li>
-              <strong>CUDA 12.8</strong> — bleeding‑edge runtime, but the only one the 50‑series driver
-              supports.
-            </li>
-            <li>
-              <strong>FlashInfer</strong> — fastest attention kernels out there, but they insist on a
-              matching compiler stack.
-            </li>
-          </ul>
-
-          <h3>Hardware &amp; Software Baseline</h3>
-          <ul>
-            <li>GPU: NVIDIA RTX 5070 Ti (16 GB VRAM, Blackwell)</li>
-            <li>OS: Debian 12 (Bookworm) — stock kernel 6.1</li>
-            <li>Driver: 545.xx or newer</li>
-            <li>CUDA Toolkit: 12.8 (local .deb repo)</li>
-            <li>Python: 3.11 (venv + Docker)</li>
-          </ul>
-
-          <h3>Step 1 — Install Driver &amp; CUDA 12.8</h3>
-          <pre><code class="language-bash"># Add NVIDIA repo key
-sudo install -m 0755 -d /etc/apt/keyrings
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Alen Peric">
+<meta name="description" content="How I shoe‑horned vLLM onto an RTX 5070 Ti (Blackwell, CUDA 12.8) under Debian 12—full story, full commands, and lessons learned.">
+<meta name="keywords" content="vLLM, PyTorch, CUDA 12.8, Blackwell GPU, RTX 5070 Ti, Debian 12, FlashInfer, AWQ, FP4, Alen Peric">
+<title>vLLM on Debian 12 & RTX 5070 Ti — My Sleepless‑Night Guide</title>
+<link rel="icon" type="image/x-icon" href="../img/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+html,body{height:100%;margin:0;padding:0}
+canvas.scene{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#121212}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;display:flex;flex-direction:column;min-height:100vh}
+.logo{margin:20px auto 0;max-width:90%;font-size:40px;text-align:center;white-space:normal}
+.blog-content{flex:1;margin:100px auto 40px;width:92%;max-width:820px;background:rgba(0,0,0,.72);padding:40px;border-radius:12px}
+.blog-post h2{margin-top:0;font-size:28px}
+.blog-post h3{margin:32px 0 12px;font-size:22px}
+.blog-post p{margin:0 0 14px;font-size:17px;line-height:1.65}
+.blog-post ul,.blog-post ol{margin:0 0 14px 22px}
+.blog-post li{margin-bottom:8px}
+.blog-post a{color:#1e90ff;text-decoration:none;font-weight:bold}
+.blog-post a:hover{text-decoration:underline}
+pre{background:#1e1e1e;color:#c9e3ff;padding:20px 56px 20px 20px;border-radius:10px;overflow-x:auto;font-size:15px;line-height:1.45;position:relative}
+code{font-family:'Source Code Pro',Menlo,Consolas,monospace;font-style:italic;font-weight:400}
+.copy-btn{position:absolute;top:12px;right:12px;background:#1e90ff;border:none;color:#fff;padding:4px 12px;font-size:12px;border-radius:4px;cursor:pointer;opacity:.85;transition:opacity .2s;z-index:2}
+.copy-btn:hover{opacity:1}
+.callout{background:#222;padding:14px;border-left:4px solid #1e90ff;border-radius:6px;margin:18px 0}
+.social-contact{margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.social-contact a.homepage{font-size:18px;color:#fff;text-decoration:none}
+.contact-links{display:flex;align-items:center;gap:20px}
+.social-contact img{width:64px;height:auto}
+.social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:6px}
+@media(max-width:800px){
+.logo{font-size:28px;margin-top:14px}
+.blog-content{margin:86px auto 34px;padding:26px}
+.blog-post h2{font-size:24px}
+.blog-post h3{font-size:20px}
+pre{font-size:14px;padding:18px 46px 18px 18px}
+}
+@media(max-width:600px){
+.logo{font-size:22px;margin-top:10px}
+.blog-content{margin:70px auto 30px;padding:20px}
+.blog-post h2{font-size:20px}
+.blog-post p{font-size:14px}
+.social-contact a.homepage{font-size:16px}
+.contact-links{gap:14px}
+.social-contact img{width:56px}
+.social-contact a.contact,.social-contact a.number{font-size:15px}
+}
+</style>
+</head>
+<body>
+<canvas class="scene"></canvas>
+<div class="logo">Blackwell Brawl — vLLM meets RTX 5070 Ti 🥊🚀</div>
+<main>
+<div class="blog-content">
+<div class="blog-post">
+<h2>How I Got vLLM Running on a Brand‑New Blackwell GPU (and Survived)</h2>
+<p>Three‑and‑a‑half bleary‑eyed days, a pile of <code>cmake</code> errors, and one <em>very</em> confused cat later, I can finally say: <strong>vLLM now runs on my RTX 5070 Ti under Debian 12 with CUDA 12.8</strong>. If you’re holding a Blackwell card and wondering why nothing “just works,” this post is for you.</p>
+<div class="callout"><strong>Skip the chatter?</strong> All commands live in the repo → <a href="https://github.com/alenperic/Debian-PyTorch-RTX5070Ti" target="_blank">github.com/alenperic/Debian‑PyTorch‑RTX5070Ti</a></div>
+<h3>Why the pain?</h3>
+<ul>
+<li><strong>No official <code>sm_120</code> wheel</strong> — PyTorch nightly tops out at Lovelace (<code>sm_90</code>). Blackwell needs <code>sm_120</code>.</li>
+<li><strong>CUDA 12.8</strong> — bleeding‑edge runtime, but the only one the 50‑series driver supports.</li>
+<li><strong>FlashInfer</strong> — fastest attention kernels out there, but they insist on a matching compiler stack.</li>
+</ul>
+<p>In other words, the perfect storm of “it should work in theory” and “why is my coffee mug screaming?”</p>
+<h3>Hardware & Software Baseline</h3>
+<ul>
+<li>GPU: NVIDIA RTX 5070 Ti (16 GB VRAM, Blackwell)</li>
+<li>OS: Debian 12 (Bookworm) — stock kernel 6.1</li>
+<li>Driver: 545.xx or newer</li>
+<li>CUDA Toolkit: 12.8</li>
+<li>Python: 3.11 (venv + Docker)</li>
+</ul>
+<h3>Step 1 — Install Driver & CUDA 12.8</h3>
+<p>First we exorcise <em>nouveau</em>, add the CUDA repo, and pray we don’t typo the URL.</p>
+<pre><code class="language-bash">sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/3bf863cc.pub \
   | sudo gpg --dearmor -o /etc/apt/keyrings/nvidia-drivers.gpg
-
-# Add CUDA repo
 echo 'deb [signed-by=/etc/apt/keyrings/nvidia-drivers.gpg] \
 https://developer.download.nvidia.com/compute/cuda/repos/debian12/x86_64/ /' \
 | sudo tee /etc/apt/sources.list.d/nvidia-cuda.list
-
 sudo apt update
 sudo apt install -y nvidia-driver cuda
 sudo reboot</code></pre>
-
-          <p class="callout">
-            After reboot, verify with <code>nvidia-smi</code>. You should see CUDA 12.8 and the
-            <em>Blackwell</em> device name.
-          </p>
-
-          <h3>Step 2 — Build PyTorch for Blackwell</h3>
-          <p>
-            Nightly wheels choke on <code>sm_120</code>, so we compile. AVX‑512 makes a real difference
-            on modern Intel chips, so I turned it on.
-          </p>
-
-          <pre><code class="language-bash">git clone --recursive https://github.com/pytorch/pytorch
+<p class="callout">After reboot, verify with <code>nvidia-smi</code>. You should see CUDA 12.8 and a shiny Blackwell device name. If you don’t, welcome to Groundhog Day — repeat until reality matches documentation.</p>
+<h3>Step 2 — Build PyTorch for Blackwell</h3>
+<p>Nightly wheels choke on <code>sm_120</code>, so we compile. AVX‑512 makes a real difference on modern Intel chips, so I turned it on.</p>
+<pre><code class="language-bash">git clone --recursive https://github.com/pytorch/pytorch
 cd pytorch
-
 export USE_CUDA=1
 export CUDA_HOME=/usr/local/cuda
-export TORCH_CUDA_ARCH_LIST="12.0"        # Blackwell
+export TORCH_CUDA_ARCH_LIST="12.0"
 export MAX_JOBS=$(nproc)
-export CMAKE_PREFIX_PATH=$(python3 -c "import sysconfig, json, os; print(sysconfig.get_paths()['data'])")
-
+export CMAKE_PREFIX_PATH=$(python3 -c "import sysconfig; print(sysconfig.get_paths()['data'])")
 pip install -r requirements.txt
 pip install ninja cmake pyyaml
-
 python setup.py clean
 python setup.py bdist_wheel
-pip install dist/torch-*.whl   # ≈45 min on 16‑core box</code></pre>
-
-          <h3>Step 3 — Build the Docker Image (vLLM + FlashInfer)</h3>
-          <pre><code class="language-dockerfile"># Dockerfile (excerpt)
-FROM nvcr.io/nvidia/pytorch:25.03-py3
-
+pip install dist/torch-*.whl</code></pre>
+<h3>Step 3 — Build the Docker Image (vLLM + FlashInfer)</h3>
+<p>Because nothing says “I love repetition” like compiling <em>again</em> inside a container.</p>
+<pre><code class="language-dockerfile">FROM nvcr.io/nvidia/pytorch:25.03-py3
 ENV TORCH_CUDA_ARCH_LIST='12.0+PTX'
 RUN apt-get update && apt-get install -y git cmake ccache python3-dev
-
-# FlashInfer
 RUN git clone https://github.com/flashinfer-ai/flashinfer.git --recursive /flashinfer
 WORKDIR /flashinfer
 RUN pip install -e . -v
-
-# vLLM
 RUN git clone https://github.com/vllm-project/vllm.git /vllm
 WORKDIR /vllm
 RUN pip install -r requirements/build.txt
 RUN python setup.py develop
 CMD ["bash"]</code></pre>
-
-          <pre><code class="language-bash">mkdir -p ~/vllm/ccache
+<pre><code class="language-bash">mkdir -p ~/vllm/ccache
 docker build -t vllm-cu128 -f Dockerfile .</code></pre>
-
-          <h3>Step 4 — Pull Some Models</h3>
-          <pre><code class="language-bash">huggingface-cli login
+<h3>Step 4 — Pull Some Models</h3>
+<p>Time to hoard weights like a dragon.</p>
+<pre><code class="language-bash">huggingface-cli login
 huggingface-cli download Qwen/QwQ-32B-AWQ \
   --local-dir /models/QwQ-32B-AWQ --local-dir-use-symlinks False
-
-# Lighter options
 huggingface-cli download TheBloke/WhiteRabbitNeo-13B-AWQ \
   --local-dir /models/WhiteRabbitNeo-13B-AWQ
 huggingface-cli download nvidia/DeepSeek-R1-FP4 \
   --local-dir /models/DeepSeek-R1-FP4</code></pre>
-
-          <h3>Step 5 — Launch vLLM</h3>
-          <p>Here’s the command that finally stuck the landing ⬇️</p>
-
-          <pre><code class="language-bash">docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 \
+<h3>Step 5 — Launch vLLM</h3>
+<p>The moment of truth. If this fails, scroll back to Step 1 and pretend you never saw this line.</p>
+<pre><code class="language-bash">docker run --gpus all --ipc=host --ulimit memlock=-1 --ulimit stack=67108864 \
   -p 8000:8000 -v /models:/models \
   -e VLLM_ATTENTION_BACKEND=FLASHINFER \
   vllm-cu128 \
@@ -194,73 +140,41 @@ huggingface-cli download nvidia/DeepSeek-R1-FP4 \
     --enable-reasoning \
     --reasoning-parser deepseek_r1 \
     --max-model-len 32768</code></pre>
-
-          <p>
-            The server starts on <code>localhost:8000</code> with an OpenAI‑compatible endpoint.
-            A quick sanity check:
-          </p>
-
-          <pre><code class="language-bash">curl http://localhost:8000/v1/completions \
+<p>The server starts on <code>localhost:8000</code>. A quick sanity check:</p>
+<pre><code class="language-bash">curl http://localhost:8000/v1/completions \
   -H "Content-Type: application/json" \
   -d '{"model":"Qwen/QwQ-32B-AWQ","prompt":"Write a haiku about snow.","max_tokens":64}'</code></pre>
-
-          <h3>Benchmarks (Real‑World)</h3>
-          <ul>
-            <li><strong>DeepSeek‑R1‑FP4 (7B)</strong> — ~120 tok/s @ 4096 ctx</li>
-            <li><strong>WhiteRabbitNeo‑13B‑AWQ</strong> — ~68 tok/s @ 4096 ctx</li>
-            <li><strong>QwQ‑32B‑AWQ</strong> — 15‑18 tok/s @ 32k ctx (still <em>usable</em>!)</li>
-          </ul>
-
-          <h3>Troubleshooting Nuggets</h3>
-          <ul>
-            <li>
-              <strong>“invalid device function”</strong> → your <code>TORCH_CUDA_ARCH_LIST</code> is
-              wrong or you’re loading the stock wheel.
-            </li>
-            <li>
-              <strong>OOM at load time</strong> → lower <code>--gpu-memory-utilization</code> or add
-              <code>--cpu-offload-gb 6</code>.
-            </li>
-            <li>
-              <strong>FlashInfer segfaults</strong> → rebuild it <em>after</em> you install your
-              custom PyTorch wheel.
-            </li>
-          </ul>
-
-          <h3>Final Thoughts</h3>
-          <p>
-            Blackwell support will land in upstream PyTorch soon enough, but if you want <em>today’s</em>
-            performance, rolling your own stack is totally doable. I hope the guide saves you a few
-            coffee refills and at least one existential crisis.
-          </p>
-
-          <p class="callout">
-            The full copy‑paste script lives here →&nbsp;
-            <a href="https://github.com/alenperic/Debian-PyTorch-RTX5070Ti" target="_blank">
-              Debian‑PyTorch‑RTX5070Ti
-            </a>
-          </p>
-
-          <p><em>Happy compiling, and ping me on LinkedIn if you hit a weird edge case.</em></p>
-
-          <a href="../" class="read-more">← Back to Blog</a>
-        </div>
-      </div>
-    </main>
-
-    <div class="social-contact">
-      <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
-
-      <div class="contact-links">
-        <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin" aria-label="LinkedIn Profile">
-          <img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
-        </a>
-        <a href="https://github.com/alenperic" target="_blank" class="github" aria-label="GitHub Profile">
-          <img src="../img/github-icon.png" alt="GitHub Profile Icon" />
-        </a>
-        <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
-        <a href="tel:5485881420" class="number">📱 Number</a>
-      </div>
-    </div>
-  </body>
+<h3>Benchmarks (Real‑World)</h3>
+<ul>
+<li><strong><a href="https://huggingface.co/nvidia/DeepSeek-R1-FP4" target="_blank">DeepSeek‑R1‑FP4 (7B)</a></strong> — ~120 tok/s @ 4096 ctx</li>
+<li><strong><a href="https://huggingface.co/TheBloke/WhiteRabbitNeo-13B-AWQ" target="_blank">WhiteRabbitNeo‑13B‑AWQ</a></strong> — ~68 tok/s @ 4096 ctx</li>
+<li><strong><a href="https://huggingface.co/Qwen/QwQ-32B-AWQ" target="_blank">QwQ‑32B‑AWQ</a></strong> — 15‑18 tok/s @ 32k ctx</li>
+</ul>
+<h3>Troubleshooting Nuggets</h3>
+<ul>
+<li><strong>invalid device function</strong> → your <code>TORCH_CUDA_ARCH_LIST</code> is wrong or you’re loading the stock wheel.</li>
+<li><strong>OOM at load time</strong> → lower <code>--gpu-memory-utilization</code> or add <code>--cpu-offload-gb 6</code>.</li>
+<li><strong>FlashInfer segfaults</strong> → rebuild it after you install your custom PyTorch wheel.</li>
+</ul>
+<h3>Final Thoughts</h3>
+<p>Blackwell support will land in upstream PyTorch soon enough, but if you want today’s performance, rolling your own stack is totally doable. I hope the guide saves you a few coffee refills and at least one existential crisis.</p>
+<div class="callout">The full copy‑paste script lives here → <a href="https://github.com/alenperic/Debian-PyTorch-RTX5070Ti" target="_blank">Debian‑PyTorch‑RTX5070Ti</a></div>
+<p><em>Happy compiling, and ping me on LinkedIn if you hit a weird edge case.</em></p>
+<a href="../" class="read-more">← Back to Blog</a>
+</div>
+</div>
+</main>
+<div class="social-contact">
+<a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+<div class="contact-links">
+<a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin"><img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon"></a>
+<a href="https://github.com/alenperic" target="_blank" class="github"><img src="../img/github-icon.png" alt="GitHub Profile Icon"></a>
+<a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+<a href="tel:5485881420" class="number">📱 Number</a>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('pre').forEach(pre=>{const btn=document.createElement('button');btn.className='copy-btn';btn.textContent='Copy';pre.appendChild(btn);btn.addEventListener('click',()=>{navigator.clipboard.writeText(pre.innerText).then(()=>{btn.textContent='Copied!';setTimeout(()=>btn.textContent='Copy',1600);});});});});
+</script>
+</body>
 </html>
