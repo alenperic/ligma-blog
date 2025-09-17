@@ -11,18 +11,18 @@
 <style>
 html,body{height:100%;margin:0;padding:0;}
 canvas.scene{position:fixed;top:0;left:0;width:133%;height:100%;transform:translateX(33%);z-index:1;}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;}
+body{font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'San Francisco','Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;}
 .logo{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:100;font-size:42px;white-space:nowrap;}
 .navbar{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:30px;}
 .navbar a{color:#fff;text-decoration:none;font-size:18px;transition:color .3s;}
 .navbar a:hover{text-decoration:underline;}
-.blog-content{position:absolute;top:120px;left:50%;transform:translateX(-50%);z-index:50;width:90%;max-width:800px;background:rgba(0,0,0,.7);padding:30px;border-radius:10px;}
-.blog-post{margin-bottom:34px;}
+.blog-content{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:50;width:90%;max-width:800px;background:rgba(0,0,0,.7);padding:30px;border-radius:10px;}
+.blog-post{margin-bottom:24px;}
 .blog-post h2{margin:0 0 10px;font-size:24px;}
 .blog-post p{margin:0 0 10px;font-size:16px;line-height:1.55;}
 .blog-post a.read-more{color:#1e90ff;text-decoration:none;font-weight:bold;}
 .blog-post a.read-more:hover{text-decoration:underline;}
-.social-contact{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.social-contact{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:10px;}
 .social-contact a.homepage{font-size:18px;text-decoration:none;color:#fff;}
 .contact-links{display:flex;align-items:center;gap:20px;}
 .social-contact img{width:68px;height:auto;}
@@ -53,6 +53,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;c
 <div class="blog-content">
 
   <div class="blog-post">
+    <h2>From Autonomous Pilots to Profit: What 2025 (Has So Far) Taught Us About Enterprise AI Agents</h2>
+    <p>
+      Learn how enterprise AI agents became practical in 2025 by focusing on workflows, 
+      guardrails, and observability instead of unchecked autonomy. Empower your AI agentic overlords! 
+    </p>
+    <a href="./post3" class="read-more">Read More</a>
+  </div>
+
+  <div class="blog-post">
     <h2>Blackwell Brawl — vLLM meets RTX 5070 Ti</h2>
     <p>
       Three and a half sleepless nights, one perplexed cat, and countless <em>cmake</em> errors later,
@@ -63,13 +72,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;c
   </div>
 
   <div class="blog-post">
-    <h2>Top 5 Security Practices for Small Businesses</h2>
+    <h2>Top 5 Security Practices for Small Businesses</h2>
     <p>
       Small businesses are often targets for cyber attacks. Learn the top security practices that
       can help protect your business from potential threats.
     </p>
-    <a href="https://ligma.blog/post2" class="read-more">Read More</a>
+    <a href="./post2" class="read-more">Read More</a>
   </div>
+
 
 </div>
 </main>
