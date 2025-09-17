@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <meta name="author" content="Alen Peric" />
+ <meta
+ name="description"
+ content="From Pilots to Profit: Learn how enterprise AI agents became practical in 2025 by focusing on workflows, guardrails, and observability instead of unchecked autonomy."
+ />
+ <meta
+ name="keywords"
+ content="AI Agents, Enterprise AI, Workflow Automation, Observability, AI Security, Agentic AI"
+ />
+ <title>From Pilots to Profit: What 2025 Taught Us About Enterprise AI Agents</title>
+ <link rel="icon" type="image/x-icon" href="../img/favicon.svg" />
+<style>
+html,body{height:100%;margin:0;padding:0}
+canvas.scene{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#121212}
+body{font-family:'SF Pro Display',-apple-system,BlinkMacSystemFont,'San Francisco','Segoe UI',Roboto,sans-serif;color:#fff;overflow-x:hidden;background:#121212;display:flex;flex-direction:column;min-height:100vh}
+.logo{margin:20px auto 0;max-width:90%;font-size:40px;text-align:center;white-space:normal}
+.blog-content{flex:1;margin:100px auto 40px;width:92%;max-width:820px;background:rgba(0,0,0,.72);padding:40px;border-radius:12px}
+.blog-post h2{margin-top:0;font-size:28px}
+.blog-post h3{margin:32px 0 12px;font-size:22px}
+.blog-post p{margin:0 0 14px;font-size:17px;line-height:1.65}
+.blog-post ul,.blog-post ol{margin:0 0 14px 22px}
+.blog-post li{margin-bottom:8px}
+.blog-post a{color:#1e90ff;text-decoration:none;font-weight:bold}
+.blog-post a:hover{text-decoration:underline}
+.social-contact{margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.social-contact a.homepage{font-size:18px;color:#fff;text-decoration:none}
+.contact-links{display:flex;align-items:center;gap:20px}
+.social-contact img{width:64px;height:auto}
+.social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:6px}
+@media(max-width:800px){
+.logo{font-size:28px;margin-top:14px}
+.blog-content{margin:86px auto 34px;padding:26px}
+.blog-post h2{font-size:24px}
+.blog-post h3{font-size:20px}
+}
+@media(max-width:600px){
+.logo{font-size:22px;margin-top:10px}
+.blog-content{margin:70px auto 30px;padding:20px}
+.blog-post h2{font-size:20px}
+.blog-post p{font-size:14px}
+.social-contact a.homepage{font-size:16px}
+.contact-links{gap:14px}
+.social-contact img{width:56px}
+.social-contact a.contact,.social-contact a.number{font-size:15px}
+}
+</style>
+<!-- Removed unnecessary JavaScript to prevent errors -->
+<script
+  type="module"
+  crossorigin
+  src="../assets/index-b7d38c76.js"
+></script>
+<link rel="stylesheet" href="../assets/index-5884692c.css" />
+</head>
+<body>
+ <canvas class="scene"></canvas>
+ <div class="logo">From Autonomous Pilots to Profit: What 2025 (Has So Far) Taught Us About Enterprise AI Agents</div>
+ <div class="navbar">
+ <!-- Removed "Home" and "Contact" links -->
+ </div>
+ <main>
+ <div class="blog-content">
+ <div class="blog-post">
+ <p>In <strong>2025</strong>, we learned the hard way that building flashy, "cool" AI agents was <em>not</em> the ultimate flex. The real winners stopped hyping autonomous vibes and started rewiring their workflows with guardrails and observability. The result? Faster cycle times, lower costs per task, and far fewer “OMG the AI did <em>what</em>?!” incidents. Consider this a candid recap (with memes) of how pilots turned to profit by keeping AI agents on the rails.</p>
+      <h3>1) Orchestrate on the rails you already own</h3>
+      <p>LinkedIn’s engineers had a big-brain moment: instead of coding a fancy new agent bus from scratch, they repurposed the messaging infrastructure they already had. No exotic frameworks needed – Kafka topics, Pub/Sub queues, retries, dead-letter channels, all that unsexy stuff became the backbone for their multi-agent orchestration <em>(because why build a Hyperloop when you’ve got a perfectly good railway?)</em>. By using the existing message brokering system for agents to plan, act, and hand off tasks, they avoided a ton of integration headaches and weird bugs on some bespoke runtime (<a href="https://www.infoq.com/articles/linkedin-ai-agent-orchestration" target="_blank">InfoQ</a>).</p>
+      <p><strong>What to copy:</strong></p>
+      <ul>
+        <li>Model your agent messages around <strong>business goals</strong> (e.g. a topic or queue for “Incident-Enrichment”) with a clear task contract: defined inputs, allowed tools, budget, and an SLA for completion.</li>
+        <li>Use the same channels for results and <strong>handoff requests</strong>. That way, when an agent needs human approval, a human can just subscribe to that topic and approve or tweak via the existing messaging dashboard – no new fancy UI required.</li>
+      </ul>
+
+      <h3>2) Treat autonomy as a graph, not a vibe</h3>
+      <p>Unbounded “think-loop-act” agents can drift aimlessly or get themselves in trouble – <em>vibe check failed 😬</em>. Leaving an AI agent to its own devices with no structure is basically inviting <strong>NPC energy</strong> into your production environment (looping, glitching, and doing <del>the Harlem Shake</del> who-knows-what).</p>
+      <p>:contentReference[oaicite:0]{index=0} <em>When your autonomous agent goes rogue in full NPC mode.</em> Not a good look, right? That blank stare is basically me whenever an AI agent starts free-styling without constraints. Let’s avoid that scenario by giving the poor thing some structure, shall we?</p>
+      <p>The teams that succeeded treated autonomy like a directed graph, not an improv session. They set up explicit <strong>state machines or workflow graphs</strong> where each node is a small, testable skill, and edges define the policy (and any human approval gates) for moving to the next step. In plain English: break the big task into Lego blocks and connect them with clear rules. McKinsey’s review of 50+ deployments was blunt: the value came from redesigning workflows with these clear handoffs and approvals, not from letting agents roam free in a “YOLO” loop (<a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-economic-potential-of-generative-ai" target="_blank">McKinsey & Company</a>).</p>
+      <p><strong>Pattern library:</strong></p>
+      <ul>
+        <li><strong>Planner → Executors → Reviewer:</strong> for complex tasks with measurable outcomes or SLAs. The planner agent makes a plan, executor agents do the parts, and a reviewer (agent or human) checks the result. Think assembly line, but make it AI.</li>
+        <li><strong>Router → Specialist:</strong> when a quick classification can route work to a narrow, deterministic toolchain. It’s like an AI triage nurse sending you to the right specialist. Simple but effective.</li>
+        <li><strong>Escalation node:</strong> a mandatory human checkpoint triggered by confidence or risk thresholds. If the AI’s not sure or the action could be costly, <em>this ain’t optional, chief</em> – involve a human. Better a slight delay than a rogue agent booking a $10M server spend by accident.</li>
+      </ul>
+
+      <h3>3) Instrument agents like microservices from day one</h3>
+      <p>If you can’t trace it, you can’t trust it. Teams that treat their AI agents like black boxes learned this the hard way. The smart folks instrumented everything from the get-go – every model call, every tool invocation, every decision gets logged and traced. Luckily, OpenTelemetry rolled out <strong>GenAI semantic conventions</strong> (a fancy phrase meaning “common standards for AI app telemetry”) so you have a blueprint to record prompts, responses, tool usage, token counts, and more in a consistent way (<a href="https://opentelemetry.io/blog/2025/genai-semantic-conventions/" target="_blank">OpenTelemetry</a>). When something goes wrong (and it will), you have the breadcrumbs to figure out why.</p>
+      <p><strong>Minimal viable telemetry:</strong></p>
+      <ul>
+        <li><strong>Traces:</strong> Record each model operation and tool call with context. Log the model name, parameters, latency, token usage, cache hits, and cost. Basically, create a timeline of what the agent did and how long it took.</li>
+        <li><strong>Metrics:</strong> Monitor success rates (e.g. how often does the agent achieve the goal vs. require human intervention), time to complete or to get approval, and cost per task. These become your SLOs (Service Level Objectives) to track improvements or regressions.</li>
+        <li><strong>Logs:</strong> Store the agent’s intermediate reasoning and decisions (normalized, so you can compare runs) and include input IDs or hashes for deterministic replay. If the agent claims “I did X because Y,” you want that recorded. It makes debugging and audits way easier.</li>
+      </ul>
+
+      <h3>4) Harden for the threats agents actually face</h3>
+      <p>AI agents open up fresh attack surfaces that traditional apps didn’t have to worry about. Think prompt injection (malicious inputs that hijack the agent’s behavior), insecure output handling (the agent might blurt out secrets or dangerous commands), tool supply chain attacks (if an attacker swaps out your agent’s tool or data source), or even indirect shenanigans like an agent tricking an internal API into doing something sketchy (hello, SSRF!). The <strong>OWASP Top 10 for LLM Applications</strong> is basically the bible here – follow those security controls in both your CI/CD pipeline and at runtime (<a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank">OWASP</a>). Don’t let your agent be the new intern that clicks every phishing link.</p>
+      <p><strong>Security gates to enforce:</strong></p>
+      <ul>
+        <li><strong>Policy lint every action:</strong> Before an agent executes a tool command, run it through a policy filter. If it’s about to do something off-limits (like accessing internal file paths or calling an admin-only API), block it or require a human override. No “I do what I want” allowed.</li>
+        <li><strong>Credential minimization:</strong> Give each tool invocation the least privilege creds possible, and rotate those creds frequently. For instance, generate a short-lived API token for each task instead of letting the agent reuse a long-lived super-key. Even if an agent goes rogue, it should be on a tight leash.</li>
+        <li><strong>Evidence logging:</strong> When an agent causes an external effect, log it. If it writes to a file, log the diff. If it makes a ticket or pull request, log the ID and link. If it sends an email… maybe log the content or a hash of it. This way, if something goes wrong, you have receipts to trace what happened and clean up the mess.</li>
+      </ul>
+
+      <h3>5) Ship skills more than “smarts”</h3>
+      <p>The secret to reliability is in deterministic skills (the tools, APIs, scripts) that your agent can call, not in giving the agent an ever-bigger “brain” full of vibes. In practice, the agent is a clever dispatcher, delegating specific tasks to well-tested skills. This is why the latest <strong>Codex upgrades</strong> are a big deal – better code generation, better integration for executing code and scripts autonomously means your agent can do more via tools, safely and predictably (<a href="https://openai.com/research/codex" target="_blank">OpenAI</a>). The takeaway: spend 20% of your effort on the agent’s prompt and “persona,” and 80% on building out a solid library of skills it can use. An agent is only as useful as the tools it reliably wields.</p>
+      <p><strong>Where this pays today:</strong></p>
+      <ul>
+        <li><strong>SecOps:</strong> Automating incident response chores like pulling logs or malware scan results. The agent can enrich an alert with related data (previous incidents, threat intel), grab suspicious files and run them through scanners, and even draft an incident report for a human to review. Humans still call the shots, but they’re not copy-pasting from 5 systems anymore.</li>
+        <li><strong>Commercial Ops:</strong> Crunching through documents and updates. For example, an agent can read a giant RFP document, extract all the requirements, flag anything high-risk (inconsistent terms, nasty compliance clauses), draft answers with citations from your knowledge base, and then update your CRM with the results. It’s like an intern who never sleeps – but you give it very clear tasks.</li>
+        <li><strong>Engineer Productivity:</strong> Tackling annoying dev tasks. Think flaky test case triage: the agent finds which test is failing, suggests a likely cause or even a code change, opens a draft PR with that fix, and tags a human reviewer with a summary. The human reviews & merges if it looks good. This doesn’t replace engineers, but it sure cancels some Jira tickets.</li>
+      </ul>
+
+      <h3>6) Budget for reality, not hype</h3>
+      <p>A recent Gartner report warns that <strong>over 40% of “agentic AI” projects could be scrapped by 2027</strong> due to weak business cases or rising costs (<a href="https://www.reuters.com/business/over-40-agentic-ai-projects-will-be-scrapped-by-2027-gartner-says-2025-06-25" target="_blank">Reuters</a>). Ouch.</p>
+      <p>:contentReference[oaicite:1]{index=1} <em>When the AI budget slide is all cost and no benefit... this ain’t it, chief.</em> That Donkey side-eye? Same vibe I got reading that stat. Pretty much my face when an AI project has zero ROI to show.</p>
+      <p>Jokes aside, the warning is legit. The solution isn’t to slam the brakes on AI entirely – it’s to be smart about what you automate first, put guardrails on spending, and measure outcomes like any other initiative. In other words, pick your battles. Don’t try to automate your entire company in one go; find a specific, painful process (maybe that thing that takes 5 people 3 hours every week) and pilot an agent there. Set a clear success metric (e.g. “reduce response time from 1 hour to 5 minutes at $0.05 per task”). Use cost guardrails from day one – if the agent starts burning cash or time because of a bad loop, shut it down and fix the workflow. Treat the agent like a microservice with a budget, not a science fair project with unlimited credits. If you show real cycle time or cost-per-task improvements, awesome – scale it up. If not, well, cut your losses and move on.</p>
+
+      <h3>Your 90-day execution plan</h3>
+      <ol>
+        <li><strong>Select one workflow with painfully slow or expensive cycle time.</strong> Choose something that has clear success criteria. For example: “Security incident enrichment to an analyst-ready report in &lt;5 minutes, under $0.05 cost per run.” Baseline where you are now (e.g. it takes 30 minutes and $5 of analyst time). This is your candidate. (<a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-economic-potential-of-generative-ai" target="_blank">McKinsey & Company</a>)</li>
+        <li><strong>Orchestrate on existing messaging infrastructure.</strong> Use the tools you already have (Kafka, SQS, etc.) to pass tasks and results between agents and humans. Define a message schema that includes goal, inputs, allowed tools, budget, SLA, and callbacks for results or approvals. No need to stand up a whole new platform – piggyback on your current one. (<a href="https://www.infoq.com/articles/linkedin-ai-agent-orchestration" target="_blank">InfoQ</a>)</li>
+        <li><strong>Implement a graph-based agent workflow.</strong> Design a simple state machine: e.g., a Planner node that breaks the task into sub-tasks, Executor nodes that handle each sub-task (calling tools or APIs deterministically), and a Reviewer node to verify output. Include an Escalation path to a human for anything that exceeds confidence or policy thresholds. This keeps the agent’s autonomy in check.</li>
+        <li><strong>Turn on OpenTelemetry tracing for everything.</strong> Instrument the agent’s every move with the GenAI semantic conventions. Emit traces and metrics to your existing APM or logging system. Track cost per task, success vs. failure rates, and time to completion. Basically, you want a dashboard that tells you “Agent did X things, cost Y cents each, succeeded Z% of the time.” (<a href="https://opentelemetry.io/blog/2025/genai-semantic-conventions/" target="_blank">OpenTelemetry</a>)</li>
+        <li><strong>Apply OWASP’s LLM security checks in CI and prod.</strong> Add prompt injection tests and jailbreak scenarios to your QA. In production, sanitize inputs/outputs and restrict external calls. For example, if the agent should never call internal admin APIs, put checks to prevent that. Treat the agent’s prompts and tool calls with the same paranoia as user input in a web app. (<a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank">OWASP</a>)</li>
+        <li><strong>Iterate on the skill library weekly.</strong> Look at where the agent fails or asks for help most often, and add or improve a tool for that. If the agent keeps hitting a limit or making a mistake, it might need a better function or an adjustment in the plan. Don’t immediately jump to tweaking the model prompt – sometimes the better fix is giving the agent a new “power-up” (skill) or adjusting the workflow logic. (<a href="https://openai.com/research/codex" target="_blank">OpenAI</a>)</li>
+      </ol>
+
+      <h3>Bottom line</h3>
+      <p>In 2025, the path from flashy demo to durable value became pretty clear: reuse your proven infrastructure, constrain your AI’s autonomy with explicit logic, instrument everything for visibility, lock it down security-wise, and continuously improve the toolset it uses. Do all that, and your AI agents might actually deliver and not just rack up cloud bills. Skip these steps, and you might be joining that 40% club of scrapped projects. The choice is yours, fam.</p>
+
+      <h3>Sources worth your next 30 minutes</h3>
+      <ul>
+        <li>LinkedIn’s approach to multi-agent orchestration on existing messaging infrastructure. (<a href="https://www.infoq.com/articles/linkedin-ai-agent-orchestration" target="_blank">InfoQ</a>)</li>
+        <li>McKinsey’s six lessons from a year of agentic AI deployments. (<a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-economic-potential-of-generative-ai" target="_blank">McKinsey & Company</a>)</li>
+        <li>OpenTelemetry GenAI semantic conventions for traces and metrics. (<a href="https://opentelemetry.io/blog/2025/genai-semantic-conventions/" target="_blank">OpenTelemetry</a>)</li>
+        <li>OWASP Top 10 for LLM applications and 2025 GenAI risks. (<a href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" target="_blank">OWASP</a>)</li>
+        <li>OpenAI’s Codex upgrades and third-party coverage. (<a href="https://openai.com/research/codex" target="_blank">OpenAI</a>)</li>
+      </ul>
+      <ul>
+        <li>Over 40% of agentic AI projects will be scrapped by 2027, Gartner says. (<a href="https://www.reuters.com/business/over-40-agentic-ai-projects-will-be-scrapped-by-2027-gartner-says-2025-06-25/?utm_source=chatgpt.com" target="_blank">Reuters</a>)</li>
+        <li>Inside the AI boom that's transforming how consultants work at McKinsey, BCG, and Deloitte. (<a href="https://www.businessinsider.com/consulting-ai-mckinsey-bcg-deloitte-pwc-kpmg-chatbots-ai-tools-2025-4?utm_source=chatgpt.com" target="_blank">Business Insider</a>)</li>
+      </ul>
+
+      <a href="../" class="read-more">← Back to Blog</a>
+    </div>
+  </div>
+</main>
+<div class="social-contact">
+  <!-- "Homepage" Link -->
+  <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+
+  <!-- Social Media Icons -->
+  <div class="contact-links">
+    <a
+      href="https://www.linkedin.com/in/alen-peric/"
+      target="_blank"
+      class="linkedin"
+      aria-label="LinkedIn Profile"
+    >
+      <img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
+    </a>
+    <a
+      href="https://github.com/alenperic"
+      target="_blank"
+      class="github"
+      aria-label="GitHub Profile"
+    >
+      <img src="../img/github-icon.png" alt="GitHub Profile Icon" />
+    </a>
+    <!-- Contact and Number Links -->
+    <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+    <a href="tel:5485881420" class="number">📱 Number</a>
+  </div>
+</div>
+</body>
+</html>
