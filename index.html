@@ -1,312 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="author" content="Alen Peric" />
-    <meta
-      name="description"
-      content="Top 5 Security Practices for Small Businesses: Essential cybersecurity measures that can help protect your small business from potential threats."
-    />
-    <meta
-      name="keywords"
-      content="Cybersecurity, Small Business Security, Security Practices, IT Security, Alen Peric"
-    />
-    <title>Top 5 Security Practices for Small Businesses</title>
-    <link rel="icon" type="image/x-icon" href="../img/favicon.svg" />
-    <style>
-      /* Reset and Base Styles */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Alen Peric">
+<meta name="description" content="Alen Peric’s Security & AI Blog ‑ practical write‑ups on cybersecurity, GPU tinkering, and everything in‑between.">
+<meta name="keywords" content="Alen Peric, Security Blog, Cybersecurity, vLLM, RTX 5070 Ti, Blackwell GPU, CUDA 12.8, Best Practices, Security Tips">
+<title>Alen Peric — Security & AI Blog</title>
+<link rel="icon" type="image/x-icon" href="./img/favicon.svg">
+<style>
+html,body{height:100%;margin:0;padding:0;}
+canvas.scene{position:fixed;top:0;left:0;width:133%;height:100%;transform:translateX(33%);z-index:1;}
+body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;overflow-x:hidden;background:#121212;}
+*{font-family:Helvetica !important;font-weight:300 !important;}
+.logo{position:absolute;top:20px;left:50%;transform:translateX(-50%);z-index:100;font-size:42px;white-space:nowrap;}
+.navbar{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:30px;}
+.navbar a{color:#fff;text-decoration:none;font-size:18px;transition:color .3s;}
+.navbar a:hover{text-decoration:underline;}
+.blog-content{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:50;width:90%;max-width:800px;background:rgba(0,0,0,.7);padding:30px;border-radius:10px;}
+.blog-post{margin-bottom:24px;}
+.blog-post h2{margin:0 0 10px;font-size:24px;}
+.blog-post p{margin:0 0 10px;font-size:16px;line-height:1.55;}
+.blog-post a.read-more{color:#1e90ff;text-decoration:none;font-weight:bold;}
+.blog-post a.read-more:hover{text-decoration:underline;}
+.social-contact{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.social-contact a.homepage{font-size:18px;text-decoration:none;color:#fff;}
+.contact-links{display:flex;align-items:center;gap:20px;}
+.social-contact img{width:68px;height:auto;}
+.social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:5px;}
+@media screen and (max-width:800px){
+.logo{font-size:24px;top:10px;}
+.navbar{top:50px;gap:15px;}
+.navbar a{font-size:16px;}
+.blog-content{top:90px;padding:20px;}
+.blog-post h2{font-size:20px;}
+.blog-post p{font-size:14px;}
+.social-contact{gap:8px;}
+.social-contact a.homepage{font-size:16px;}
+.contact-links{gap:10px;}
+.social-contact img{width:102px;}
+.social-contact a.contact,.social-contact a.number{font-size:16px;}
+}
+</style>
+<script type="module" crossorigin src="./assets/index-b7d38c76.js"></script>
+<link rel="stylesheet" href="./assets/index-5884692c.css">
+</head>
+<body>
+<canvas class="scene"></canvas>
 
-      /* Background Canvas */
-      canvas.scene {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1; /* Ensure it stays behind all content */
-        background: #121212; /* Fallback background color */
-      }
+<div class="logo">Alen Peric | Security & AI Blog</div>
 
-      /* Body Styles */
-      body {
-        font-family: Helvetica !important;
-        font-weight: 300 !important;
-        color: white;
-        overflow-x: hidden;
-        background-color: #121212; /* Dark background for better contrast */
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-      }
+<main>
+<div class="blog-content">
 
-      /* Logo Styling */
-      .logo {
-        margin: 20px auto;
-        color: white;
-        font-size: 42px;
-        text-align: center;
-        white-space: nowrap;
-      }
+  <div class="blog-post">
+    <h2>From Autonomous Pilots to Profit: What 2025 (Has So Far) Taught Us About Enterprise AI Agents</h2>
+    <p>
+      Learn how enterprise AI agents became practical in 2025 by focusing on workflows, 
+      guardrails, and observability instead of unchecked autonomy. Empower your AI agentic overlords! 
+    </p>
+    <a href="./post3" class="read-more">Read More</a>
+  </div>
 
-      /* Hide Navbar */
-      .navbar {
-        display: none;
-      }
+  <div class="blog-post">
+    <h2>Blackwell Brawl — vLLM meets RTX 5070 Ti</h2>
+    <p>
+      Three and a half sleepless nights, one perplexed cat, and countless <em>cmake</em> errors later,
+      I coaxed vLLM to run on a brand‑new Blackwell GPU under Debian 12. Benchmarks, jokes, and full
+      copy‑paste commands included.
+    </p>
+    <a href="./post1" class="read-more">Read More</a>
+  </div>
 
-      /* Blog Content Styling */
-      .blog-content {
-        flex: 1;
-        margin: 20px auto;
-        width: 90%;
-        max-width: 800px;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 30px;
-        border-radius: 10px;
-      }
+  <div class="blog-post">
+    <h2>Top 5 Security Practices for Small Businesses</h2>
+    <p>
+      Small businesses are often targets for cyber attacks. Learn the top security practices that
+      can help protect your business from potential threats.
+    </p>
+    <a href="./post2" class="read-more">Read More</a>
+  </div>
 
-      .blog-post h2 {
-        margin: 0 0 10px 0;
-        font-size: 24px;
-      }
 
-      .blog-post p {
-        margin: 0 0 10px 0;
-        font-size: 16px;
-        line-height: 1.5;
-      }
+</div>
+</main>
 
-      .blog-post a.read-more {
-        color: #1e90ff;
-        text-decoration: none;
-        font-weight: bold;
-      }
+<div class="social-contact">
+  <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+  <div class="contact-links">
+    <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin">
+      <img src="./img/linkedin-icon.png" alt="LinkedIn Profile Icon">
+    </a>
+    <a href="https://github.com/alenperic" target="_blank" class="github">
+      <img src="./img/github-icon.png" alt="GitHub Profile Icon">
+    </a>
+    <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+    <a href="tel:5485881420" class="number">📱 Number</a>
+  </div>
+</div>
 
-      .blog-post a.read-more:hover {
-        text-decoration: underline;
-      }
-
-      /* Social and Contact Section Styling */
-      .social-contact {
-        display: flex;
-        flex-direction: column; /* Stack elements vertically */
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-      }
-
-      /* "Homepage" Link Styling */
-      .social-contact a.homepage {
-        font-size: 18px;
-        text-decoration: none; /* Remove underline */
-        color: white; /* Set text color to white */
-      }
-
-      /* Container for Contact and Social Links */
-      .contact-links {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: nowrap;
-      }
-
-      /* Social Media Icon Links Styling */
-      .social-contact a.linkedin,
-      .social-contact a.github {
-        color: white;
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-      }
-
-      /* Social Media Icons Styling */
-      .social-contact img {
-        width: 68px; /* 2x size */
-        height: auto;
-        vertical-align: middle;
-      }
-
-      /* Contact and Number Links Styling */
-      .social-contact a.contact,
-      .social-contact a.number {
-        color: white;
-        text-decoration: none;
-        font-size: 18px;
-        display: flex;
-        align-items: center;
-        gap: 5px;
-      }
-
-      /* Responsive Adjustments */
-      @media screen and (max-width: 800px) {
-        .logo {
-          font-size: 24px;
-          margin: 10px auto;
-        }
-
-        .blog-content {
-          margin: 10px auto;
-          padding: 20px;
-        }
-
-        .blog-post h2 {
-          font-size: 20px;
-        }
-
-        .blog-post p {
-          font-size: 14px;
-        }
-
-        .social-contact a.homepage {
-          font-size: 16px;
-        }
-
-        .contact-links {
-          gap: 10px;
-        }
-
-        .social-contact img {
-          width: 102px; /* 3x size for mobile */
-        }
-
-        .social-contact a.contact,
-        .social-contact a.number {
-          font-size: 16px;
-        }
-      }
-      
-      * {
-        font-family: Helvetica !important;
-        font-weight: 300 !important;
-      }
-    </style>
-    <!-- Removed unnecessary JavaScript to prevent errors -->
-    <script
-      type="module"
-      crossorigin
-      src="../assets/index-b7d38c76.js"
-    ></script>
-    <link rel="stylesheet" href="../assets/index-5884692c.css" />
-  </head>
-  <body>
-    <canvas class="scene"></canvas>
-    <div class="logo">Top 5 Security Practices for Small Businesses</div>
-    <div class="navbar">
-      <!-- Removed "Home" and "Contact" links -->
-    </div>
-    <main>
-      <div class="blog-content">
-        <div class="blog-post">
-          <h2>Top 5 Security Practices for Small Businesses</h2>
-          <p>
-            Small businesses are increasingly becoming targets for cybercriminals due to their often limited security measures. Protecting your business from cyber threats is not just an IT concern but a critical aspect of maintaining trust and ensuring long-term success. This post outlines the top five security practices that small businesses should implement to safeguard their digital assets.
-          </p>
-
-          <h3>1. Implement Strong Password Policies</h3>
-          <p>
-            <strong>Why It Matters:</strong><br />
-            Weak or reused passwords are a common entry point for cyber attacks. Ensuring that employees use strong, unique passwords significantly reduces the risk of unauthorized access.
-          </p>
-          <p><strong>Best Practices:</strong></p>
-          <ul>
-            <li><strong>Use Complex Passwords:</strong> Encourage the use of passwords that include a mix of letters, numbers, and symbols.</li>
-            <li><strong>Regularly Update Passwords:</strong> Implement policies that require password changes every few months.</li>
-            <li><strong>Avoid Password Reuse:</strong> Ensure that employees do not reuse passwords across multiple platforms.</li>
-            <li><strong>Enable Multi-Factor Authentication (MFA):</strong> Adds an additional layer of security by requiring a second form of verification.</li>
-          </ul>
-
-          <h3>2. Keep Software and Systems Updated</h3>
-          <p>
-            <strong>Why It Matters:</strong><br />
-            Cybercriminals often exploit known vulnerabilities in software and systems. Regular updates and patches address these vulnerabilities, making it harder for attackers to gain access.
-          </p>
-          <p><strong>Best Practices:</strong></p>
-          <ul>
-            <li><strong>Automate Updates:</strong> Enable automatic updates for operating systems and critical applications.</li>
-            <li><strong>Regularly Check for Patches:</strong> Stay informed about the latest security patches and apply them promptly.</li>
-            <li><strong>Use Supported Software:</strong> Ensure that all software in use is actively supported and receiving security updates.</li>
-          </ul>
-
-          <h3>3. Educate and Train Employees</h3>
-          <p>
-            <strong>Why It Matters:</strong><br />
-            Employees are often the first line of defense against cyber threats. Educating them about potential risks and proper security practices can prevent accidental breaches.
-          </p>
-          <p><strong>Best Practices:</strong></p>
-          <ul>
-            <li><strong>Conduct Regular Training Sessions:</strong> Educate employees about phishing, social engineering, and safe internet practices.</li>
-            <li><strong>Simulate Phishing Attacks:</strong> Test employees’ ability to recognize phishing attempts through simulated campaigns.</li>
-            <li><strong>Promote a Security-Aware Culture:</strong> Encourage employees to report suspicious activities and prioritize cybersecurity in daily operations.</li>
-          </ul>
-
-          <h3>4. Secure Your Network</h3>
-          <p>
-            <strong>Why It Matters:</strong><br />
-            An unsecured network can be easily exploited by cybercriminals to access sensitive information. Proper network security measures protect your business from unauthorized access and data breaches.
-          </p>
-          <p><strong>Best Practices:</strong></p>
-          <ul>
-            <li><strong>Use Firewalls:</strong> Implement both hardware and software firewalls to monitor and control incoming and outgoing network traffic.</li>
-            <li><strong>Encrypt Data:</strong> Use encryption protocols (e.g., SSL/TLS) to protect data transmitted over the network.</li>
-            <li><strong>Segment Your Network:</strong> Divide the network into segments to limit access and contain potential breaches.</li>
-            <li><strong>Secure Wi-Fi Networks:</strong> Use strong encryption (WPA3), hide network SSIDs, and change default router passwords.</li>
-          </ul>
-
-          <h3>5. Regularly Back Up Your Data</h3>
-          <p>
-            <strong>Why It Matters:</strong><br />
-            Data loss can occur due to cyber attacks, hardware failures, or accidental deletions. Regular backups ensure that your business can recover quickly and minimize downtime.
-          </p>
-          <p><strong>Best Practices:</strong></p>
-          <ul>
-            <li><strong>Automate Backups:</strong> Schedule regular backups of critical data and systems.</li>
-            <li><strong>Use Offsite Storage:</strong> Store backups in secure, offsite locations or use cloud-based backup solutions.</li>
-            <li><strong>Test Backups:</strong> Regularly test backup integrity and the restoration process to ensure data can be recovered effectively.</li>
-            <li><strong>Implement a Backup Policy:</strong> Develop and enforce a comprehensive backup policy that outlines backup frequency, storage methods, and responsibilities.</li>
-          </ul>
-
-          <h3>Conclusion</h3>
-          <p>
-            Protecting your small business from cyber threats doesn't have to be overwhelming. By implementing these top five security practices—strong password policies, regular software updates, employee education, network security, and data backups—you can significantly enhance your business's cybersecurity posture. Investing in these measures not only safeguards your digital assets but also builds trust with your customers and partners, ensuring the longevity and success of your business.
-          </p>
-
-          <a href="../" class="read-more">← Back to Blog</a>
-        </div>
-      </div>
-    </main>
-    <div class="social-contact">
-      <!-- "Homepage" Link -->
-      <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
-
-      <!-- Social Media Icons -->
-      <div class="contact-links">
-        <a
-          href="https://www.linkedin.com/in/alen-peric/"
-          target="_blank"
-          class="linkedin"
-          aria-label="LinkedIn Profile"
-        >
-          <img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon" />
-        </a>
-        <a
-          href="https://github.com/alenperic"
-          target="_blank"
-          class="github"
-          aria-label="GitHub Profile"
-        >
-          <img src="../img/github-icon.png" alt="GitHub Profile Icon" />
-        </a>
-        <!-- Contact and Number Links -->
-        <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
-        <a href="tel:5485881420" class="number">📱 Number</a>
-      </div>
-    </div>
-  </body>
+</body>
 </html>
