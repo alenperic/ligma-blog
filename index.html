@@ -3,10 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="Alen Peric">
-<meta name="description" content="Alen Peric’s Security & AI Blog ‑ practical write‑ups on cybersecurity, GPU tinkering, and everything in‑between.">
-<meta name="keywords" content="Alen Peric, Security Blog, Cybersecurity, vLLM, RTX 5070 Ti, Blackwell GPU, CUDA 12.8, Best Practices, Security Tips">
-<title>Alen Peric — Security & AI Blog</title>
+<meta name="author" content="Alen Peric">
+<meta name="description" content="Security & AI Blog by Alen Peric. Practical guides, prompt engineering, cybersecurity, GPU tinkering, and more.">
+<meta name="keywords" content="AI prompts, writing style, voice cloning, prompt engineering, Claude Styles, ChatGPT, Anthropic, OpenAI, Gemini, prompt compression, persona, style profile, cybersecurity, vLLM, RTX 5070 Ti, Blackwell GPU, CUDA 12.8, Best Practices, Security Tips, Alen Peric, genAI">
+<meta property="og:title" content="Alen Peric — Security & AI Blog">
+<meta property="og:description" content="Security & AI Blog by Alen Peric. Practical guides, prompt engineering, cybersecurity, GPU tinkering, and more.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alenperic.com">
+<meta property="og:image" content="https://alenperic.com/img/favicon.svg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Alen Peric — Security & AI Blog">
+<meta name="twitter:description" content="Security & AI Blog by Alen Peric. Practical guides, prompt engineering, cybersecurity, GPU tinkering, and more.">
+<meta name="twitter:image" content="https://alenperic.com/img/favicon.svg">
+<title>Alen Peric — Security & AI Blog</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SLLVM6YY1Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SLLVM6YY1Y');
+</script>
 <link rel="icon" type="image/x-icon" href="./img/favicon.svg">
 <style>
 html,body{height:100%;margin:0;padding:0;}
@@ -23,7 +40,7 @@ body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;over
 .blog-post p{margin:0 0 10px;font-size:16px;line-height:1.55;}
 .blog-post a.read-more{color:#1e90ff;text-decoration:none;font-weight:bold;}
 .blog-post a.read-more:hover{text-decoration:underline;}
-.social-contact{position:absolute;bottom:0px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:10px;}
+.social-contact{position:fixed;bottom:0px;left:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;align-items:center;gap:10px;background:rgba(18,18,18,0.92);padding:18px 32px 12px 32px;border-radius:18px;box-shadow:0 0 18px 0 rgba(0,0,0,0.45);}
 .social-contact a.homepage{font-size:18px;text-decoration:none;color:#fff;}
 .contact-links{display:flex;align-items:center;gap:20px;}
 .social-contact img{width:68px;height:auto;}
@@ -52,6 +69,14 @@ body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;over
 
 <main>
 <div class="blog-content">
+
+  <div class="blog-post">
+    <h2>The Way of the Voice in AI Prompts: A Field Guide for People Who Want Their AI Writing to Actually Sound Like Theme</h2>
+    <p>
+      A guide for getting genAI to write in your own style, reliably, ethically, and effectively. Learn prompt engineering techniques, style profiles, and practical exercises for making AI sound like you (or anyone else).
+    </p>
+    <a href="./post4" class="read-more">Read More</a>
+  </div>
 
   <div class="blog-post">
     <h2>From Autonomous Pilots to Profit: What 2025 (Has So Far) Taught Us About Enterprise AI Agents</h2>
