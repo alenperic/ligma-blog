@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="Alen Peric">
+  <meta name="description" content="A field guide for getting AI to write in your own style, reliably, ethically, and effectively. Learn prompt engineering techniques, style profiles, and practical exercises for making AI sound like you (or anyone else).">
+  <meta name="keywords" content="AI prompts, writing style, voice cloning, prompt engineering, Claude Styles, ChatGPT, Anthropic, OpenAI, Gemini, prompt compression, persona, style profile, Alen Peric, field guide, ethical AI, style audit, context window">
+  <meta property="og:title" content="The Way of the Voice in AI Prompts — A Field Guide">
+  <meta property="og:description" content="A field guide for getting AI to write in your own style, reliably, ethically, and effectively. Learn prompt engineering techniques, style profiles, and practical exercises for making AI sound like you (or anyone else).">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://alenperic.com/post4">
+  <meta property="og:image" content="https://alenperic.com/img/favicon.svg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Way of the Voice in AI Prompts — A Field Guide">
+  <meta name="twitter:description" content="A field guide for getting AI to write in your own style, reliably, ethically, and effectively. Learn prompt engineering techniques, style profiles, and practical exercises for making AI sound like you (or anyone else).">
+  <meta name="twitter:image" content="https://alenperic.com/img/favicon.svg">
+  <title>The Way of the Voice in AI Prompts — A Field Guide</title>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLLVM6YY1Y"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SLLVM6YY1Y');
+  </script>
+  <link rel="icon" type="image/x-icon" href="../img/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    html,body{height:100%;margin:0;padding:0}
+    canvas.scene{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#121212}
+    body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;overflow-x:hidden;background:#121212;display:flex;flex-direction:column;min-height:100vh}
+    *{font-family:Helvetica !important;font-weight:300 !important;}
+    .logo{margin:20px auto 0;max-width:90%;font-size:40px;text-align:center;white-space:normal}
+    .blog-content{flex:1;margin:100px auto 40px;width:92%;max-width:820px;background:rgba(0,0,0,.72);padding:40px;border-radius:12px}
+    .blog-post h2{margin-top:0;font-size:28px}
+    .blog-post h3{margin:32px 0 12px;font-size:22px}
+    .blog-post p{margin:0 0 14px;font-size:17px;line-height:1.65}
+    .blog-post ul,.blog-post ol{margin:0 0 14px 22px}
+    .blog-post li{margin-bottom:8px}
+    .blog-post a{color:#1e90ff;text-decoration:none;font-weight:bold}
+    .blog-post a:hover{text-decoration:underline}
+    pre{background:#1e1e1e;color:#c9e3ff;padding:20px 56px 20px 20px;border-radius:10px;overflow-x:auto;font-size:15px;line-height:1.45;position:relative}
+    code{font-family:'Source Code Pro',Menlo,Consolas,monospace;font-style:italic;font-weight:400}
+    .callout{background:#222;padding:14px;border-left:4px solid #1e90ff;border-radius:6px;margin:18px 0}
+    .social-contact{margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+    .social-contact a.homepage{font-size:18px;color:#fff;text-decoration:none}
+    .contact-links{display:flex;align-items:center;gap:20px}
+    .social-contact img{width:64px;height:auto}
+    .social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:6px}
+    @media(max-width:800px){
+      .logo{font-size:28px;margin-top:14px}
+      .blog-content{margin:86px auto 34px;padding:26px}
+      .blog-post h2{font-size:24px}
+      .blog-post h3{font-size:20px}
+      pre{font-size:14px;padding:18px 46px 18px 18px}
+    }
+    @media(max-width:600px){
+      .logo{font-size:22px;margin-top:10px}
+      .blog-content{margin:70px auto 30px;padding:20px}
+      .blog-post h2{font-size:20px}
+      .blog-post p{font-size:14px}
+      .social-contact a.homepage{font-size:16px}
+      .contact-links{gap:14px}
+      .social-contact img{width:56px}
+    }
+  </style>
+</head>
+<body>
+  <div class="logo">The Way of the Voice in AI Prompts</div>
+  <br>
+  <div style="text-align:center;font-size:18px;color:#bbb;margin-top:2px;margin-bottom:4px;">Alen Peric | September 2025</div>
+  <div class="blog-content">
+    <article class="blog-post">
+      <h2>A Field Guide for People Who Want Their AI Writing to Actually Sound Like Them</h2>
+      <p><em>How to get AI to write in your (or someone else’s) style, reliably, ethically, and effectively.</em></p>
+  <img src="https://64.media.tumblr.com/58096b7aa4a09c42b701268d8cf5e973/39329cd58649f083-c8/s540x810/48e2838b122f1aca1aefb620c5f69c2cfc277b70.gif" alt="AI Voice" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>TL;DR (read this if you don't want your coffee getting cold)</h3>
+      <ul>
+  <li>Put samples of your writing style in your prompt and tell the model what to look at (tone, rhythm, punctuation, sentence length). This consistently works better than vague adjectives like “professional yet friendly”. <a href="https://www.atlassian.com/blog/artificial-intelligence/ultimate-guide-writing-ai-prompts" target="_blank">Atlassian – The ultimate guide to writing effective AI prompts</a></li>
+  <li>In long prompts, place instructions at both the top and bottom; it improves adherence on long-context models. <a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide" target="_blank">OpenAI Cookbook</a></li>
+  <li>More context isn’t always better. Use extractive prompt compression (quote the essentials) if you’re hitting token limits. It preserves accuracy better than most abstractive pruning. <a href="https://arxiv.org/abs/2407.08892" target="_blank">arXiv</a></li>
+  <li>Claude “Styles” (upload samples, lock tone) and ChatGPT Custom/Study modes make persistent voice easier than ad-hoc prompting. <a href="https://www.anthropic.com/news/styles" target="_blank">Anthropic Claude Styles – Product notes and walkthroughs</a></li>
+  <li>Minor, controlled imperfections (e.g., an occasional missing comma) can make outputs feel more human and measurably reduce some detectors’ accuracy. Use sparingly! <a href="https://arxiv.org/abs/2301.11305" target="_blank">arXiv</a></li>
+      </ul>
+      <h3>Introduction</h3>
+      <p>In generative AI, having consistent and recognizable voice or style can make content more credible, engaging, and “you.” Whether you are a student, or a professional, knowing how to prompt AI so that it writes in your voice (or someone else’s) is a valuable skill. This blog explains what it means to “borrow someone’s voice” (with examples & AI agents), how to build exercises & prompts to help users capture their own tone, along with some best practices, considerations and limitations.</p>
+  <img src="https://i.giphy.com/8wErdZv66g3X91y9kI.webp" alt="Voice" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <p>If you can provide the AI with a sample of someone’s voice (your own, a brand voice, or a role model), and prompt it properly, you can get outputs that are far more aligned, more engaging, more distinctive. This post will teach how to do this: the structure of prompts, some research that supports different strategies, pitfalls, and some ready-to-use exercises and templates.</p>
+      <p>Unfortunately, I don’t have access to the latest H200 GPUs from Nvidia, or a PhD in AI, but I do read a lot, prototype a ton, drink buckets of coffee, and will try to cite what matters. Consider this a field guide, not gospel. Without further delay, let's jump right into it!</p>
+  <img src="https://i.giphy.com/toXKzaJP3WIgM.webp" alt="Jump" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>What Does “Voice” or “Style” Mean in Writing?</h3>
+      <ul>
+        <li>Word choice (formal vs casual, vocabulary level)</li>
+        <li>Sentence structure & rhythm (short vs long sentences, complexity)</li>
+        <li>Tone: humor, sarcasm, warmth, directness, distance, etc.</li>
+        <li>Use of punctuation, formatting, quirks (ellipses, dashes, capitalization)</li>
+        <li>Use of metaphors, examples, stories</li>
+      </ul>
+      <p>AI models have the capability to approximate these features if you give enough cues. Large language models encode semantic relationships by placing words and phrases in high-dimensional spaces where meaning is represented by distance and similarity, and users can shift those relationships toward their own natural vocabulary by supplying sample text that the model uses as contextual guidance.</p>
+  <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXNyYnE2ZTQwN3llcXM5M2ZzdXk2dDd4aHRmeW9qOXd1cmluOXdsaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5nce9JyYqp9HOJwmTv/giphy.gif" alt="Style" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Why “voice borrowing” works (and what research says)</h3>
+  <p>Models imitate style best when you show (examples) and tell (explicit descriptors). Industry docs consistently recommend example-based prompting and multi-shot examples; community reports echo that breaking style into traits (sentence length, punctuation habits, rhetorical moves) helps the model latch onto the right signals. <a href="https://docs.claude.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank">Claude Documentation – Prompt engineering overview</a></p>
+  <p>Long-context models can ingest large style corpora, but placement and relevance matter. Anthropic’s long-context study shows gains when you add (a) quote pulling and (b) few-shot examples of successful answers; it also recommends pushing critical instructions to the end of the prompt. OpenAI’s long-context guidance similarly recommends instruction placement at both ends. <a href="https://www.anthropic.com/news/prompting-long-context" target="_blank">Prompt engineering for Claude's long context window – Anthropic</a></p>
+  <p>If you’re running into token ceilings, a comparative analysis of prompt compression methods found extractive compression (copying the relevant lines verbatim) often beats abstractive summaries or token pruning — you can compress up to 10× with minimal loss on many tasks. That’s perfect for carrying just enough style signal without drowning the model. <a href="https://arxiv.org/abs/2407.08892" target="_blank">arXiv – Prompt compression and context windows</a></p>
+  <p>On the product side, Claude’s Styles lets you upload writing samples (or describe a style) and then reuse that voice across chats. Tom’s Guide and others have verified this works shockingly well for tone, punctuation quirks, and rhythm. <a href="https://www.anthropic.com/news/styles" target="_blank">Anthropic Claude Styles – Product notes and walkthroughs</a></p>
+  <img src="https://i.giphy.com/3oeSAIB796EbZMUFgs.webp" alt="Research" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Key Components of Prompts to Clone Voice / Style</h3>
+      <table style="width:100%;background:#222;border-radius:8px;margin-bottom:24px;">
+        <thead>
+          <tr style="color:#1e90ff;text-align:left;">
+            <th>Component</th>
+            <th>Why it's Needed</th>
+            <th>What to Include / Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Text sample / exemplar block</td>
+            <td>Gives AI concrete data to imitate: word choice, sentence length, punctuation, structure, rhetorical devices, etc.</td>
+            <td>Include 1-2 short paragraphs written in the style you want. Could be your own writing, or someone else’s you have rights to.</td>
+          </tr>
+          <tr>
+            <td>Voice / Tone descriptors</td>
+            <td>Helps AI understand what aspects of style are important (e.g. formal/informal, witty, concise, elaborate, emotive)</td>
+            <td>E.g. “Write as if speaking to a colleague, with light humor, using short sentences, occasional metaphor, avoiding jargon.”</td>
+          </tr>
+          <tr>
+            <td>Persona / Context</td>
+            <td>Who is “speaking” in this voice? What’s the audience? Why are they speaking?</td>
+            <td>E.g. “You are a senior cybersecurity analyst explaining a risk assessment to non-technical executives.”</td>
+          </tr>
+          <tr>
+            <td>Formatting / Structure</td>
+            <td>The way content is laid out also impacts feel: headings, bullet points, paragraph length, etc.</td>
+            <td>E.g. “Use headings, 3-5 bullets, keep paragraphs under 100 words.”</td>
+          </tr>
+          <tr>
+            <td>Examples of what not to do (optional but useful)</td>
+            <td>Clarifies boundaries: what’s outside the style you want (too formal, too flowery, too many adverbs, etc.)</td>
+            <td>E.g. “Do not use overly technical jargon or passive voice.”</td>
+          </tr>
+        </tbody>
+      </table>
+  <img src="https://i.giphy.com/ckJF143W1gBS8Hk833.webp" alt="Components" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Building “sticky voice” into ChatGPT & Claude (step-by-step)</h3>
+    <ul>
+  <h4 style="margin-bottom:0;margin-top:18px;text-align:left;font-weight:bold;"><b>ChatGPT (Custom GPTs / Study or Project modes):</b></h4>
+  <li>Create a Custom GPT and paste your Style Profile + 2–3 samples into its Instructions (and optionally “Knowledge”). Use a “checksum” like: Always add a 5-bullet style audit… This keeps tone consistent across chats. Tom’s Guide shows how persistent settings markedly improve voice match in practice. <a href="https://www.tomsguide.com/ai/i-ignored-this-chatgpt-setting-for-months-now-i-use-it-every-day" target="_blank">Tom's Guide – How to use ChatGPT custom settings</a></li>
+  <li>In long sessions (e.g., Study/Project modes), keep a single file with Style Profile + Do/Don’t and ask ChatGPT to re-print it at the end of every output until you’re satisfied. This repeated placement has measurable adherence benefits in long prompts. <a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide" target="_blank">OpenAI Cookbook – GPT-4.1 Prompting Guide</a></li>
+  <h4 style="margin-bottom:0;margin-top:18px;text-align:left;font-weight:bold;"><b>Claude (Styles + Projects):</b></h4>
+  <li>Go to Settings → Styles. Either describe your style or upload samples. Give it a clear name (“Security-Analyst-Explainer v2”). Community and press testing found Claude picks up punctuation habits and tone from surprisingly small samples. <a href="https://www.anthropic.com/news/styles" target="_blank">Anthropic Claude Styles – Product notes and walkthroughs</a> + <a href="https://www.tomsguide.com/ai/claude-ai-can-clone-your-writing-style-for-its-responses-and-its-really-easy-to-do?" target="_blank">Tom's Guide – Claude AI writing style feature</a></li>
+  <li>In projects, pin a one-page style guide (traits + anti-traits). Ask Claude to echo the active style name and cite which traits it applied in each response (lightweight QA). Tips and walkthroughs confirm this workflow is stable. <a href="https://www.reddit.com/r/PromptEngineering/" target="_blank">Reddit – Prompt Engineering Community</a></li>
+  <em>(Gemini also supports long context; if you go that route, keep to the same “samples + traits + checksum” structure.)</em> <a href="https://blog.google/intl/en-mena/company-news/technology/google-io-2024-keynote-sundar-pichaigemini-era/" target="_blank">Google – Gemini 1.5 context window announcement</a>
+    </ul>
+  <img src="https://i.giphy.com/fo7URGO8QtGPToGZrk.webp" alt="Sticky Voice" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>How to Borrow a Voice: Step-by-Step Prompt Techniques</h3>
+      <h4>Technique A: Example Block + “Analyze & Replicate” Prompt</h4>
+      <ol>
+        <li>Collect 2-4 pieces of your own writing that you feel represent your voice. These might be emails, blog posts, internal docs. Prefer varied contexts if possible (some formal, some casual).</li>
+        <li>Prompt to analyze style, ignoring content. Example prompt:<br><pre>Prompt Part 1 (style extraction):
+Here are several excerpts from my writing:
+Excerpt #1: “I’ve noticed that when you try to boil the ocean, the small wins get lost, but focusing on narrow improvements compounds quickly.”
+Excerpt #2: “On Tuesday’s call, I felt the delivery could have been more concise; bullet points tend to help when people are tired.”
+(add more)
+Instruction: Based only on those excerpts, describe in detail my writing style: tone, vocabulary, sentence structure, rhythm, punctuation habits, use of metaphors or examples, formality level, etc. Don’t mention the topics. I want you to produce a “style profile”.</pre></li>
+        <li>Prompt to generate new text in that style:<br><pre>Using the style profile you generated, write a new passage (e.g. a short blog intro, or an email, or whatever your use case is) on [some topic]. Ensure it matches the style profile: vocabulary, tone, sentence length, punctuation habits, etc.</pre></li>
+        <li>Refinement loop: You compare the output to your own writing. Give feedback like: “too formal/too many long sentences / lacks humor / not enough casual phrasing,” and re-prompt.</li>
+      </ol>
+      <h4>Technique B: Agent / Persona Prompt</h4>
+      <p>You can build a reusable persona or “agent” prompt that sits at the top of everything you send. Example structure:</p>
+      <pre>Persona definition (once):
+You are “MyStyleAI,” a writing agent that writes as if it were me. My writing style has these features:
+— I use conversational but professional tone, with occasional informal contractions (“I’ll,” “don’t”)
+— I prefer short-to-moderate sentences; when needed, I sometimes include longer complex sentences but not too many
+— I use analogies/metaphors often to explain technical concepts (e.g. “like boiling the ocean,” “filtering noise”)
+— I include occasional mild humour or rhetorical questions (“What’s the point if we can’t measure?”)
+— I tend to avoid overly technical jargon unless audience is technical; when I do, I define it
+— I often begin paragraphs with a hook sentence; I tend not to use bullet lists unless summarizing steps
+— Punctuation style: minimal commas where possible, avoid overuse of ellipses, but I do use em-dashes (—) to set off clauses loosely.
+Then for each prompt, precede with something like:
+Prompt:
+MyStyleAI: Write [type of content] about [topic] for [audience]. Make sure it follows the persona definition above.
+You can store that persona block and reuse it.</pre>
+      <h4>Technique C: Exercises That Users Can Adjust</h4>
+      <table style="width:100%;background:#222;border-radius:8px;margin-bottom:24px;">
+        <thead>
+          <tr style="color:#1e90ff;text-align:left;">
+            <th>Exercise</th>
+            <th>Goal</th>
+            <th>Sample Template / Text Block</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Email to a peer</td>
+            <td>Get casual, concise style</td>
+            <td>“Hey [Name], I just looked at the data you sent. The trends are interesting: while X is rising, Y is flat. I think we should pivot to test Z and see if that improves metrics. What do you think?”</td>
+          </tr>
+          <tr>
+            <td>Internal technical report summary</td>
+            <td>More formal, structured, use technical terms but still accessible</td>
+            <td>“Below is the summary of Q2 performance. System load increased by 27 %, latency remained stable, but error rates jumped in module A. Proposed actions: optimize caching, review logs, add monitoring. Next steps on page 2.”</td>
+          </tr>
+          <tr>
+            <td>Blog intro</td>
+            <td>Blend storytelling, metaphors, engaging tone</td>
+            <td>“Imagine we’re navigating a dense forest with only a dim lantern. That’s often what data security feels like when dark web threats multiply faster than our defenses. In this post, I’ll map the paths, spot the shadows, and show you how to light the way.”</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>Users can take these templates and adjust word choice, sentence rhythm, punctuation quirks (your tendency to use “—”, parentheses, etc.), formal vs informal greeting or sign-off, etc.</p>
+      <h3>Field-Tested Prompt Skeletons (steal these)</h3>
+      <h4>Skeleton 1 — Long-Context (instructions at both ends)</h4>
+      <pre># Style Rules (short)
+- Audience: [e.g., non-technical execs]
+- Tone & cadence: [e.g., direct, short-medium sentences, light humor]
+- Punctuation habits: [e.g., em-dash allowed; commas light]
+- Do not: [e.g., avoid passive voice, avoid buzzwords]
+
+# Samples (extractive)
+"Quote 1: …"
+"Quote 2: …"
+
+# Task
+Write [deliverable] about [topic], [structure & length].
+Return a 5-bullet style audit at end.
+
+# Repeat Critical Rules (checksum)
+Follow Tone/Cadence + Punctuation habits above. Avoid [anti-traits].
+(Backed by long-context placement and extractive compression findings.)</pre>
+      <h4>Skeleton 2 — Claude Styles + Inline Checksum</h4>
+      <pre>Use active Claude Style: [YourStyleName].
+Before writing, restate 3 key traits from that Style.
+After writing, add a 5-bullet audit tying each trait to specific lines.
+  (Confirmed workable in product walkthroughs & reporting.)</pre>
+      <h4>Skeleton 3 — Agent Persistence (any model)</h4>
+      <pre>Agent mission: persist this Style Profile across messages until I say "reset".
+If I critique tone, update the Profile and summarize the change.
+Always include: (a) 3-line paraphrase of the current Profile before output, (b) 5-bullet audit after.
+  (Industry docs: role prompts + multishot examples are robust.)</pre>
+      <h3>Including Minor Typos / Idiosyncrasies</h3>
+      <p>Over-polished AI text can feel synthetic. One way to make AI output feel more “real” or less synthetic is to include minor typos or quirks in the sample text to make the voice feel more human. Empirical work (and practical red teaming) shows many AI-text detectors are fragile; small edits and errors degrade their accuracy, with documented cases where deliberate typos/grammar perturbations materially reduce detection reliability. That doesn’t mean you should sabotage your writing — it means that a few natural quirks can help preserve authenticity and avoid false positives. Examples of quirks:</p>
+      <ul>
+        <li>Missing symbols or punctuation occasionally (e.g. missing comma, missing period, dash used instead of comma)</li>
+        <li>Slight inconsistencies (short vs long sentences)</li>
+        <li>Minor colloquialisms, contractions, filler words (“just”, “you know”, “kind of”)</li>
+        <li>Deliberate non-standard style choices (e.g. beginning some lines with “And”, or using informal interjections)</li>
+      </ul>
+  <img src="https://i.giphy.com/MgBJ3UifivIY.webp" alt="Typos" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <p>When you include these in your exemplar text, and instruct the AI not to over-correct them (or even preserve them), the output tends to feel less “synthetic” and more like you / someone real. But use this carefully: too many errors look unprofessional; balance is key.</p>
+      <h3>Prompt Length, Context Windows & Best Case Scenarios</h3>
+      <p>Because AI models have a limit to how much prior text (“context”) they can hold / attend to, the amount of sample + instructions matters. Here is what the research / product-specs suggest as of September 2025:</p>
+      <table style="width:100%;background:#222;border-radius:8px;margin-bottom:24px;">
+        <thead>
+          <tr style="color:#1e90ff;text-align:left;">
+            <th>Provider / Model</th>
+            <th>Typical Max Context Window</th>
+            <th>Notes for Style Cloning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OpenAI GPT-4.1</td>
+            <td>Up to ~1M tokens (API)</td>
+            <td>Use for large corpora of samples + long instructions. Keep instructions top & bottom. OpenAI Cookbook – GPT-4.1 Prompting Guide</td>
+          </tr>
+          <tr>
+            <td>ChatGPT (GPT-5 Thinking, consumer app)</td>
+            <td>~196k tokens (mode-specific)</td>
+            <td>For day-to-day chats, plenty for multiple samples + audits. OpenAI Help Center</td>
+          </tr>
+          <tr>
+            <td>Anthropic Claude 3.5/4 family</td>
+            <td>200k → 1M tokens (model & plan dependent)</td>
+            <td>Excellent long-context performance; Styles helps with persistence. Prompt engineering for Claude's long context window – Anthropic</td>
+          </tr>
+          <tr>
+            <td>Google Gemini 1.5 (Advanced/Pro)</td>
+            <td>~1M tokens (consumer messaging)</td>
+            <td>Strong for large docs; still follow extractive quoting to reduce noise. Google – Gemini 1.5 context window announcement</td>
+          </tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Keep your style examples representative rather than exhaustive. A few good excerpts work better than very many mediocre ones.</li>
+        <li>Keep persona/style definition separate so you can paste or reuse into new prompts.</li>
+        <li>Always include a feedback loop: evaluate, refine, adjust.</li>
+      </ul>
+  <img src="https://i.giphy.com/LR5ZBwZHv02lmpVoEU.webp" alt="Context" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Sample Prompt Patterns / Exercises</h3>
+      <h4>Exercise Template 1: Sample + Replicate</h4>
+      <ol>
+        <li>Step 1 (Provide Sample):<br><pre>Here is a text written in the style I like. Please analyze its tone, word choice, punctuation, sentence rhythm, etc.:
+[Insert 2 paragraphs of your own writing.]
+Now write a new text (topic: [X]) in that same style.</pre></li>
+        <li>Step 2 (Adjust):<br>
+          <ul>
+            <li>Ask the AI to also provide a style profile summarizing what it noticed: vocabulary quirks, sentence length, punctuation, tone, etc.</li>
+            <li>Allow you to correct or tweak: “More informal / more formal / fewer metaphors / fewer long sentences / more contractions / more rhetorical questions.”</li>
+          </ul>
+        </li>
+      </ol>
+      <h4>Exercise Template 2: Voice Profile + Example Blocks</h4>
+      <pre>You are a writer who writes like this: (sample block 1) … (sample block 2) …
+Important features: informal tone, uses analogies, occasional humour, short paragraphs.
+Write a 300-word article on [topic] in this voice. Then, write the same article with minor changes so it's more formal / more technical / more concise, so I can see the differences.</pre>
+      <h4>Exercise Template 3: Prompting an AI Agent with Style-Replication Mission</h4>
+      <pre>Agent: your mission is to adopt the writing voice of [Person A]. Use samples below. When given new topics or content, always write in that voice. If I'm unhappy, I will give feedback: adjust tone / sentence length / choice of words.
+Sample Text: [Insert sample]
+Now: write me a blog introduction about [topic] in that voice.</pre>
+      <h3>Example Prompts & Practice Blocks</h3>
+      <h4>Sample Practice Block #1: Style Extraction</h4>
+      <pre>Here are three samples of my writing:
+Sample 1: “Last Thursday I reviewed the firewall logs and noticed repeated connection attempts from IPs with weak TLS settings. It’s a red flag. I believe patching priorities should shift.”
+Sample 2: “I generally avoid fancy jargon unless I know everyone’s familiar — it’s easy to lose people in abstractions.”
+Sample 3: “What’s the point of large scale if basic hygiene is ignored? Small steps compound.”
+---
+Based only on these samples, I want you (AI) to produce: a style profile of me. Describe my tone (formal / informal), vocabulary preferences, sentence structure, any quirks, punctuation habits, humor/pacing.</pre>
+      <h4>Sample Practice Block #2: Generate in My Style</h4>
+      <pre>Based on the style profile generated above, write a blog intro (~150 words) about “Emerging Threats in the Deep & Dark Web” for an audience of cyber threat analysts and non-tech readers. Use my style: conversational, some metaphors, occasional rhetorical questions, moderate sentence length, avoid over-technical jargon without definition.</pre>
+  <img src="https://i.giphy.com/4fBK9lkgmuNnPpMkYa.webp" alt="Practice" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Benefits</h3>
+      <ul>
+        <li>Consistency across content: blog posts, emails, reports, etc. all “sound like you.”</li>
+        <li>Efficiency: Once the style is encoded (via examples, persona prompt), you spend less time editing.</li>
+        <li>Authenticity: The quirks make writing feel more human, engaging.</li>
+        <li>Branding: For recruiters & industry pros, clear voice helps you stand out.</li>
+      </ul>
+      <h3>What not to do (and why your prompts flop)</h3>
+      <ul>
+        <li>Pure adjectives (“make it punchy”) with no samples → the model will default to generic “internet voice”.</li>
+        <li>Wall of context with no explicit instruction placement → instructions fade. Put them top/bottom. <a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide" target="_blank">OpenAI Cookbook</a></li>
+        <li>Abstractive style summaries only → you’ll lose cadence and punctuation signals. Prefer quotes for compression. <a href="https://arxiv.org/abs/2407.08892" target="_blank">arXiv</a></li>
+      </ul>
+      <h3>Case Notes from the Wild (what users report)</h3>
+      <ul>
+        <li>Defining persona + task + context + format outperforms “vibes-only” prompts. Atlassian’s guide mirrors this structure and is easy for non-tech teams to adopt. <a href="https://www.atlassian.com/blog/artificial-intelligence/ultimate-guide-writing-ai-prompts" target="_blank">Atlassian: Ultimate Guide to Writing AI Prompts</a></li>
+        <li>Claude’s “Styles” reliably emulates punctuation and rhythm from short samples; Tom’s Guide demos are consistent with what practitioners see day-to-day. <a href="https://www.tomsguide.com/ai/claude-ai-can-clone-your-writing-style-for-its-responses-and-its-really-easy-to-do?" target="_blank">Tom's Guide – Claude AI writing style feature</a></li>
+        <li>Role prompting (persona) is a simple, repeatable on-ramp for non-tech users; community resources reinforce it. <a href="https://learnprompting.org/" target="_blank">Learn Prompting</a></li>
+      </ul>
+  <img src="https://i.giphy.com/l2Sq8blHtyflHPw9q.webp" alt="Wild" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Ethics, permissions, and the “don’t be weird” clause</h3>
+      <ul>
+        <li>Always respect authorship and copyright: if you’re cloning someone else’s voice, ensure you have rights or permission.</li>
+        <li>Attribution: Be transparent when needed. In many contexts (e.g. journalism, professional writing) readers may expect disclosure if AI has been involved.</li>
+        <li>Bias & stereotypes: Style often encodes implicit bias. Be aware of what traits your exemplar text includes (e.g. gendered language, cultural idioms) and whether they are appropriate.</li>
+        <li>Over-reliance risk: if you always ask AI to clone, you might reduce your own voice development. Use it as tool, not crutch.</li>
+      </ul>
+      <p>My recommendation when cloning your voice, your brand’s voice, or a voice is to have the right to use it. If you’re inspired by a public figure, keep it inspired-by rather than identifiable imitation in professional contexts. Disclose AI assistance where your org requires it. (Also: style often encodes cultural/identity cues; be mindful.)</p>
+  <p>Language models learn statistical signals — not your soul. When you provide concrete exemplars and explicit trait labels, you’re reducing ambiguity and increasing the chance the model locks onto the right distributional cues (cadence, punctuation, lexical register). That’s why examples + trait bullets beat adjectives — and why where you place instructions matters in long prompts. <a href="https://www.anthropic.com/news/prompting-long-context" target="_blank">Prompt engineering for Claude's long context window – Anthropic</a></p>
+  <img src="https://i.giphy.com/J6JazAkCVLId91L4yM.webp" alt="Ethics" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Conclusion & Your 20-minute setup checklist</h3>
+      <ol>
+        <li>Gather 2–3 authentic samples (250–400 words total) of your own writing that you feel “sounds like you".</li>
+        <li>Build your prompt including: style sample, clear voice/tone descriptors, target audience, structure.</li>
+        <li>Build Exercise 1 and Skeleton 1 into your notebook or agent, then test your prompts</li>
+        <li>Refine prompt or give feedback to agent (e.g. “this is too formal,” “use more contractions,” etc.).</li>
+        <li>If too polished, use small imperfections consciously (typos / quirks), or if you want more human feel.</li>
+        <li>Adjust prompt length to your model’s limits, making sure exemplar + instructions + target content stay within context window.</li>
+  <li>Save what worked as your house prompt (or a Claude Style / Custom GPT instruction block). <a href="https://www.anthropic.com/news/prompting-long-context" target="_blank">Prompt engineering for Claude's long context window – Anthropic</a></li>
+      </ol>
+  <img src="https://i.giphy.com/E77YW2DDl3cMo.webp" alt="Checklist" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>The end (kinda). Summary of takeaways to tape on top of your monitor</h3>
+      <ul>
+        <li>Show + tell. Use short samples + explicit trait bullets.</li>
+  <li>Compress smartly. Quote what matters; don’t bury the model in fluff. <a href="https://arxiv.org/abs/2407.08892" target="_blank">arXiv – Prompt compression and context windows</a></li>
+  <li>Place instructions twice in long prompts (top & bottom). <a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide" target="_blank">OpenAI Cookbook – GPT-4.1 Prompting Guide</a></li>
+  <li>Make it sticky. Use Claude Styles or a Custom GPT with a checksum audit step. <a href="https://www.anthropic.com/news/prompting-long-context" target="_blank">Prompt engineering for Claude's long context window – Anthropic</a></li>
+        <li>Human, not sloppy. A hint of imperfection beats robotic polish — keep it tasteful.</li>
+        <li>Happy cloning—ethically, consistently, and with receipts.</li>
+      </ul>
+      <p>For non-tech users: practice with the templates above can get results quickly, with modest effort.</p>
+  <img src="https://i.giphy.com/l4FGDAx6u3hthMhgI.webp" alt="End" style="width:100%;max-width:420px;display:block;margin:24px auto;">
+      <h3>Sources, further reading & references:</h3>
+      <ul class="sources-list" style="list-style:none;padding-left:0;">
+  <li style="margin-bottom:18px;"><strong><a href="https://www.atlassian.com/blog/artificial-intelligence/ultimate-guide-writing-ai-prompts" target="_blank">Atlassian: Ultimate Guide to Writing AI Prompts</a></strong><br><span style="color:#ccc;">Comprehensive guide from Atlassian on writing effective AI prompts, including structure, persona, and style tips for non-technical teams.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://medium.com/%40kanerika/ai-prompt-engineering-best-practices-how-to-write-better-prompts-for-better-results-522c10c752bf" target="_blank">Prompt Engineering Best Practices</a></strong><br><span style="color:#ccc;">A Medium article on prompt engineering emphasizes defining voice, formality level, stylistic approach (academic, conversational, persuasive, etc.). Using sample text is often advised to help the AI understand the tone/style desired.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://www.anthropic.com/news/prompting-long-context" target="_blank">Long Context / Reference Examples</a></strong><br><span style="color:#ccc;">Anthropic’s study on supplementing prompts with examples of correctly answered questions in long documents, showing extracting relevant quotes helps.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://arxiv.org/html/2407.08892v1" target="_blank">Prompt Compression and Context Windows</a></strong><br><span style="color:#ccc;">Research on prompt compression methods for large context windows, comparing extractive and abstractive approaches.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://www.reddit.com/r/PromptEngineering/comments/1lng59u/how_would_you_go_about_cloning_someones_writing/" target="_blank">Empirical Studies on Style Reproduction</a></strong><br><span style="color:#ccc;">Community reports on breaking writing style into components and using examples and trait specification for better results.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://medium.com/cyberark-engineering/a-guide-to-mimicking-and-blending-writing-styles-with-ai-ce541044c004" target="_blank">A Guide to Mimicking and Blending Writing Styles with AI (CyberArk Engineering)</a></strong><br><span style="color:#ccc;">Describes feeding in examples of your writing, extracting style traits, then applying them in prompts.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://www.tomsguide.com/ai/claude-ai-can-clone-your-writing-style-for-its-responses-and-its-really-easy-to-do?" target="_blank">Tom’s Guide article</a></strong><br><span style="color:#ccc;">Claude AI’s “writing styles” feature lets you upload or describe your voice; Claude mimics punctuation, tone, humour, and formality.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://alitu.com/creator/content-creation/ai-writing-claude-styles/" target="_blank">Make Your AI Writing Sound More Like You, with Claude Writing Styles</a></strong><br><span style="color:#ccc;">Shows a framework (WRITE: Writing sample, Role definition, Instructions, Testing, Evaluation) for choosing examples & refining style.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://www.reddit.com/r/PromptEngineering/" target="_blank">Reddit r/PromptEngineering Threads</a></strong><br><span style="color:#ccc;">Discussions on building “personas” capturing writing traits into structured JSON or prompts.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://cookbook.openai.com/examples/gpt4-1_prompting_guide" target="_blank">OpenAI GPT-4.1 Prompting Guide</a></strong><br><span style="color:#ccc;">Official OpenAI guide on prompt engineering for GPT-4.1, including instruction placement findings.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://arxiv.org/abs/2407.08892" target="_blank">Prompt compression comparison</a></strong><br><span style="color:#ccc;">Research comparing extractive and abstractive/token pruning for prompt compression.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://www.anthropic.com/news/styles" target="_blank">Claude Styles product notes and walkthroughs</a></strong><br><span style="color:#ccc;">Anthropic’s documentation on Claude Styles, including uploading samples and using preset/custom styles.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://blog.google/intl/en-mena/company-news/technology/google-io-2024-keynote-sundar-pichaigemini-era/" target="_blank">Google on Gemini 1.5’s 1M-token context</a></strong><br><span style="color:#ccc;">Google’s official announcement and details on Gemini 1.5’s context window for consumer messaging.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://arxiv.org/abs/2301.11305" target="_blank">Detector fragility & bypass with small edits/perturbations</a></strong><br><span style="color:#ccc;">Research on how small edits and perturbations can bypass AI text detectors (use ethically).</span></li>
+      </ul>
+  </ul>
+  <a href="../" class="read-more">&larr; Back to Blog</a>
+  </article>
+  </div>
+</body>
+</html>
+</body>
+<div class="social-contact">
+  <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+  <div class="contact-links">
+    <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin"><img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon"></a>
+    <a href="https://github.com/alenperic" target="_blank" class="github"><img src="../img/github-icon.png" alt="GitHub Profile Icon"></a>
+    <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+    <a href="tel:5485881420" class="number">📱 Number</a>
+  </div>
+</div>
