@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Alen Peric">
+<meta name="description" content="Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG — A practical guide to building, scaling, and validating a production-grade cybersecurity RAG system on Kubernetes.">
+<meta name="keywords" content="Ray, K3s, Kubernetes, Cybersecurity, RAG, AI, distributed computing, GPU, ChromaDB, Ray Serve, FastAPI, Prometheus, Grafana, Llama-2, Mistral, QLoRA, CPT, Alen Peric">
+<meta property="og:title" content="Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG">
+<meta property="og:description" content="A practical guide to building, scaling, and validating a production-grade cybersecurity RAG system on Kubernetes.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://alenperic.com/post6">
+<meta property="og:image" content="https://csuiteaward.com/wp-content/uploads/2024/11/ai-fu.gif">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG">
+<meta name="twitter:description" content="A practical guide to building, scaling, and validating a production-grade cybersecurity RAG system on Kubernetes.">
+<meta name="twitter:image" content="https://csuiteaward.com/wp-content/uploads/2024/11/ai-fu.gif">
+<title>Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SLLVM6YY1Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SLLVM6YY1Y');
+</script>
+<link rel="icon" type="image/x-icon" href="../img/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet">
+<style>
+html,body{height:100%;margin:0;padding:0}
+canvas.scene{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;background:#121212}
+body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;overflow-x:hidden;background:#121212;display:flex;flex-direction:column;min-height:100vh}
+*{font-family:Helvetica !important;}
+.logo{margin:20px auto 0;max-width:90%;font-size:40px;text-align:center;white-space:normal}
+.blog-content{flex:1;margin:100px auto 40px;width:92%;max-width:820px;background:rgba(0,0,0,.72);padding:40px;border-radius:12px}
+.blog-post h2{margin-top:0;font-size:28px;font-weight:700 !important;}
+.blog-post h3{margin:32px 0 12px;font-size:22px;font-weight:700 !important;}
+.blog-post h4{font-weight:700 !important;}
+.blog-post p{margin:0 0 14px;font-size:17px;line-height:1.65}
+.blog-post ul,.blog-post ol{margin:0 0 14px 22px}
+.blog-post li{margin-bottom:8px}
+.blog-post a{color:#1e90ff;text-decoration:none;font-weight:700 !important;}
+.blog-post a:hover{text-decoration:underline}
+b{font-weight:700 !important;}
+pre{background:#1e1e1e;color:#c9e3ff;padding:20px 56px 20px 20px;border-radius:10px;overflow-x:auto;font-size:15px;line-height:1.45;position:relative}
+code{font-family:'Source Code Pro',Menlo,Consolas,monospace;font-style:italic;font-weight:400}
+.callout{background:#222;padding:14px;border-left:4px solid #1e90ff;border-radius:6px;margin:18px 0}
+.social-contact{margin:0 auto 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.social-contact a.homepage{font-size:18px;color:#fff;text-decoration:none}
+.contact-links{display:flex;align-items:center;gap:20px}
+.social-contact img{width:64px;height:auto}
+.social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:6px}
+@media(max-width:800px){.logo{font-size:28px;margin-top:14px}.blog-content{margin:86px auto 34px;padding:26px}.blog-post h2{font-size:24px}.blog-post h3{font-size:20px}pre{font-size:14px;padding:18px 46px 18px 18px}}
+@media(max-width:600px){.logo{font-size:22px;margin-top:10px}.blog-content{margin:70px auto 30px;padding:20px}.blog-post h2{font-size:20px}.blog-post p{font-size:14px}.social-contact a.homepage{font-size:16px}.contact-links{gap:14px}.social-contact img{width:56px}}
+</style>
+</head>
+<body>
+  <div class="logo">Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG</div>
+  <br>
+  <div style="text-align:center;font-size:18px;color:#bbb;margin-top:2px;margin-bottom:4px;">Alen Peric | October 2025</div>
+  <div class="blog-content">
+    <article class="blog-post">
+      <h2 style="font-size:2.2em;font-weight:700;text-transform:uppercase;letter-spacing:1px;">Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG</h2>
+      <p><em>When I first decided to deploy Ray on my K3s cluster, I thought it would just be a quick experiment—a weekend test of distributed AI workloads. Instead, it evolved into a full-blown guide on building, scaling, and validating a production-grade <b>cybersecurity RAG system</b>. What follows isn’t theory—it’s the real sequence of wins, failures, and fixes that led to a stable, scalable deployment.</em></p>
+      <hr>
+      <h3>🧩 Step 1: Preparing the Cluster</h3>
+      <p>The setup began with a modest K3s cluster—lightweight, GPU-enabled, and ideal for experimentation. I confirmed the nodes were ready:</p>
+      <pre><code class="language-bash">kubectl cluster-info
+kubectl get nodes -o wide</code></pre>
+  <img src="img/1-cluster.png" alt="Cluster overview with GPU resources" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <p>With Kubernetes healthy, I installed <b>KubeRay</b>, the operator that makes Ray play nicely with K8s:</p>
+      <pre><code class="language-bash">helm repo add kuberay https://ray-project.github.io/kuberay-helm/
+helm repo update
+helm install kuberay-operator kuberay/kuberay-operator --version 1.4.2</code></pre>
+  <img src="img/2-pod.png" alt="Operator pods running" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <p>That simple install marked the first milestone—the infrastructure was ready to host distributed AI jobs.</p>
+      <hr>
+      <h3>💥 Step 2: The OOMKilled Lesson</h3>
+      <p>My first Ray cluster barely lasted five minutes. I’d allocated just 1500Mi memory to the head node. Kubernetes responded with predictable cruelty:</p>
+      <pre><code>Last State: Terminated (Reason: OOMKilled, Exit Code: 137)
+Restart Count: 14</code></pre>
+      <p>The fix was obvious in hindsight—bump resources:</p>
+      <pre><code class="language-yaml">resources:
+  requests:
+    memory: 4Gi
+  limits:
+    memory: 8Gi</code></pre>
+      <p>After that change, the cluster stabilized instantly. Lesson learned: <b>if Ray is crashing, check your memory first.</b></p>
+  <img src="img/3-OOMkilled.png" alt="Pod events OOMKilled resolved" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <hr>
+      <h3>⚙️ Step 3: Building the CyberLLM RAG MVP</h3>
+      <p>Once the cluster was stable, I began the core task—building the RAG system that would power cybersecurity queries. The data ingestion pipeline aggregated:</p>
+      <ul>
+        <li><b>MITRE ATT&CK</b> (STIX)</li>
+        <li><b>CWE</b> (XML)</li>
+        <li><b>CAPEC</b> (XML)</li>
+        <li><b>NVD CVEs</b> (JSON)</li>
+        <li><b>Sigma detection rules</b> (YAML)</li>
+      </ul>
+      <p>To start the build:</p>
+      <pre><code class="language-bash">python scripts/build_rag.py</code></pre>
+      <p>Initial throughput hovered around <b>127 docs/sec</b>—not bad, but not great. Then I parallelized with Ray, optimized embedding batches, and saw it jump to <b>10,576 docs/sec</b>. That’s an <b>83× boost</b> from distributed execution alone.</p>
+  <img src="img/4-perf.png" alt="Terminal logs throughput increase" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <br>
+  <img src="img/5-ray-parallel.png" alt="Ray parallelism visualization" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <hr>
+      <h3>🚀 Step 4: Serving with RayJob</h3>
+      <p>With the vector store ready, I deployed the API via a <b>RayJob</b> manifest:</p>
+      <pre><code class="language-yaml">apiVersion: ray.io/v1
+kind: RayJob
+metadata:
+  name: cyber-rag-service
+spec:
+  entrypoint: >-
+    python src/serving/ray_serve_app.py \
+      --vector-store /data/embeddings \
+      --model meta-llama/Llama-2-7b-chat-hf \
+      --host 0.0.0.0 \
+      --port 8000</code></pre>
+      <p>After applying it and forwarding the port:</p>
+      <pre><code class="language-bash">kubectl port-forward svc/raycluster-basic-head-svc 8000:8000</code></pre>
+      <p>I tested the endpoint:</p>
+      <pre><code class="language-bash">curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{"question":"What is ATT&CK technique T1059?","top_k":5}'</code></pre>
+      <p>It returned a clean, structured JSON answer—with references. That was the first real moment of proof: <b>this cluster was alive, intelligent, and useful.</b></p>
+  <img src="img/5-inferencing.png" alt="API response ATT&CK technique" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <hr>
+      <h3>✅ Step 5: Testing and Validation</h3>
+      <p>Skipping tests is how you build fragile systems. I didn’t skip them.</p>
+      <pre><code class="language-bash">python scripts/test_core.py
+python scripts/test_pipeline.py</code></pre>
+      <p>Output:</p>
+      <pre><code>[TEST 1] Python Syntax   PASSED (14/14)
+[TEST 2] Core Logic      PASSED (6/6)
+[TEST 3] Data Process    PASSED (1,272 docs)
+[TEST 4] K8s Manifests   PASSED (2/2)
+...
+Overall: ✅ 100% PASS</code></pre>
+      <p>Green across the board. It wasn’t just functional—it was <b>validated</b>.</p>
+      <hr>
+      <h3>📊 Step 6: Observability and Scaling</h3>
+      <p>Once everything worked, I opened the dashboards:</p>
+      <pre><code class="language-bash">kubectl port-forward svc/raycluster-basic-head-svc 8265:8265  # Ray dashboard
+kubectl port-forward svc/kps-grafana 3000:80                  # Grafana</code></pre>
+      <p>The <b>Ray dashboard</b> visualized live scaling as worker pods spawned and terminated under load. In <b>Grafana</b>, I watched latency metrics dip as autoscaling kicked in—proof the cluster wasn’t just running, it was adapting in real time.</p>
+  <img src="img/ray-interface.png" alt="Ray dashboard scaling workers" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+
+  <img src="img/grafana.png" alt="Grafana latency and GPU utilization" style="display:block;margin:18px auto 24px;max-width:98%;border-radius:8px;box-shadow:0 2px 12px #000;">
+  <hr>
+      <h3>📈 Key Metrics</h3>
+      <h4>RAG Performance</h4>
+      <table style="width:100%;background:#222;border-radius:8px;margin-bottom:24px;">
+        <thead>
+          <tr style="color:#1e90ff;text-align:left;">
+            <th>Metric</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Knowledge base</td><td>~100K documents</td></tr>
+          <tr><td>Embedding dimension</td><td>384 (MiniLM)</td></tr>
+          <tr><td>Index build time</td><td>20–30 min</td></tr>
+          <tr><td>Retrieval latency (p95)</td><td>150–250ms</td></tr>
+          <tr><td>Generation latency (p95)</td><td>5–8s</td></tr>
+          <tr><td>Throughput</td><td>5–10 req/s (single GPU)</td></tr>
+        </tbody>
+      </table>
+      <h4>Training Benchmarks</h4>
+      <table style="width:100%;background:#222;border-radius:8px;margin-bottom:24px;">
+        <thead>
+          <tr style="color:#1e90ff;text-align:left;">
+            <th>Model</th>
+            <th>Method</th>
+            <th>Time</th>
+            <th>Memory</th>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Llama-2 7B</td><td>QLoRA</td><td>2–3 h</td><td>18 GB</td><td>200 MB adapter</td></tr>
+          <tr><td>Llama-2 7B</td><td>CPT</td><td>4–6 h</td><td>35 GB</td><td>13 GB model</td></tr>
+          <tr><td>Mistral 7B</td><td>QLoRA</td><td>2–3 h</td><td>16 GB</td><td>200 MB adapter</td></tr>
+        </tbody>
+      </table>
+      <h4>Resource Profile</h4>
+      <ul>
+        <li><b>Development:</b> 4 CPU / 16 GB RAM / 1 GPU (8 GB VRAM) / 50 GB storage</li>
+        <li><b>Production:</b> 4 CPU / 8 GB RAM per node + auto-scaling workers / 100 GB PVC</li>
+      </ul>
+  <hr>
+      <h3>📁 Repository Snapshot</h3>
+      <pre><code>cyber-llm-rag/
+├── scripts/
+│   ├── download_data.py
+│   ├── build_rag.py
+│   └── test_pipeline.py
+├── src/
+│   ├── rag/
+│   ├── training/
+│   └── serving/
+├── k8s/rayjob-cyber-rag.yaml
+├── data/
+├── models/
+└── notebooks/</code></pre>
+      <p>➡️ <b>Full repo:</b> <a href="https://github.com/alenperic/Cyber-LLM-RAG" target="_blank">github.com/alenperic/Cyber-LLM-RAG</a><br>Includes complete code, manifests, and documentation for training, serving, and testing.</p>
+      <hr>
+      <h3>💡 Lessons Learned</h3>
+      <ul>
+        <li><b>OOMKilled is inevitable</b> — treat it as a diagnostic, not a disaster.</li>
+        <li><b>Parallelism changes everything</b> — Ray took indexing from 127 → 10,576 docs/sec.</li>
+        <li><b>Tests prove stability</b> — automation prevents regressions before they ship.</li>
+        <li><b>Observability is non-negotiable</b> — dashboards are the difference between guessing and knowing.</li>
+      </ul>
+      <hr>
+      <h3>🏁 Final Thoughts</h3>
+      <p>What began as a tinkering project turned into a <b>production-ready cybersecurity AI system</b>—a Retrieval-Augmented Generation pipeline fine-tuned for CTI data, deployed with Ray Serve, scaling automatically on K3s, and validated end-to-end.</p>
+      <p>If you’re starting your own Ray journey:<br>expect some crashes, expect to tune aggressively, but also expect that once it clicks, you’ll have a self-healing, GPU-powered AI system that feels alive.</p>
+      <hr>
+      <h3>Sources & Links</h3>
+      <ul class="sources-list" style="list-style:none;padding-left:0;">
+        <li style="margin-bottom:18px;"><strong><a href="https://github.com/alenperic/Cyber-LLM-RAG" target="_blank">Cyber-LLM-RAG GitHub Repository</a></strong><br><span style="color:#ccc;">Full codebase, manifests, and documentation for the project.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://docs.ray.io/en/latest/kuberay/index.html" target="_blank">Ray on KubeRay Documentation</a></strong><br><span style="color:#ccc;">Official Ray docs for running Ray on Kubernetes with KubeRay.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://docs.ray.io/en/latest/serve/index.html" target="_blank">Ray Serve Documentation</a></strong><br><span style="color:#ccc;">Docs for Ray Serve, API deployment, and scaling.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://github.com/ray-project/kuberay" target="_blank">KubeRay GitHub Repository</a></strong><br><span style="color:#ccc;">Source code and issues for the KubeRay operator.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://docs.ray.io/en/latest/cluster/kubernetes-user-guide.html" target="_blank">Ray Kubernetes User Guide</a></strong><br><span style="color:#ccc;">Best practices for Ray clusters on Kubernetes.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://docs.ray.io/en/latest/monitoring/index.html" target="_blank">Ray Monitoring & Observability</a></strong><br><span style="color:#ccc;">How to monitor Ray clusters and jobs.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://github.com/chroma-core/chroma" target="_blank">ChromaDB GitHub Repository</a></strong><br><span style="color:#ccc;">Vector database used for RAG pipeline.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://github.com/huggingface/transformers" target="_blank">HuggingFace Transformers</a></strong><br><span style="color:#ccc;">Model training and inference library.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://github.com/huggingface/peft" target="_blank">PEFT (Parameter-Efficient Fine-Tuning)</a></strong><br><span style="color:#ccc;">Library for QLoRA and adapter-based training.</span></li>
+        <li style="margin-bottom:18px;"><strong><a href="https://github.com/bitsandbytes-cpu/bitsandbytes" target="_blank">BitsAndBytes</a></strong><br><span style="color:#ccc;">Efficient quantization for LLM training.</span></li>
+      </ul>
+      <div style="font-size:13px;color:#888;margin:18px 0 0 0;text-align:center;">Disclaimer: This blog was written with assistance from genAI and large language models (LLMs).</div>
+      <a href="../" class="read-more" style="display:block;margin:32px auto 0;text-align:center;font-size:18px;">&larr; Back to Blog</a>
+    </article>
+  </div>
+  <div class="social-contact">
+    <a href="https://alenperic.com" target="_blank" class="homepage">Homepage</a>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" class="linkedin"><img src="../img/linkedin-icon.png" alt="LinkedIn Profile Icon"></a>
+      <a href="https://github.com/alenperic" target="_blank" class="github"><img src="../img/github-icon.png" alt="GitHub Profile Icon"></a>
+      <a href="mailto:alenperic@protonmail.com" class="contact">📧 Contact</a>
+      <a href="tel:5485881420" class="number">📱 Number</a>
+    </div>
+  </div>
+</body>
+</html>
