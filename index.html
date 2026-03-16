@@ -45,6 +45,25 @@ body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;over
 .contact-links{display:flex;align-items:center;gap:20px;}
 .social-contact img{width:68px;height:auto;}
 .social-contact a.contact,.social-contact a.number{color:#fff;text-decoration:none;font-size:18px;display:flex;align-items:center;gap:5px;}
+
+/* Custom style for external publications */
+.external-post {
+  background: rgba(255, 255, 255, 0.07);
+  padding: 20px 24px;
+  border-radius: 8px;
+  border-left: 4px solid #fc0000; /* CrowdStrike Red */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.external-badge {
+  font-size: 11px;
+  font-weight: bold;
+  color: #fc0000;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  display: block;
+}
+
 @media screen and (max-width:800px){
 .logo{font-size:24px;top:10px;}
 .navbar{top:50px;gap:15px;}
@@ -57,6 +76,7 @@ body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;over
 .contact-links{gap:10px;}
 .social-contact img{width:102px;}
 .social-contact a.contact,.social-contact a.number{font-size:16px;}
+.external-post { padding: 16px; }
 }
 </style>
 <script type="module" crossorigin src="./assets/index-b7d38c76.js"></script>
@@ -78,6 +98,15 @@ body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;over
       providing a strategic roadmap for securing AI workloads in highly regulated financial environments.
     </p>
     <a href="./post7/index.html" class="read-more">Read More</a>
+  </div>
+
+  <div class="blog-post external-post">
+    <span class="external-badge">External Publication ⸺ CrowdStrike Blog</span>
+    <h2 style="margin-top: 0;">The Art of Deception: How Threat Actors Master Typosquatting Campaigns to Bypass Detection</h2>
+    <p>
+      Typosquatting has evolved far beyond simple domain parking. In this technical CTI analysis published by CrowdStrike Counter Adversary Operations, I break down how adversaries utilize strategic HTTP redirects, geo-targeted IP filtering, and AI-generated domain sale camouflage to execute sophisticated credential harvesting and phishing campaigns under the radar.
+    </p>
+    <a href="https://www.crowdstrike.com/en-us/blog/the-art-of-deception-how-threat-actors-master-typosquatting-campaigns-to-bypass-detection/" target="_blank" class="read-more">Read on CrowdStrike ↗</a>
   </div>
 
   <div class="blog-post">
@@ -124,14 +153,13 @@ body{font-family:Helvetica !important;font-weight:300 !important;color:#fff;over
   </div>
 
   <div class="blog-post">
-    <h2>Top 5 Security Practices for Small Businesses</h2>
+    <h2>5 Easy Security Practices for Small Businesses</h2>
     <p>
       Small businesses are often targets for cyber attacks. Learn the top security practices that
       can help protect your business from potential threats.
     </p>
     <a href="./post2" class="read-more">Read More</a>
   </div>
-
 
 </div>
 </main>
