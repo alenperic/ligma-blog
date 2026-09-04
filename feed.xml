@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LIGMA.BLOG</title>
+    <link>https://ligma.blog/</link>
+    <description>Field notes by Alen Peric on cybersecurity, applied AI, and production systems.</description>
+    <language>en-ca</language>
+    <lastBuildDate>Fri, 04 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://ligma.blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security</title>
+      <link>https://ligma.blog/post7/</link>
+      <guid>https://ligma.blog/post7/</guid>
+      <pubDate>Mon, 16 Mar 2026 00:00:00 GMT</pubDate>
+      <description>A practical blueprint for identifying, assessing, and remediating AI-specific risks in enterprise environments.</description>
+    </item>
+    <item>
+      <title>Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG</title>
+      <link>https://ligma.blog/post6/</link>
+      <guid>https://ligma.blog/post6/</guid>
+      <pubDate>Sun, 05 Oct 2025 00:00:00 GMT</pubDate>
+      <description>A hands-on guide to building, scaling, and validating a cybersecurity retrieval system with Ray, K3s, and Kubernetes.</description>
+    </item>
+    <item>
+      <title>Governing AI, One Boardroom at a Time</title>
+      <link>https://ligma.blog/post5/</link>
+      <guid>https://ligma.blog/post5/</guid>
+      <pubDate>Tue, 23 Sep 2025 00:00:00 GMT</pubDate>
+      <description>A practical guide to AI governance, standards, and regulatory playbooks for leaders scaling AI responsibly.</description>
+    </item>
+    <item>
+      <title>The Way of the Voice in AI Prompts: A Field Guide</title>
+      <link>https://ligma.blog/post4/</link>
+      <guid>https://ligma.blog/post4/</guid>
+      <pubDate>Sun, 21 Sep 2025 00:00:00 GMT</pubDate>
+      <description>A field guide to building reliable voice profiles that make AI-assisted writing sound recognizably yours.</description>
+    </item>
+    <item>
+      <title>From Autonomous Pilots to Profit: What 2025 Taught Us About Enterprise AI Agents</title>
+      <link>https://ligma.blog/post3/</link>
+      <guid>https://ligma.blog/post3/</guid>
+      <pubDate>Wed, 17 Sep 2025 00:00:00 GMT</pubDate>
+      <description>How constrained workflows, observability, and proven infrastructure turn enterprise AI agents into durable value.</description>
+    </item>
+    <item>
+      <title>Blackwell Brawl: vLLM Meets the RTX 5070 Ti</title>
+      <link>https://ligma.blog/post1/</link>
+      <guid>https://ligma.blog/post1/</guid>
+      <pubDate>Sun, 01 Dec 2024 00:00:00 GMT</pubDate>
+      <description>A hands-on account of running vLLM on an NVIDIA RTX 5070 Ti with Debian 12 and CUDA 12.8.</description>
+    </item>
+    <item>
+      <title>5 Security Practices for Small Businesses</title>
+      <link>https://ligma.blog/post2/</link>
+      <guid>https://ligma.blog/post2/</guid>
+      <pubDate>Sun, 01 Dec 2024 00:00:00 GMT</pubDate>
+      <description>Five practical cybersecurity controls that help small businesses reduce avoidable risk and recover faster.</description>
+    </item>
+  </channel>
+</rss>
