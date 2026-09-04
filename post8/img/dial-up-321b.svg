@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Dial-up inference</title>
+  <desc id="desc">A retro terminal shows GLM-5.3-Flash successfully generating at 0.38 tokens per second.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#082d27"/><stop offset="1" stop-color="#020b09"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <rect width="1200" height="675" rx="32" fill="url(#bg)"/>
+  <text x="70" y="74" fill="#efd98f" font-family="ui-monospace,monospace" font-size="22" letter-spacing="4">BENCHMARK // SUCCESS*</text>
+  <rect x="80" y="112" width="1040" height="420" rx="18" fill="#020907" stroke="#3d7465" stroke-width="3"/>
+  <circle cx="116" cy="146" r="8" fill="#e06e5f"/><circle cx="143" cy="146" r="8" fill="#d9b765"/><circle cx="170" cy="146" r="8" fill="#75d5ba"/>
+  <g font-family="ui-monospace,monospace" font-size="25">
+    <text x="125" y="214" fill="#75d5ba">$ curl localhost:8081/v1/chat/completions</text>
+    <text x="125" y="269" fill="#9db9af">HTTP/1.1</text><text x="285" y="269" fill="#efd98f" font-weight="700">200 OK</text>
+    <text x="125" y="324" fill="#9db9af">model:</text><text x="285" y="324" fill="#f4f1e9">glm-5.3-flash</text>
+    <text x="125" y="379" fill="#9db9af">generation:</text><text x="340" y="379" fill="#f4f1e9">0.38 tokens/sec</text>
+    <text x="125" y="434" fill="#9db9af">response:</text><text x="285" y="434" fill="#75d5ba" filter="url(#glow)">“GLM is running.”</text>
+  </g>
+  <rect x="125" y="472" width="900" height="18" rx="9" fill="#153f36"/><rect x="125" y="472" width="344" height="18" rx="9" fill="#d9b765"/>
+  <text x="70" y="595" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="29" font-weight="700">DIAL‑UP, BUT MAKE IT 321 BILLION PARAMETERS.</text>
+  <text x="70" y="632" fill="#9db9af" font-family="ui-monospace,monospace" font-size="16">* “IT RUNS” AND “IT RUNS FAST” ARE DIFFERENT MILESTONES.</text>
+</svg>

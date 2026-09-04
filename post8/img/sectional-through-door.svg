@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Big model, small GPU</title>
+  <desc id="desc">A 321-billion-parameter model is represented as a sectional sofa being compressed through a 16 GB VRAM doorway.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#082d27"/><stop offset="1" stop-color="#03100d"/></linearGradient>
+    <linearGradient id="sofa" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#75d5ba"/><stop offset="1" stop-color="#2b7e69"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1200" height="675" rx="32" fill="url(#bg)"/>
+  <path d="M0 118h1200M0 557h1200" stroke="#d9b765" stroke-opacity=".18"/>
+  <text x="70" y="74" fill="#efd98f" font-family="ui-monospace,monospace" font-size="22" letter-spacing="4">FIELD NOTE // CONSTRAINT</text>
+  <rect x="919" y="112" width="192" height="458" rx="10" fill="#061c18" stroke="#e1c36f" stroke-width="5"/>
+  <rect x="950" y="180" width="130" height="325" rx="5" fill="#0d3a31" stroke="#75d5ba" stroke-opacity=".5"/>
+  <text x="1015" y="152" text-anchor="middle" fill="#efd98f" font-family="ui-monospace,monospace" font-size="19">16 GB VRAM</text>
+  <g filter="url(#glow)">
+    <path d="M112 275h622q80 0 133 54l77 78-76 84-96-76H203q-91 0-91-91z" fill="url(#sofa)" stroke="#a6ead6" stroke-width="4"/>
+    <path d="M152 227h560q52 0 52 52v103H152z" fill="#155646" stroke="#75d5ba" stroke-width="4"/>
+    <rect x="94" y="248" width="88" height="217" rx="22" fill="#1b6755" stroke="#75d5ba" stroke-width="4"/>
+  </g>
+  <text x="430" y="342" text-anchor="middle" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="42" font-weight="700">GLM‑5.3‑FLASH</text>
+  <text x="430" y="394" text-anchor="middle" fill="#efd98f" font-family="ui-monospace,monospace" font-size="28">321 BILLION PARAMETERS</text>
+  <path d="M800 245l92 0M800 535l92 0" stroke="#e1c36f" stroke-width="7" stroke-linecap="round"/>
+  <path d="M864 218l31 27-31 27M864 508l31 27-31 27" fill="none" stroke="#e1c36f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="70" y="625" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="30" font-weight="700">THE SOFA FITS. TECHNICALLY.</text>
+</svg>

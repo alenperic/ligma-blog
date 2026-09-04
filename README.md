@@ -5,7 +5,7 @@ Static cybersecurity and applied AI publication by Alen Peric, hosted on GitHub 
 ## Structure
 
 - `index.html` — searchable, filterable article archive
-- `post1/` through `post7/` — standalone article pages
+- `post1/` through `post8/` — standalone article pages
 - `assets/blog.css` — shared visual and reading system
 - `assets/blog.js` — archive filters, reading progress, code-copy controls, and remote-media fallbacks
 - `scripts/rebuild-articles.mjs` — rebuilds article shells without modifying article content

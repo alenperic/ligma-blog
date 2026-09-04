@@ -11,6 +11,17 @@ if (sourceRef && !/^[0-9a-f]{7,40}$/i.test(sourceRef)) {
 
 const articles = [
   {
+    id: 8,
+    title: "Big Model, Small GPU",
+    fullTitle: "Big Model, Small GPU — Running GLM‑5.3‑Flash at Home",
+    description: "How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home.",
+    category: "Local AI",
+    date: "2026-09-04",
+    displayDate: "September 2026",
+    minutes: 5,
+    keywords: ["GLM-5.3-Flash", "llama.cpp", "RTX 5070 Ti", "GGUF", "quantization", "local AI", "Mixture of Experts"]
+  },
+  {
     id: 7,
     title: "The Top 8 LLM Vulnerabilities",
     fullTitle: "The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security",

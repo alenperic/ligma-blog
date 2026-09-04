@@ -5,7 +5,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const htmlFiles = [
   "index.html",
   "404.html",
-  ...Array.from({ length: 7 }, (_, index) => `post${index + 1}/index.html`)
+  ...Array.from({ length: 8 }, (_, index) => `post${index + 1}/index.html`)
 ];
 const errors = [];
 let schemaBlocks = 0;
@@ -53,11 +53,22 @@ for (const filename of htmlFiles) {
 
 const homepage = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const cards = homepage.match(/\bdata-post\b/g) || [];
-if (cards.length !== 8) errors.push(`index.html: expected 8 article cards, found ${cards.length}`);
+if (cards.length !== 9) errors.push(`index.html: expected 9 article cards, found ${cards.length}`);
+
+const featuredCards = homepage.match(/class="[^"]*\bfeatured\b[^"]*"/g) || [];
+if (featuredCards.length !== 2) errors.push(`index.html: expected 2 featured cards, found ${featuredCards.length}`);
+
+if (!/<div class="post-grid">\s*<a class="post-card featured reveal" href="\.\/post8\/"/.test(homepage)) {
+  errors.push("index.html: post8 must be the first article card");
+}
 
 const rayPost = fs.readFileSync(path.join(root, "post6/index.html"), "utf8");
 const technicalImages = rayPost.match(/<img\b[^>]*src="img\//g) || [];
 if (technicalImages.length !== 8) errors.push(`post6: expected 8 technical screenshots, found ${technicalImages.length}`);
+
+const glmPost = fs.readFileSync(path.join(root, "post8/index.html"), "utf8");
+const originalMemes = glmPost.match(/<figure\b[^>]*class="meme-panel"/g) || [];
+if (originalMemes.length !== 3) errors.push(`post8: expected 3 original meme panels, found ${originalMemes.length}`);
 
 const expectedRestoredImages = new Map([["post4/index.html", 14], ["post5/index.html", 17], ["post7/index.html", 8]]);
 for (const [filename, expected] of expectedRestoredImages) {

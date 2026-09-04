@@ -682,6 +682,23 @@ img {
   text-align: center;
 }
 
+.meme-panel {
+  margin: 42px 0;
+}
+
+.blog-post .meme-panel img {
+  width: 100%;
+  margin: 0;
+  border-color: rgba(225, 195, 111, 0.34);
+}
+
+.meme-panel figcaption {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font: 0.72rem/1.55 "IBM Plex Mono", monospace;
+  text-align: center;
+}
+
 .media-fallback {
   display: block;
   width: min(100%, 480px);

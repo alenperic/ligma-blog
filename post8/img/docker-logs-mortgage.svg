@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Storage side quest</title>
+  <desc id="desc">A storage dashboard shows a 102 GB model competing with Docker logs, caches, and temporary files for 46 GB of free disk space.</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#082d27"/><stop offset="1" stop-color="#03100d"/></linearGradient></defs>
+  <rect width="1200" height="675" rx="32" fill="url(#bg)"/>
+  <text x="70" y="74" fill="#efd98f" font-family="ui-monospace,monospace" font-size="22" letter-spacing="4">SIDE QUEST // STORAGE</text>
+  <rect x="70" y="112" width="1060" height="420" rx="18" fill="#041713" stroke="#376f60" stroke-width="2"/>
+  <circle cx="280" cy="318" r="135" fill="none" stroke="#153f36" stroke-width="45"/>
+  <path d="M280 183a135 135 0 1 1-124 82" fill="none" stroke="#d9b765" stroke-width="45" stroke-linecap="round"/>
+  <text x="280" y="304" text-anchor="middle" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="54" font-weight="700">46 GB</text>
+  <text x="280" y="348" text-anchor="middle" fill="#9db9af" font-family="ui-monospace,monospace" font-size="20">FREE SPACE</text>
+  <g font-family="ui-monospace,monospace">
+    <text x="500" y="170" fill="#9db9af" font-size="20">INCOMING MODEL</text>
+    <rect x="500" y="190" width="540" height="54" rx="8" fill="#123d34"/><rect x="500" y="190" width="500" height="54" rx="8" fill="#75d5ba"/>
+    <text x="520" y="226" fill="#03100d" font-size="24" font-weight="700">GLM GGUF // 102 GB</text>
+    <text x="500" y="294" fill="#9db9af" font-size="20">CURRENT TENANTS</text>
+    <rect x="500" y="316" width="475" height="52" rx="8" fill="#5d3e22" stroke="#d9b765"/><text x="520" y="349" fill="#f4f1e9" font-size="22">DOCKER LOGS // “I LIVE HERE NOW”</text>
+    <rect x="500" y="384" width="340" height="52" rx="8" fill="#204f43"/><text x="520" y="417" fill="#f4f1e9" font-size="22">PACKAGE CACHE</text>
+    <rect x="500" y="452" width="255" height="52" rx="8" fill="#183f36"/><text x="520" y="485" fill="#f4f1e9" font-size="22">TEMP FILES</text>
+  </g>
+  <text x="70" y="610" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="29" font-weight="700">DOCKER LOGS ALSO WANTED THEIR OWN MORTGAGE.</text>
+</svg>
