@@ -135,9 +135,10 @@ img {
   z-index: 100;
   top: 0;
   display: flex;
-  width: var(--page);
+  width: 100%;
   min-height: 74px;
-  margin: 0 auto;
+  margin: 0;
+  padding-inline: max(20px, calc((100% - 1180px) / 2));
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
@@ -854,6 +855,7 @@ img {
 
   .site-header {
     min-height: 66px;
+    padding-inline: 14px;
   }
 
   .brand img {
