@@ -613,6 +613,111 @@ img {
   color: #d9e7df;
 }
 
+.results-panel {
+  margin: 36px 0 42px;
+  padding: 26px;
+  border: 1px solid rgba(225, 195, 111, 0.32);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(222, 185, 104, 0.09), transparent 42%),
+    rgba(7, 35, 29, 0.76);
+  box-shadow: var(--shadow);
+}
+
+.results-kicker {
+  margin-bottom: 8px !important;
+  color: var(--gold-bright);
+  font: 0.68rem/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.blog-post .results-panel h2 {
+  margin: 0 0 22px;
+  font-size: clamp(1.4rem, 3.4vw, 2rem);
+}
+
+.results-grid {
+  display: grid;
+  margin: 0 0 18px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line-soft);
+  border-left: 1px solid var(--line-soft);
+}
+
+.results-grid div {
+  padding: 15px;
+  border-right: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+
+.results-grid div:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.results-grid dt {
+  color: var(--muted);
+  font: 0.68rem/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.results-grid dd {
+  margin: 5px 0 0;
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.results-note,
+.build-record p:last-child {
+  margin-bottom: 0 !important;
+}
+
+.results-note {
+  color: #a9bdb5;
+  font-size: 0.82rem;
+}
+
+.blog-post .sources-heading {
+  margin-top: 56px;
+}
+
+.industry-section {
+  margin: 54px 0 42px;
+}
+
+.blog-post .industry-section h2 {
+  margin: 0 0 24px;
+}
+
+.implication-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.implication-grid article {
+  padding: 22px;
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  background: rgba(7, 35, 29, 0.58);
+}
+
+.blog-post .implication-grid h3 {
+  margin: 0 0 12px;
+  color: var(--gold-bright);
+  font: 0.78rem/1.4 "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.implication-grid p {
+  margin-bottom: 0;
+  color: #c8d8d1;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
 .blog-post pre {
   position: relative;
   overflow-x: auto;
@@ -937,6 +1042,22 @@ img {
     margin-left: -4px;
     padding: 18px;
     font-size: 0.75rem;
+  }
+
+  .results-panel {
+    padding: 20px;
+  }
+
+  .results-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-grid div:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+
+  .implication-grid {
+    grid-template-columns: 1fr;
   }
 
   .article-pagination {

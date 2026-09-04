@@ -69,6 +69,39 @@ if (technicalImages.length !== 8) errors.push(`post6: expected 8 technical scree
 const glmPost = fs.readFileSync(path.join(root, "post8/index.html"), "utf8");
 const originalMemes = glmPost.match(/<figure\b[^>]*class="meme-panel"/g) || [];
 if (originalMemes.length !== 3) errors.push(`post8: expected 3 original meme panels, found ${originalMemes.length}`);
+if (!glmPost.includes('class="results-panel"')) errors.push("post8: missing scan-friendly results panel");
+if (!glmPost.includes('class="industry-section"')) errors.push("post8: missing industry implications section");
+if (glmPost.includes("routes each request")) errors.push("post8: obsolete per-request MoE wording remains");
+if (glmPost.includes("clearest confirmed bottleneck")) errors.push("post8: bottleneck claim remains unqualified");
+
+const requiredPost8Links = [
+  "https://huggingface.co/zai-org/GLM-5.3-Flash",
+  "https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF/tree/main/UD-IQ2_XXS",
+  "https://github.com/unslothai/llama.cpp/tree/glm5next/upstream",
+  "https://github.com/ggml-org/llama.cpp/pull/27754",
+  "https://github.com/unslothai/llama.cpp/commit/949f7efb097eb20ef36fecdb1afaebff9a4ae7ed"
+];
+for (const url of requiredPost8Links) {
+  if (!glmPost.includes(url)) errors.push(`post8: missing source link ${url}`);
+}
+
+const post8SocialImage = "https://ligma.blog/post8/img/og-glm-5-3-flash.png";
+if (!glmPost.includes(`<meta property="og:image" content="${post8SocialImage}"`)) {
+  errors.push("post8: missing post-specific Open Graph image");
+}
+if (!glmPost.includes(`<meta name="twitter:image" content="${post8SocialImage}"`)) {
+  errors.push("post8: missing post-specific Twitter image");
+}
+
+const socialImagePath = path.join(root, "post8/img/og-glm-5-3-flash.png");
+if (fs.existsSync(socialImagePath)) {
+  const png = fs.readFileSync(socialImagePath);
+  const width = png.readUInt32BE(16);
+  const height = png.readUInt32BE(20);
+  if (width !== 1200 || height !== 630) {
+    errors.push(`post8: social image must be 1200x630, found ${width}x${height}`);
+  }
+}
 
 const expectedRestoredImages = new Map([["post4/index.html", 14], ["post5/index.html", 17], ["post7/index.html", 8]]);
 for (const [filename, expected] of expectedRestoredImages) {
@@ -77,7 +110,7 @@ for (const [filename, expected] of expectedRestoredImages) {
   if (actual !== expected) errors.push(`${filename}: expected ${expected} restored article images, found ${actual}`);
 }
 
-for (const filename of ["robots.txt", "sitemap.xml", "feed.xml", "img/og-blog.png"]) {
+for (const filename of ["robots.txt", "sitemap.xml", "feed.xml", "img/og-blog.png", "post8/img/og-glm-5-3-flash.png"]) {
   if (!fs.existsSync(path.join(root, filename))) errors.push(`missing ${filename}`);
 }
 

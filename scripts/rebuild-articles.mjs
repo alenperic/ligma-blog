@@ -14,12 +14,14 @@ const articles = [
     id: 8,
     title: "Big Model, Small GPU",
     fullTitle: "Big Model, Small GPU — Running GLM‑5.3‑Flash at Home",
-    description: "How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home.",
+    description: "How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home.",
     category: "Local AI",
     date: "2026-09-04",
     displayDate: "September 2026",
-    minutes: 5,
-    keywords: ["GLM-5.3-Flash", "llama.cpp", "RTX 5070 Ti", "GGUF", "quantization", "local AI", "Mixture of Experts"]
+    minutes: 6,
+    keywords: ["GLM-5.3-Flash", "llama.cpp", "RTX 5070 Ti", "GGUF", "quantization", "local AI", "Mixture of Experts"],
+    socialImage: "https://ligma.blog/post8/img/og-glm-5-3-flash.png",
+    socialImageAlt: "Big Model, Small GPU: a 321B-parameter model routed through a 16 GB GPU"
   },
   {
     id: 7,
@@ -160,6 +162,8 @@ function sanitizeContent(content) {
 
 function articleHead(article) {
   const url = `https://ligma.blog/post${article.id}/`;
+  const socialImage = article.socialImage ?? "https://ligma.blog/img/og-blog.png";
+  const socialImageAlt = article.socialImageAlt ?? "LIGMA.BLOG by Alen Peric";
   const schema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -174,12 +178,12 @@ function articleHead(article) {
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         image: {
           "@type": "ImageObject",
-          url: "https://ligma.blog/img/og-blog.png",
+          url: socialImage,
           width: 1200,
           height: 630,
-          caption: "LIGMA.BLOG by Alen Peric"
+          caption: socialImageAlt
         },
-        thumbnailUrl: "https://ligma.blog/img/og-blog.png",
+        thumbnailUrl: socialImage,
         inLanguage: "en-CA",
         isAccessibleForFree: true,
         articleSection: article.category,
@@ -234,12 +238,12 @@ function articleHead(article) {
     <meta property="og:title" content="${escapeHtml(article.fullTitle)}" />
     <meta property="og:description" content="${escapeHtml(article.description)}" />
     <meta property="og:url" content="${url}" />
-    <meta property="og:image" content="https://ligma.blog/img/og-blog.png" />
-    <meta property="og:image:secure_url" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image" content="${socialImage}" />
+    <meta property="og:image:secure_url" content="${socialImage}" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="LIGMA.BLOG by Alen Peric" />
+    <meta property="og:image:alt" content="${escapeHtml(socialImageAlt)}" />
     <meta property="article:published_time" content="${article.date}" />
     <meta property="article:modified_time" content="2026-09-04" />
     <meta property="article:author" content="Alen Peric" />
@@ -247,8 +251,8 @@ function articleHead(article) {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(article.fullTitle)}" />
     <meta name="twitter:description" content="${escapeHtml(article.description)}" />
-    <meta name="twitter:image" content="https://ligma.blog/img/og-blog.png" />
-    <meta name="twitter:image:alt" content="LIGMA.BLOG by Alen Peric" />
+    <meta name="twitter:image" content="${socialImage}" />
+    <meta name="twitter:image:alt" content="${escapeHtml(socialImageAlt)}" />
     <title>${escapeHtml(article.fullTitle)} | LIGMA.BLOG</title>
     <link rel="icon" type="image/png" sizes="64x64" href="../img/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />

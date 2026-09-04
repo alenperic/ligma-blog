@@ -12,7 +12,7 @@
       <link>https://ligma.blog/post8/</link>
       <guid>https://ligma.blog/post8/</guid>
       <pubDate>Fri, 04 Sep 2026 00:00:00 GMT</pubDate>
-      <description>How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home.</description>
+      <description>How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home.</description>
     </item>
     <item>
       <title>The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security</title>

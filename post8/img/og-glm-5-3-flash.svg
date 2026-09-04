@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Big Model, Small GPU</title>
+  <desc id="desc">Social preview for Alen Peric's GLM-5.3-Flash homelab experiment, showing a 321-billion-parameter model being fitted through a 16 GB GPU doorway.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#0b372f"/>
+      <stop offset="0.56" stop-color="#061c18"/>
+      <stop offset="1" stop-color="#020b09"/>
+    </linearGradient>
+    <linearGradient id="sofa" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#7edbc0"/>
+      <stop offset="1" stop-color="#286f5f"/>
+    </linearGradient>
+    <pattern id="nodes" width="68" height="68" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="7" r="1.8" fill="#75d5ba" fill-opacity=".18"/>
+      <path d="M7 7h61M7 7v61" stroke="#75d5ba" stroke-opacity=".045"/>
+    </pattern>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#nodes)"/>
+  <path d="M0 92h1200M0 553h1200" stroke="#e1c36f" stroke-opacity=".19"/>
+  <path d="M744 0v630" stroke="#75d5ba" stroke-opacity=".09"/>
+
+  <g font-family="Arial,Helvetica,sans-serif">
+    <text x="64" y="60" fill="#efd98f" font-family="ui-monospace,monospace" font-size="20" font-weight="700" letter-spacing="4">LIGMA.BLOG // LOCAL AI</text>
+    <text x="64" y="183" fill="#f4f1e9" font-size="70" font-weight="800" letter-spacing="-3">Big Model,</text>
+    <text x="64" y="258" fill="#f4f1e9" font-size="70" font-weight="800" letter-spacing="-3">Small GPU.</text>
+    <text x="68" y="306" fill="#a9c8be" font-family="ui-monospace,monospace" font-size="18" letter-spacing="1.5">RUNNING GLM-5.3-FLASH AT HOME</text>
+
+    <rect x="64" y="363" width="576" height="92" rx="12" fill="#0d332c" stroke="#e1c36f" stroke-width="2"/>
+    <text x="92" y="420" fill="#efd98f" font-family="ui-monospace,monospace" font-size="31" font-weight="800">321B MODEL</text>
+    <path d="M353 408h82m-20-18 20 18-20 18" fill="none" stroke="#75d5ba" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="465" y="420" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="31" font-weight="800">16 GB GPU</text>
+    <text x="66" y="512" fill="#789b90" font-family="ui-monospace,monospace" font-size="17">QUANTIZATION · CPU OFFLOAD · LLAMA.CPP</text>
+    <text x="64" y="596" fill="#d4dfda" font-family="ui-monospace,monospace" font-size="18" font-weight="700">ALEN PERIC</text>
+  </g>
+
+  <g transform="translate(770 116)" filter="url(#glow)">
+    <rect x="286" y="0" width="104" height="382" rx="8" fill="#061713" stroke="#e1c36f" stroke-width="5"/>
+    <rect x="305" y="62" width="66" height="259" rx="4" fill="#0f3b32" stroke="#75d5ba" stroke-opacity=".55"/>
+    <text x="338" y="39" text-anchor="middle" fill="#efd98f" font-family="ui-monospace,monospace" font-size="16" font-weight="700">16 GB</text>
+
+    <path d="M0 177h188q38 0 65 27l60 60-53 61-73-58H47q-47 0-47-47z" fill="url(#sofa)" stroke="#a6ead6" stroke-width="4"/>
+    <path d="M27 133h160q36 0 36 36v79H27z" fill="#17594a" stroke="#75d5ba" stroke-width="4"/>
+    <rect x="-13" y="151" width="62" height="158" rx="18" fill="#1b6755" stroke="#75d5ba" stroke-width="4"/>
+    <text x="116" y="220" text-anchor="middle" fill="#f4f1e9" font-family="ui-monospace,monospace" font-size="24" font-weight="800">GLM-5.3</text>
+    <text x="116" y="250" text-anchor="middle" fill="#efd98f" font-family="ui-monospace,monospace" font-size="17" font-weight="700">321B PARAMS</text>
+
+    <path d="M226 105h45m-16-15 16 15-16 15M226 347h45m-16-15 16 15-16 15" fill="none" stroke="#e1c36f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="188" y="407" text-anchor="middle" fill="#a9c8be" font-family="ui-monospace,monospace" font-size="15">THE SOFA FITS. TECHNICALLY.</text>
+  </g>
+</svg>

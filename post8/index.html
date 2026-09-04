@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#061c18" />
     <meta name="color-scheme" content="dark" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-    <meta name="description" content="How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home." />
+    <meta name="description" content="How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home." />
     <link rel="canonical" href="https://ligma.blog/post8/" />
     <link rel="author" href="https://alenperic.com/" />
     <link rel="alternate" hreflang="en-CA" href="https://ligma.blog/post8/" />
@@ -16,23 +16,23 @@
     <meta property="og:locale" content="en_CA" />
     <meta property="og:site_name" content="LIGMA.BLOG" />
     <meta property="og:title" content="Big Model, Small GPU — Running GLM‑5.3‑Flash at Home" />
-    <meta property="og:description" content="How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home." />
+    <meta property="og:description" content="How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home." />
     <meta property="og:url" content="https://ligma.blog/post8/" />
-    <meta property="og:image" content="https://ligma.blog/img/og-blog.png" />
-    <meta property="og:image:secure_url" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image" content="https://ligma.blog/post8/img/og-glm-5-3-flash.png" />
+    <meta property="og:image:secure_url" content="https://ligma.blog/post8/img/og-glm-5-3-flash.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="LIGMA.BLOG by Alen Peric" />
+    <meta property="og:image:alt" content="Big Model, Small GPU: a 321B-parameter model routed through a 16 GB GPU" />
     <meta property="article:published_time" content="2026-09-04" />
     <meta property="article:modified_time" content="2026-09-04" />
     <meta property="article:author" content="Alen Peric" />
     <meta property="article:section" content="Local AI" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Big Model, Small GPU — Running GLM‑5.3‑Flash at Home" />
-    <meta name="twitter:description" content="How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home." />
-    <meta name="twitter:image" content="https://ligma.blog/img/og-blog.png" />
-    <meta name="twitter:image:alt" content="LIGMA.BLOG by Alen Peric" />
+    <meta name="twitter:description" content="How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home." />
+    <meta name="twitter:image" content="https://ligma.blog/post8/img/og-glm-5-3-flash.png" />
+    <meta name="twitter:image:alt" content="Big Model, Small GPU: a 321B-parameter model routed through a 16 GB GPU" />
     <title>Big Model, Small GPU — Running GLM‑5.3‑Flash at Home | LIGMA.BLOG</title>
     <link rel="icon" type="image/png" sizes="64x64" href="../img/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
@@ -45,7 +45,7 @@
       gtag('js', new Date());
       gtag('config', 'G-VMD9STL32Q');
     </script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://ligma.blog/post8/#article","url":"https://ligma.blog/post8/","headline":"Big Model, Small GPU — Running GLM‑5.3‑Flash at Home","description":"How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home.","datePublished":"2026-09-04","dateModified":"2026-09-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://ligma.blog/post8/"},"image":{"@type":"ImageObject","url":"https://ligma.blog/img/og-blog.png","width":1200,"height":630,"caption":"LIGMA.BLOG by Alen Peric"},"thumbnailUrl":"https://ligma.blog/img/og-blog.png","inLanguage":"en-CA","isAccessibleForFree":true,"articleSection":"Local AI","keywords":["GLM-5.3-Flash","llama.cpp","RTX 5070 Ti","GGUF","quantization","local AI","Mixture of Experts"],"author":{"@id":"https://alenperic.com/#person"},"publisher":{"@id":"https://alenperic.com/#person"},"isPartOf":{"@id":"https://ligma.blog/#blog"}},{"@type":"BreadcrumbList","@id":"https://ligma.blog/post8/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"LIGMA.BLOG","item":"https://ligma.blog/"},{"@type":"ListItem","position":2,"name":"Big Model, Small GPU — Running GLM‑5.3‑Flash at Home","item":"https://ligma.blog/post8/"}]},{"@type":"Person","@id":"https://alenperic.com/#person","name":"Alen Peric","url":"https://alenperic.com/","image":"https://ligma.blog/img/alen-peric.webp","jobTitle":"Senior Threat Intelligence Analyst","worksFor":{"@type":"Organization","name":"CrowdStrike"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Fanshawe College"},"sameAs":["https://www.linkedin.com/in/alen-peric","https://github.com/alenperic","https://ligma.blog/"]}]}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://ligma.blog/post8/#article","url":"https://ligma.blog/post8/","headline":"Big Model, Small GPU — Running GLM‑5.3‑Flash at Home","description":"How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home.","datePublished":"2026-09-04","dateModified":"2026-09-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://ligma.blog/post8/"},"image":{"@type":"ImageObject","url":"https://ligma.blog/post8/img/og-glm-5-3-flash.png","width":1200,"height":630,"caption":"Big Model, Small GPU: a 321B-parameter model routed through a 16 GB GPU"},"thumbnailUrl":"https://ligma.blog/post8/img/og-glm-5-3-flash.png","inLanguage":"en-CA","isAccessibleForFree":true,"articleSection":"Local AI","keywords":["GLM-5.3-Flash","llama.cpp","RTX 5070 Ti","GGUF","quantization","local AI","Mixture of Experts"],"author":{"@id":"https://alenperic.com/#person"},"publisher":{"@id":"https://alenperic.com/#person"},"isPartOf":{"@id":"https://ligma.blog/#blog"}},{"@type":"BreadcrumbList","@id":"https://ligma.blog/post8/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"LIGMA.BLOG","item":"https://ligma.blog/"},{"@type":"ListItem","position":2,"name":"Big Model, Small GPU — Running GLM‑5.3‑Flash at Home","item":"https://ligma.blog/post8/"}]},{"@type":"Person","@id":"https://alenperic.com/#person","name":"Alen Peric","url":"https://alenperic.com/","image":"https://ligma.blog/img/alen-peric.webp","jobTitle":"Senior Threat Intelligence Analyst","worksFor":{"@type":"Organization","name":"CrowdStrike"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Fanshawe College"},"sameAs":["https://www.linkedin.com/in/alen-peric","https://github.com/alenperic","https://ligma.blog/"]}]}</script>
     <script src="../assets/blog.js" defer></script>
   </head>
   <body class="article-page">
@@ -64,25 +64,25 @@
     <div class="reading-progress" aria-hidden="true"><span></span></div>
     <main id="article">
       <section class="article-masthead">
-        <p class="article-meta">Local AI // <time datetime="2026-09-04">September 2026</time> // 5 min read</p>
+        <p class="article-meta">Local AI // <time datetime="2026-09-04">September 2026</time> // 6 min read</p>
         <h1>Big Model, Small GPU — Running GLM‑5.3‑Flash at Home</h1>
-        <p class="article-standfirst">How a single RTX 5070 Ti, 128 GB of RAM, aggressive quantization, and CPU offloading made a 321B GLM‑5.3‑Flash model run at home.</p>
+        <p class="article-standfirst">How a single RTX 5070 Ti, 128 GB of RAM, quantization, and CPU offloading made a 320B-class model run at home.</p>
       </section>
       <div class="article-shell">
         <article class="blog-post">
           <!-- ARTICLE CONTENT START -->
-<p>The goal sounded slightly unreasonable: run GLM‑5.3‑Flash locally on my existing Debian 12 homelab server. This is a 321‑billion-parameter model designed for coding, reasoning, and agentic workloads, but my server has a single RTX 5070 Ti with 16 GB of VRAM, 128 GB of system memory, and a Ryzen 7 5800XT. In other words, the model was approximately twenty times larger than the GPU memory available to it. This was less “install an AI model” and more “fit a sectional sofa through a condo doorway without admitting defeat.”</p>
+<p>The goal sounded slightly unreasonable: run <a href="https://huggingface.co/zai-org/GLM-5.3-Flash" target="_blank" rel="noopener noreferrer">GLM‑5.3‑Flash</a> locally on my existing Debian 12 homelab server. This is a roughly 320B-parameter model designed for coding, reasoning, and agentic workloads, but my server has a single RTX 5070 Ti with 16 GB of VRAM, 128 GB of system memory, and a Ryzen 7 5800XT. In BF16, the model’s weights alone would require roughly 640 GB—about 40 times the VRAM available. Even the 102 GB quantized build was more than six times larger than the card. This was less “install an AI model” and more “fit a sectional sofa through a condo doorway without admitting defeat.”</p>
 
       <figure class="meme-panel">
         <img loading="lazy" decoding="async" src="img/sectional-through-door.svg" width="1200" height="675" alt="A 321-billion-parameter model represented as an oversized sectional sofa being compressed through a doorway labelled 16 GB VRAM." />
         <figcaption>The first architecture diagram was mostly furniture logistics.</figcaption>
       </figure>
 
-      <p>GLM‑5.3‑Flash does have one important advantage: it uses a Mixture-of-Experts architecture. Instead of activating all 321 billion parameters for every token, it routes each request through roughly 18 billion active parameters. That reduces the amount of computation required, but it does not eliminate the need to store the complete model. The practical options were renting a multi-GPU cloud server, building a much larger local GPU system, choosing a smaller model, or using quantization and CPU offloading. I chose the last option because the objective was not to build the fastest deployment—it was to find out whether the hardware I already owned could run the model at all.</p>
+      <p>GLM‑5.3‑Flash does have one important advantage: it uses a Mixture-of-Experts architecture. For each token, it activates roughly 18 billion of its total parameters. That reduces the computation required, but it does not eliminate the need to store the complete model. The official model card reports 320B total parameters and 18B active, while Hugging Face’s file metadata reports 321B; “320B-class” avoids pretending the distinction matters to this experiment. The practical options were renting a multi-GPU cloud server, building a much larger local GPU system, choosing a smaller model, or using quantization and CPU offloading. I chose the last option because the objective was not to build the fastest deployment—it was to find out whether the hardware I already owned could run the model at all.</p>
 
-      <p>Quantization made the experiment possible. Normally, storing the model in BF16 format would require roughly 642 GB because each parameter consumes two bytes. I used Unsloth’s UD‑IQ2_XXS GGUF release, which compresses the weights to approximately two bits per parameter and reduces the model to about 102 GB. Importantly, this did not make the entire model fit inside 16 GB of VRAM. Instead, llama.cpp automatically placed around 13.7 GB of model data on the GPU while keeping the remaining weights in system RAM. The GPU handled the tensors it could accommodate, while the CPU and RAM supplied everything else. Quantization is therefore less like shrinking a moving truck into a hatchback and more like packing the truck very efficiently and towing the rest behind it.</p>
+      <p>Quantization made the experiment possible. Normally, storing the model in BF16 format would require roughly 642 GB because each parameter consumes two bytes. I used Unsloth’s nominally two-bit <a href="https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF/tree/main/UD-IQ2_XXS" target="_blank" rel="noopener noreferrer">UD‑IQ2_XXS GGUF release</a>, which produced an approximately 102 GB model footprint. The effective storage works out above two bits per parameter once metadata, block structures, and higher-precision tensors are included. Importantly, this did not make the entire model fit inside 16 GB of VRAM. Instead, llama.cpp automatically placed around 13.7 GB of model data on the GPU while keeping the remaining weights in system RAM. The GPU handled the tensors it could accommodate, while the CPU and RAM supplied everything else. Quantization is therefore less like shrinking a moving truck into a hatchback and more like packing the truck very efficiently and towing the rest behind it.</p>
 
-      <p>Implementation required a custom llama.cpp branch with early support for GLM’s <code>glm5next</code> architecture. I compiled it for the RTX 5070 Ti’s Blackwell architecture using CUDA 13.3, CMake, and Ninja, then downloaded the four-part GGUF model from Hugging Face. The server was configured with a 4,096-token context window, one inference slot, eight CPU threads, and automatic GPU-layer fitting. Two settings—disabling TensorFloat-32 overrides and leaving flash attention off—were required for correct output in this experimental build. Once the model loaded, llama.cpp exposed a local OpenAI-compatible API on port 8081, allowing it to accept the same general request format used by many commercial AI services.</p>
+      <p>Implementation required Unsloth’s experimental <a href="https://github.com/unslothai/llama.cpp/tree/glm5next/upstream" target="_blank" rel="noopener noreferrer"><code>glm5next/upstream</code> branch</a>, tracked in <a href="https://github.com/ggml-org/llama.cpp/pull/27754" target="_blank" rel="noopener noreferrer">llama.cpp PR #27754</a>, with early support for GLM’s <code>glm5next</code> architecture. This run was pinned to <a href="https://github.com/unslothai/llama.cpp/commit/949f7efb097eb20ef36fecdb1afaebff9a4ae7ed" target="_blank" rel="noopener noreferrer">commit <code>949f7ef</code></a>. I compiled it for the RTX 5070 Ti’s Blackwell architecture using CUDA 13.3, CMake, and Ninja, then downloaded the four-part GGUF model from Hugging Face. The server was configured with a 4,096-token context window, one inference slot, eight CPU threads, and automatic GPU-layer fitting. Two settings—disabling TensorFloat-32 overrides and leaving flash attention off—were required for correct output in this experimental build. Once the model loaded, llama.cpp exposed a local OpenAI-compatible API on port 8081, allowing it to accept the same general request format used by many commercial AI services.</p>
 
       <p>Storage became an unexpected side quest. The server’s 512 GB SSD initially had only 46 GB available, while the model alone needed more than twice that amount. Cleaning stale temporary files, oversized Docker logs, package caches, and unused images eventually created enough room. An interrupted SSH session then stopped the first download attempt halfway through, but llama.cpp retained the partial shards and resumed them later. I moved the process into a systemd-managed service so it could survive SSH disconnects and continue loading independently. Apparently deploying a 321B model was not enough; Docker logs also wanted their own mortgage.</p>
 
@@ -91,14 +91,54 @@
         <figcaption>The storage audit found several tenants who were not paying rent.</figcaption>
       </figure>
 
-      <p>The final result was successful, although nobody will confuse it with a low-latency production endpoint. The health check returned <code>200 OK</code>, and the model correctly responded to its first API prompt with “GLM is running.” Prompt processing reached approximately 0.91 tokens per second, while generation averaged 0.38 tokens per second. Producing 35 completion tokens took about 89 seconds, with the complete request finishing in just under two minutes. The RTX 5070 Ti reported full utilization, but drew only around 46 watts, indicating that it was frequently waiting for data from system memory rather than operating at its full computational capacity. It felt a little like dial-up internet had returned, except this time it had 321 billion parameters.</p>
+      <p>The final result was successful, although nobody will confuse it with a low-latency production endpoint. The health check returned <code>200 OK</code>, and the model responded to its first API prompt with “GLM is running.” Prompt processing reached approximately 0.91 tokens per second, while generation averaged 0.38 tokens per second. Producing 35 completion tokens took about 89 seconds, with the complete request finishing in just under two minutes. The RTX 5070 Ti reported full utilization but drew only around 46 watts. That behaviour was consistent with the GPU frequently waiting on the CPU and system memory, although utilization and power readings alone do not prove the cause. It felt a little like dial-up internet had returned, except this time it had roughly 320 billion parameters.</p>
+
+      <section class="results-panel" aria-labelledby="results-title">
+        <p class="results-kicker">Measured result // single test run</p>
+        <h2 id="results-title">Deployment feasibility: confirmed</h2>
+        <dl class="results-grid">
+          <div><dt>Quantized footprint</dt><dd>~102 GB</dd></div>
+          <div><dt>GPU-resident model data</dt><dd>~13.7 GB</dd></div>
+          <div><dt>Prompt processing</dt><dd>0.91 tok/s</dd></div>
+          <div><dt>Generation</dt><dd>0.38 tok/s</dd></div>
+          <div><dt>35-token generation</dt><dd>~89 seconds</dd></div>
+        </dl>
+        <p class="results-note">The endpoint loaded and generated coherent output. This experiment tested deployment feasibility, not coding or reasoning quality.</p>
+      </section>
 
       <figure class="meme-panel">
         <img src="img/dial-up-321b.svg" width="1200" height="675" alt="A retro terminal showing GLM-5.3-Flash generating at 0.38 tokens per second with a dial-up-style progress indicator." loading="lazy" decoding="async" />
         <figcaption>Technically online. Spiritually still negotiating the handshake.</figcaption>
       </figure>
 
-      <p>There is still room to improve. The server’s four memory modules are currently running at only 2,133 MT/s, making RAM bandwidth the clearest confirmed bottleneck; increasing that speed to a stable 2,667 or 2,933 MT/s should reduce some of the waiting. Quantizing the key-value cache to eight bits, reducing the reserved VRAM from 2 GB to 1 GB, and benchmarking different CPU-thread counts may provide additional incremental gains. Newer experimental approaches can also cache frequently selected Mixture-of-Experts weights in VRAM, potentially reducing repeated transfers between RAM and the GPU. The broader conclusion, however, is already clear: a single 16 GB consumer GPU can technically serve a 321B model when paired with aggressive quantization and enough system memory—but “it runs” and “it runs well” remain two very different engineering milestones.</p>
+      <section class="industry-section" aria-labelledby="industry-title">
+        <p class="results-kicker">Beyond the benchmark // industry impact</p>
+        <h2 id="industry-title">What this changes</h2>
+        <div class="implication-grid">
+          <article>
+            <h3>Threat intelligence</h3>
+            <p>The barrier to privately controlled, localized agentic AI is falling sharply. This system is too slow for high-volume interactive work, but research, data enrichment, workflow orchestration, and other asynchronous tasks do not always need real-time generation. Local inference can also remove cloud-provider telemetry and policy enforcement from the picture. The implication is not that every threat actor now owns a frontier lab; it is that capable private automation is moving within reach of increasingly modest operations.</p>
+          </article>
+          <article>
+            <h3>Enterprise strategy</h3>
+            <p>Data-sovereign and air-gapped AI no longer automatically implies a million-dollar H100 cluster. This build proves technical feasibility, not a production business case: 0.38 tokens per second would miss most interactive service expectations. For batch enrichment, offline summarization, controlled experimentation, or other latency-tolerant workloads, however, organizations can trade speed for sovereignty and lower infrastructure cost. The useful question becomes workload fit—not whether local deployment is possible.</p>
+          </article>
+        </div>
+      </section>
+
+      <p>There is still room to improve. The server’s four memory modules are currently running at only 2,133 MT/s, making RAM bandwidth the leading suspected bottleneck. Raising that speed to a stable 2,667 or 2,933 MT/s and repeating the same benchmark would test the diagnosis. Quantizing the key-value cache to eight bits, reducing the reserved VRAM from 2 GB to 1 GB, and benchmarking different CPU-thread counts may provide additional incremental gains. Newer experimental approaches can also cache frequently selected Mixture-of-Experts weights in VRAM, potentially reducing repeated transfers between RAM and the GPU. The broader conclusion, however, is already clear: a single 16 GB consumer GPU can technically serve a 320B-class model when paired with aggressive quantization and enough system memory—but “it runs” and “it runs well” remain two very different engineering milestones.</p>
+
+      <h2 class="sources-heading">Sources and build record</h2>
+      <ul class="sources-list">
+        <li><a href="https://huggingface.co/zai-org/GLM-5.3-Flash" target="_blank" rel="noopener noreferrer">Official GLM‑5.3‑Flash model card</a> — architecture, 320B total parameters, and 18B active parameters.</li>
+        <li><a href="https://huggingface.co/unsloth/GLM-5.3-Flash-GGUF/tree/main/UD-IQ2_XXS" target="_blank" rel="noopener noreferrer">Exact Unsloth UD‑IQ2_XXS GGUF release</a> — the four-shard, approximately 102 GB model used here.</li>
+        <li><a href="https://github.com/unslothai/llama.cpp/tree/glm5next/upstream" target="_blank" rel="noopener noreferrer"><code>glm5next/upstream</code> branch</a> and <a href="https://github.com/ggml-org/llama.cpp/pull/27754" target="_blank" rel="noopener noreferrer">llama.cpp PR #27754</a> — pinned to <a href="https://github.com/unslothai/llama.cpp/commit/949f7efb097eb20ef36fecdb1afaebff9a4ae7ed" target="_blank" rel="noopener noreferrer">commit <code>949f7efb</code></a> for this experiment.</li>
+      </ul>
+
+      <div class="callout build-record">
+        <p><strong>Reproduction snapshot:</strong> Debian 12; Ryzen 7 5800XT; RTX 5070 Ti 16 GB; 128 GB RAM; CUDA 13.3; CUDA target <code>120a</code>; llama.cpp <code>0.3.0-dev</code> at <code>949f7ef</code>; 4,096-token context; one inference slot; eight CPU threads; port 8081; automatic GPU-layer fitting; flash attention off; TensorFloat-32 overrides disabled.</p>
+        <p>This is a pinned run record rather than a turnkey tutorial. The branch was experimental, so flags and behaviour may change as support moves upstream.</p>
+      </div>
           <!-- ARTICLE CONTENT END -->
         </article>
       </div>
