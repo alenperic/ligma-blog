@@ -9,6 +9,8 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="description" content="A hands-on guide to building, scaling, and validating a cybersecurity retrieval system with Ray, K3s, and Kubernetes." />
     <link rel="canonical" href="https://ligma.blog/post6/" />
+    <link rel="author" href="https://alenperic.com/" />
+    <link rel="alternate" hreflang="en-CA" href="https://ligma.blog/post6/" />
     <link rel="alternate" type="application/rss+xml" title="LIGMA.BLOG RSS" href="https://ligma.blog/feed.xml" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="en_CA" />
@@ -17,29 +19,33 @@
     <meta property="og:description" content="A hands-on guide to building, scaling, and validating a cybersecurity retrieval system with Ray, K3s, and Kubernetes." />
     <meta property="og:url" content="https://ligma.blog/post6/" />
     <meta property="og:image" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image:secure_url" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="LIGMA.BLOG by Alen Peric" />
     <meta property="article:published_time" content="2025-10-05" />
+    <meta property="article:modified_time" content="2026-09-04" />
     <meta property="article:author" content="Alen Peric" />
     <meta property="article:section" content="AI infrastructure" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG" />
     <meta name="twitter:description" content="A hands-on guide to building, scaling, and validating a cybersecurity retrieval system with Ray, K3s, and Kubernetes." />
     <meta name="twitter:image" content="https://ligma.blog/img/og-blog.png" />
+    <meta name="twitter:image:alt" content="LIGMA.BLOG by Alen Peric" />
     <title>Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG | LIGMA.BLOG</title>
     <link rel="icon" type="image/png" sizes="64x64" href="../img/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
     <link rel="preload" href="../assets/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="../assets/blog.css" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLLVM6YY1Y"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMD9STL32Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-SLLVM6YY1Y');
+      gtag('config', 'G-VMD9STL32Q');
     </script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://ligma.blog/post6/#article","headline":"Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG","description":"A hands-on guide to building, scaling, and validating a cybersecurity retrieval system with Ray, K3s, and Kubernetes.","datePublished":"2025-10-05","dateModified":"2025-10-05","mainEntityOfPage":"https://ligma.blog/post6/","image":"https://ligma.blog/img/og-blog.png","inLanguage":"en-CA","articleSection":"AI infrastructure","keywords":["Ray","K3s","Kubernetes","RAG","cybersecurity AI"],"author":{"@type":"Person","@id":"https://alenperic.com/#person","name":"Alen Peric","url":"https://alenperic.com/"},"publisher":{"@id":"https://alenperic.com/#person"},"isPartOf":{"@id":"https://ligma.blog/#blog"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://ligma.blog/post6/#article","url":"https://ligma.blog/post6/","headline":"Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG","description":"A hands-on guide to building, scaling, and validating a cybersecurity retrieval system with Ray, K3s, and Kubernetes.","datePublished":"2025-10-05","dateModified":"2026-09-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://ligma.blog/post6/"},"image":{"@type":"ImageObject","url":"https://ligma.blog/img/og-blog.png","width":1200,"height":630,"caption":"LIGMA.BLOG by Alen Peric"},"thumbnailUrl":"https://ligma.blog/img/og-blog.png","inLanguage":"en-CA","isAccessibleForFree":true,"articleSection":"AI infrastructure","keywords":["Ray","K3s","Kubernetes","RAG","cybersecurity AI"],"author":{"@id":"https://alenperic.com/#person"},"publisher":{"@id":"https://alenperic.com/#person"},"isPartOf":{"@id":"https://ligma.blog/#blog"}},{"@type":"BreadcrumbList","@id":"https://ligma.blog/post6/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"LIGMA.BLOG","item":"https://ligma.blog/"},{"@type":"ListItem","position":2,"name":"Learning Ray on K3s: From Setup to Production-Ready CyberLLM RAG","item":"https://ligma.blog/post6/"}]},{"@type":"Person","@id":"https://alenperic.com/#person","name":"Alen Peric","url":"https://alenperic.com/","image":"https://ligma.blog/img/alen-peric.webp","jobTitle":"Senior Threat Intelligence Analyst","worksFor":{"@type":"Organization","name":"CrowdStrike"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Fanshawe College"},"sameAs":["https://www.linkedin.com/in/alen-peric","https://github.com/alenperic","https://ligma.blog/"]}]}</script>
     <script src="../assets/blog.js" defer></script>
   </head>
   <body class="article-page">
@@ -255,7 +261,7 @@ kubectl port-forward svc/kps-grafana 3000:80                  # Grafana</code></
           <a href="https://github.com/alenperic" rel="me">GitHub</a>
         </nav>
       </div>
-      <p class="footer-note">Research and analysis are personal and do not represent current or former employers. This is a static publication with no accounts or comments. Basic traffic analytics may use cookies to measure readership.</p>
+      <p class="footer-note"><strong>Privacy note:</strong> This static publication has no accounts or comments. Google Analytics may use cookies or similar browser storage to measure readership. Some articles load media from third-party content networks. Research and analysis are personal and do not represent current or former employers.</p>
     </footer>
   </body>
 </html>

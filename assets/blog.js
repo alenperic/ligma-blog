@@ -65,6 +65,18 @@
     });
   });
 
+  document.querySelectorAll("img[data-remote-media]").forEach((image) => {
+    image.addEventListener("error", () => {
+      const fallback = document.createElement("a");
+      fallback.className = "media-fallback";
+      fallback.href = image.currentSrc || image.src;
+      fallback.target = "_blank";
+      fallback.rel = "noopener noreferrer";
+      fallback.textContent = "Media could not load here. Open the original source ↗";
+      image.replaceWith(fallback);
+    }, { once: true });
+  });
+
   const reveals = [...document.querySelectorAll(".reveal")];
   if ("IntersectionObserver" in window && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const observer = new IntersectionObserver((entries) => {

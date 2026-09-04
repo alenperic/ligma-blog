@@ -9,6 +9,8 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="description" content="A practical blueprint for identifying, assessing, and remediating AI-specific risks in enterprise environments." />
     <link rel="canonical" href="https://ligma.blog/post7/" />
+    <link rel="author" href="https://alenperic.com/" />
+    <link rel="alternate" hreflang="en-CA" href="https://ligma.blog/post7/" />
     <link rel="alternate" type="application/rss+xml" title="LIGMA.BLOG RSS" href="https://ligma.blog/feed.xml" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="en_CA" />
@@ -17,29 +19,33 @@
     <meta property="og:description" content="A practical blueprint for identifying, assessing, and remediating AI-specific risks in enterprise environments." />
     <meta property="og:url" content="https://ligma.blog/post7/" />
     <meta property="og:image" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image:secure_url" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="LIGMA.BLOG by Alen Peric" />
     <meta property="article:published_time" content="2026-03-16" />
+    <meta property="article:modified_time" content="2026-09-04" />
     <meta property="article:author" content="Alen Peric" />
     <meta property="article:section" content="AI security" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security" />
     <meta name="twitter:description" content="A practical blueprint for identifying, assessing, and remediating AI-specific risks in enterprise environments." />
     <meta name="twitter:image" content="https://ligma.blog/img/og-blog.png" />
+    <meta name="twitter:image:alt" content="LIGMA.BLOG by Alen Peric" />
     <title>The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security | LIGMA.BLOG</title>
     <link rel="icon" type="image/png" sizes="64x64" href="../img/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
     <link rel="preload" href="../assets/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="../assets/blog.css" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLLVM6YY1Y"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMD9STL32Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-SLLVM6YY1Y');
+      gtag('config', 'G-VMD9STL32Q');
     </script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://ligma.blog/post7/#article","headline":"The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security","description":"A practical blueprint for identifying, assessing, and remediating AI-specific risks in enterprise environments.","datePublished":"2026-03-16","dateModified":"2026-03-16","mainEntityOfPage":"https://ligma.blog/post7/","image":"https://ligma.blog/img/og-blog.png","inLanguage":"en-CA","articleSection":"AI security","keywords":["AI security","LLM vulnerabilities","prompt injection","red teaming","AIBOM"],"author":{"@type":"Person","@id":"https://alenperic.com/#person","name":"Alen Peric","url":"https://alenperic.com/"},"publisher":{"@id":"https://alenperic.com/#person"},"isPartOf":{"@id":"https://ligma.blog/#blog"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BlogPosting","@id":"https://ligma.blog/post7/#article","url":"https://ligma.blog/post7/","headline":"The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security","description":"A practical blueprint for identifying, assessing, and remediating AI-specific risks in enterprise environments.","datePublished":"2026-03-16","dateModified":"2026-09-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://ligma.blog/post7/"},"image":{"@type":"ImageObject","url":"https://ligma.blog/img/og-blog.png","width":1200,"height":630,"caption":"LIGMA.BLOG by Alen Peric"},"thumbnailUrl":"https://ligma.blog/img/og-blog.png","inLanguage":"en-CA","isAccessibleForFree":true,"articleSection":"AI security","keywords":["AI security","LLM vulnerabilities","prompt injection","red teaming","AIBOM"],"author":{"@id":"https://alenperic.com/#person"},"publisher":{"@id":"https://alenperic.com/#person"},"isPartOf":{"@id":"https://ligma.blog/#blog"}},{"@type":"BreadcrumbList","@id":"https://ligma.blog/post7/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"LIGMA.BLOG","item":"https://ligma.blog/"},{"@type":"ListItem","position":2,"name":"The Top 8 LLM Vulnerabilities: A Blueprint for Enterprise AI Security","item":"https://ligma.blog/post7/"}]},{"@type":"Person","@id":"https://alenperic.com/#person","name":"Alen Peric","url":"https://alenperic.com/","image":"https://ligma.blog/img/alen-peric.webp","jobTitle":"Senior Threat Intelligence Analyst","worksFor":{"@type":"Organization","name":"CrowdStrike"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Fanshawe College"},"sameAs":["https://www.linkedin.com/in/alen-peric","https://github.com/alenperic","https://ligma.blog/"]}]}</script>
     <script src="../assets/blog.js" defer></script>
   </head>
   <body class="article-page">
@@ -75,33 +81,57 @@
       <p>Prompt injection is the top critical vulnerability for a reason. Attackers craft evasion attacks to bypass safety filters, forcing the model to ignore prior instructions. It’s the AI equivalent of SQL injection, but much harder to patch because the compiler understands natural language. This happens directly via user inputs, or indirectly when an LLM reads a poisoned external webpage.</p>
       <p><b>My playbook:</b> System prompts are not a security boundary. You need dedicated Red Teaming orchestration. Deploy automated security testing tools like <b>Giskard</b>, <b>Garak</b>, or Microsoft’s <b>PyRIT</b> to hammer the model with hallucination and jailbreak payloads before it ever touches production.</p>
 
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/yx400dIdkwWdsCgWYp/giphy.gif" alt="Eric Andre Let Me In GIF">
+      <div class="meme-caption">Prompt injection payloads hitting your "You are a helpful assistant" system prompt.</div>
+
       <h3>2. Supply Chain Vulnerabilities & Model Provenance</h3>
       <p>You cannot secure what you cannot track. The AI lifecycle relies heavily on third-party ML frameworks (TensorFlow, PyTorch) and pre-trained weights. Pulling a compromised model weight from a public repository without validation introduces a catastrophic, system-level backdoor into your AWS SageMaker or Azure AI environments.</p>
       <p><b>My playbook:</b> Mandate an <b>AI Bill of Materials (AIBOM)</b> to track the lineage of every model, dataset, and third-party dependency. Inject specialized AI scanners like <b>Hidden Layer</b> or <b>Protect AI</b> directly into your CI/CD pipeline. Block any build that contains vulnerable Python libraries or unsigned model weights.</p>
+
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/32mC2kXYWCsg0/giphy.gif" alt="Awkward Monkey Puppet GIF">
+      <div class="meme-caption">Swapping unverified HuggingFace model weights into the production pipeline.</div>
 
       <h3>3. Sensitive Information Disclosure</h3>
       <p>LLMs are data sponges; they memorize their training data. If you fine-tune a model on internal financial records without perfect sanitization, an attacker can use targeted extraction prompts to pull Personally Identifiable Information (PII) or proprietary financial data right out of the model's memory.</p>
       <p><b>My playbook:</b> Sanitize data at the source before collection. In production, run strict Data Loss Prevention (DLP) filters and Output Handling guardrails designed specifically for generative text to scrutinize every outbound response.</p>
 
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/fADf4RUs3hUFvHz18o/giphy.gif" alt="Phil Swift Flex Tape GIF">
+      <div class="meme-caption">Trying to stop an over-parameterized LLM from leaking its training data with a single regex filter.</div>
+
       <h3>4. Insecure Output Handling</h3>
       <p>When downstream systems—like internal web portals, databases, or autonomous agents—blindly trust the output generated by an LLM, you inherit traditional exploits. An LLM can be manipulated into generating malicious payloads that trigger Cross-Site Scripting (XSS) or Server-Side Request Forgery (SSRF) when rendered by a browser or executed by a backend.</p>
       <p><b>My playbook:</b> Treat all LLM output as untrusted, user-supplied input. Implement strict zero-trust validation and escaping on all model outputs before they interact with any other system.</p>
+
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cat rapidly typing GIF">
+      <div class="meme-caption">Downstream applications blindly executing raw LLM output as sanitized code.</div>
 
       <h3>5. Training Data Poisoning</h3>
       <p>Adversaries subtly alter datasets used for initial training or fine-tuning pipelines. By introducing poisoned data points, they degrade model performance or implant targeted biases and backdoors that lie dormant until triggered by a specific phrase or token sequence.</p>
       <p><b>My playbook:</b> Cryptographically hash your datasets and lock down access controls. Regularly audit the statistical distribution of your training data and use anomaly detection to catch poisoned inputs before they commit to the training cycle.</p>
 
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/l4Jz3a8jO92crUlWM/giphy.gif" alt="Salt Bae dropping salt GIF">
+      <div class="meme-caption">Adversaries quietly poisoning the fine-tuning dataset while no one checks the hashes.</div>
+
       <h3>6. Model Denial of Service (DoS)</h3>
       <p>LLM inferencing eats GPU VRAM for breakfast. Attackers craft computationally expensive prompts—triggering massive token generation or recursive logic—to exhaust your infrastructure. The result is a degraded service for legitimate users and a massive, unexpected cloud billing spike.</p>
       <p><b>My playbook:</b> Hardcode strict resource quotas, token limits, and API rate limiting. Pipe your telemetry into a Tableau or PowerBI dashboard to track resource consumption anomalies and monitor your Mean Time to Remediation (MTTR) for availability events.</p>
+
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/1n4iuWZFnTeN6qvdpD/giphy.gif" alt="Spongebob brain on fire GIF">
+      <div class="meme-caption">When an attacker's recursive prompt eats all 80GB of your Blackwell's VRAM.</div>
 
       <h3>7. Insecure Plugin & Agent Design</h3>
       <p>As we transition LLMs into autonomous agents with access to web browsing, SQL databases, and code execution, the risk of lateral movement explodes. A prompt injection against an over-privileged agent can easily pivot into a full infrastructure compromise.</p>
       <p><b>My playbook:</b> Apply absolute least privilege. Plugins must run in strictly isolated, containerized environments. Any API integration that touches state changes or financial transactions requires explicit, human-in-the-loop authorization. No exceptions.</p>
 
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/z9AUvhAEiXOqA/giphy.gif" alt="Jurassic Park Hold Onto Your Butts GIF">
+      <div class="meme-caption">Giving an autonomous agent unsanitized API access to the production database.</div>
+
       <h3>8. Model Theft & Extraction Attacks</h3>
       <p>Your proprietary financial models are your IP. Attackers execute extraction attacks by systematically hammering your API, analyzing the input/output pairs, and mathematically reconstructing the model’s weights offline.</p>
       <p><b>My playbook:</b> Secure AI endpoints with aggressive behavioral rate limiting. Watermark your model outputs and deploy alerting to flag the repetitive, anomalous querying patterns that indicate an automated extraction attempt.</p>
+
+      <img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media src="https://media.giphy.com/media/KmHueA88mFABT9GkkR/giphy.gif" alt="Hackerman typing GIF">
+      <div class="meme-caption">Adversaries systematically executing extraction attacks against your API.</div>
 
       <hr>
 
@@ -148,7 +178,7 @@
           <a href="https://github.com/alenperic" rel="me">GitHub</a>
         </nav>
       </div>
-      <p class="footer-note">Research and analysis are personal and do not represent current or former employers. This is a static publication with no accounts or comments. Basic traffic analytics may use cookies to measure readership.</p>
+      <p class="footer-note"><strong>Privacy note:</strong> This static publication has no accounts or comments. Google Analytics may use cookies or similar browser storage to measure readership. Some articles load media from third-party content networks. Research and analysis are personal and do not represent current or former employers.</p>
     </footer>
   </body>
 </html>

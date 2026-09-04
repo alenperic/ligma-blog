@@ -10,6 +10,7 @@ const htmlFiles = [
 const errors = [];
 let schemaBlocks = 0;
 let checkedReferences = 0;
+let remoteArticleImages = 0;
 
 for (const filename of htmlFiles) {
   const html = fs.readFileSync(path.join(root, filename), "utf8");
@@ -18,11 +19,15 @@ for (const filename of htmlFiles) {
   if (!html.includes('<html lang="en-CA">')) errors.push(`${filename}: missing en-CA language`);
   if (!html.includes("<title>")) errors.push(`${filename}: missing title`);
   if (html.includes('name="keywords"')) errors.push(`${filename}: obsolete keywords metadata remains`);
-  if (/<img\b[^>]*\bsrc=["']https?:\/\//i.test(html)) errors.push(`${filename}: remote image hotlink remains`);
+  remoteArticleImages += (html.match(/<img\b[^>]*\bdata-remote-media\b/gi) || []).length;
 
   if (filename !== "404.html") {
     if (!html.includes('rel="canonical"')) errors.push(`${filename}: missing canonical URL`);
     if (!html.includes('name="description"')) errors.push(`${filename}: missing description`);
+    if (!html.includes('rel="alternate" hreflang="en-CA"')) errors.push(`${filename}: missing hreflang`);
+    if (!html.includes('property="og:image:secure_url"')) errors.push(`${filename}: missing secure Open Graph image`);
+    if (!html.includes('name="twitter:image:alt"')) errors.push(`${filename}: missing Twitter image alt text`);
+    if (!html.includes("G-VMD9STL32Q")) errors.push(`${filename}: homepage analytics tag is not aligned`);
   }
 
   for (const match of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
@@ -54,6 +59,13 @@ const rayPost = fs.readFileSync(path.join(root, "post6/index.html"), "utf8");
 const technicalImages = rayPost.match(/<img\b[^>]*src="img\//g) || [];
 if (technicalImages.length !== 8) errors.push(`post6: expected 8 technical screenshots, found ${technicalImages.length}`);
 
+const expectedRestoredImages = new Map([["post4/index.html", 14], ["post5/index.html", 17], ["post7/index.html", 8]]);
+for (const [filename, expected] of expectedRestoredImages) {
+  const html = fs.readFileSync(path.join(root, filename), "utf8");
+  const actual = (html.match(/<img\b[^>]*\bdata-remote-media\b/gi) || []).length;
+  if (actual !== expected) errors.push(`${filename}: expected ${expected} restored article images, found ${actual}`);
+}
+
 for (const filename of ["robots.txt", "sitemap.xml", "feed.xml", "img/og-blog.png"]) {
   if (!fs.existsSync(path.join(root, filename))) errors.push(`missing ${filename}`);
 }
@@ -69,5 +81,5 @@ console.log(JSON.stringify({
   articleCards: cards.length,
   technicalImages: technicalImages.length,
   checkedReferences,
-  remoteImageHotlinks: 0
+  restoredRemoteArticleImages: remoteArticleImages
 }, null, 2));

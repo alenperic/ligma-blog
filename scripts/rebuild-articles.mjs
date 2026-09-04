@@ -1,7 +1,13 @@
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 
 const root = path.resolve(import.meta.dirname, "..");
+const sourceRef = process.argv.find((argument) => argument.startsWith("--source-ref="))?.split("=")[1];
+
+if (sourceRef && !/^[0-9a-f]{7,40}$/i.test(sourceRef)) {
+  throw new Error("--source-ref must be a Git commit SHA");
+}
 
 const articles = [
   {
@@ -113,7 +119,7 @@ const footer = `
           <a href="https://github.com/alenperic" rel="me">GitHub</a>
         </nav>
       </div>
-      <p class="footer-note">Research and analysis are personal and do not represent current or former employers. This is a static publication with no accounts or comments. Basic traffic analytics may use cookies to measure readership.</p>
+      <p class="footer-note"><strong>Privacy note:</strong> This static publication has no accounts or comments. Google Analytics may use cookies or similar browser storage to measure readership. Some articles load media from third-party content networks. Research and analysis are personal and do not represent current or former employers.</p>
     </footer>`;
 
 function extractContent(raw) {
@@ -131,8 +137,8 @@ function extractContent(raw) {
 function sanitizeContent(content) {
   return content
     .replace(/\r\n?/g, "\n")
-    .replace(/<img\b[^>]*\bsrc=["']https?:\/\/[^"']+["'][^>]*>/gi, "")
-    .replace(/<div\b[^>]*class=["'][^"']*meme-caption[^"']*["'][^>]*>[\s\S]*?<\/div>/gi, "")
+    .replaceAll("https://techcrunch.com/wp-content/uploads/2017/12/pushup.gif", "https://assets.rbl.ms/25581692/origin.gif")
+    .replace(/<img\b(?![^>]*\bdata-remote-media\b)([^>]*\bsrc=["']https?:\/\/[^"']+["'][^>]*)>/gi, '<img class="article-media" loading="lazy" decoding="async" fetchpriority="low" referrerpolicy="no-referrer" data-remote-media$1>')
     .replace(/\sstyle=["'][^"']*["']/gi, "")
     .replace(/target=["']_blank["'](?!\s+rel=)/gi, 'target="_blank" rel="noopener noreferrer"')
     .replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')
@@ -145,25 +151,56 @@ function articleHead(article) {
   const url = `https://ligma.blog/post${article.id}/`;
   const schema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "@id": `${url}#article`,
-    headline: article.fullTitle,
-    description: article.description,
-    datePublished: article.date,
-    dateModified: article.date,
-    mainEntityOfPage: url,
-    image: "https://ligma.blog/img/og-blog.png",
-    inLanguage: "en-CA",
-    articleSection: article.category,
-    keywords: article.keywords,
-    author: {
-      "@type": "Person",
-      "@id": "https://alenperic.com/#person",
-      name: "Alen Peric",
-      url: "https://alenperic.com/"
-    },
-    publisher: { "@id": "https://alenperic.com/#person" },
-    isPartOf: { "@id": "https://ligma.blog/#blog" }
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${url}#article`,
+        url,
+        headline: article.fullTitle,
+        description: article.description,
+        datePublished: article.date,
+        dateModified: "2026-09-04",
+        mainEntityOfPage: { "@type": "WebPage", "@id": url },
+        image: {
+          "@type": "ImageObject",
+          url: "https://ligma.blog/img/og-blog.png",
+          width: 1200,
+          height: 630,
+          caption: "LIGMA.BLOG by Alen Peric"
+        },
+        thumbnailUrl: "https://ligma.blog/img/og-blog.png",
+        inLanguage: "en-CA",
+        isAccessibleForFree: true,
+        articleSection: article.category,
+        keywords: article.keywords,
+        author: { "@id": "https://alenperic.com/#person" },
+        publisher: { "@id": "https://alenperic.com/#person" },
+        isPartOf: { "@id": "https://ligma.blog/#blog" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${url}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "LIGMA.BLOG", item: "https://ligma.blog/" },
+          { "@type": "ListItem", position: 2, name: article.fullTitle, item: url }
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://alenperic.com/#person",
+        name: "Alen Peric",
+        url: "https://alenperic.com/",
+        image: "https://ligma.blog/img/alen-peric.webp",
+        jobTitle: "Senior Threat Intelligence Analyst",
+        worksFor: { "@type": "Organization", name: "CrowdStrike" },
+        alumniOf: { "@type": "CollegeOrUniversity", name: "Fanshawe College" },
+        sameAs: [
+          "https://www.linkedin.com/in/alen-peric",
+          "https://github.com/alenperic",
+          "https://ligma.blog/"
+        ]
+      }
+    ]
   };
 
   return `<!doctype html>
@@ -177,6 +214,8 @@ function articleHead(article) {
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="description" content="${escapeHtml(article.description)}" />
     <link rel="canonical" href="${url}" />
+    <link rel="author" href="https://alenperic.com/" />
+    <link rel="alternate" hreflang="en-CA" href="${url}" />
     <link rel="alternate" type="application/rss+xml" title="LIGMA.BLOG RSS" href="https://ligma.blog/feed.xml" />
     <meta property="og:type" content="article" />
     <meta property="og:locale" content="en_CA" />
@@ -185,27 +224,31 @@ function articleHead(article) {
     <meta property="og:description" content="${escapeHtml(article.description)}" />
     <meta property="og:url" content="${url}" />
     <meta property="og:image" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image:secure_url" content="https://ligma.blog/img/og-blog.png" />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="LIGMA.BLOG by Alen Peric" />
     <meta property="article:published_time" content="${article.date}" />
+    <meta property="article:modified_time" content="2026-09-04" />
     <meta property="article:author" content="Alen Peric" />
     <meta property="article:section" content="${escapeHtml(article.category)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(article.fullTitle)}" />
     <meta name="twitter:description" content="${escapeHtml(article.description)}" />
     <meta name="twitter:image" content="https://ligma.blog/img/og-blog.png" />
+    <meta name="twitter:image:alt" content="LIGMA.BLOG by Alen Peric" />
     <title>${escapeHtml(article.fullTitle)} | LIGMA.BLOG</title>
     <link rel="icon" type="image/png" sizes="64x64" href="../img/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
     <link rel="preload" href="../assets/fonts/sora-latin.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="../assets/blog.css" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLLVM6YY1Y"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VMD9STL32Q"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-SLLVM6YY1Y');
+      gtag('config', 'G-VMD9STL32Q');
     </script>
     <script type="application/ld+json">${JSON.stringify(schema)}</script>
     <script src="../assets/blog.js" defer></script>
@@ -214,7 +257,9 @@ function articleHead(article) {
 
 articles.forEach((article, index) => {
   const filename = path.join(root, `post${article.id}`, "index.html");
-  const raw = fs.readFileSync(filename, "utf8");
+  const raw = sourceRef
+    ? execFileSync("git", ["show", `${sourceRef}:post${article.id}/index.html`], { cwd: root, encoding: "utf8" })
+    : fs.readFileSync(filename, "utf8");
   const content = sanitizeContent(extractContent(raw));
   const next = articles[(index + 1) % articles.length];
   const html = `${articleHead(article)}
