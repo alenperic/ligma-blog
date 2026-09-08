@@ -5,8 +5,15 @@
     <link>https://ligma.blog/</link>
     <description>Field notes by Alen Peric on cybersecurity, applied AI, and production systems.</description>
     <language>en-ca</language>
-    <lastBuildDate>Fri, 04 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 08 Sep 2026 00:31:13 GMT</lastBuildDate>
     <atom:link href="https://ligma.blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Your identity. Their AI agent.</title>
+      <link>https://ligma.blog/post9/</link>
+      <guid>https://ligma.blog/post9/</guid>
+      <pubDate>Tue, 08 Sep 2026 00:31:13 GMT</pubDate>
+      <description>How public information could fuel AI impersonation agents, what the campaign evidence supports, and where familiar conversations need stronger verification.</description>
+    </item>
     <item>
       <title>Big Model, Small GPU — Running GLM‑5.3‑Flash at Home</title>
       <link>https://ligma.blog/post8/</link>
@@ -65,3 +72,4 @@
     </item>
   </channel>
 </rss>
+
