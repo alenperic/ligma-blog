@@ -5,7 +5,7 @@ const root = path.resolve(import.meta.dirname, "..");
 const htmlFiles = [
   "index.html",
   "404.html",
-  ...Array.from({ length: 9 }, (_, index) => `post${index + 1}/index.html`)
+  ...Array.from({ length: 10 }, (_, index) => `post${index + 1}/index.html`)
 ];
 const errors = [];
 let schemaBlocks = 0;
@@ -53,13 +53,13 @@ for (const filename of htmlFiles) {
 
 const homepage = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const cards = homepage.match(/\bdata-post\b/g) || [];
-if (cards.length !== 10) errors.push(`index.html: expected 10 article cards, found ${cards.length}`);
+if (cards.length !== 11) errors.push(`index.html: expected 11 article cards, found ${cards.length}`);
 
 const featuredCards = homepage.match(/class="[^"]*\bfeatured\b[^"]*"/g) || [];
 if (featuredCards.length !== 2) errors.push(`index.html: expected 2 featured cards, found ${featuredCards.length}`);
 
-if (!/<div class="post-grid">\s*<a class="post-card featured reveal" href="\.\/post9\/"/.test(homepage)) {
-  errors.push("index.html: post9 must be the first article card");
+if (!/<div class="post-grid">\s*<a class="post-card featured reveal" href="\.\/post10\/"/.test(homepage)) {
+  errors.push("index.html: post10 must be the first article card");
 }
 
 const rayPost = fs.readFileSync(path.join(root, "post6/index.html"), "utf8");

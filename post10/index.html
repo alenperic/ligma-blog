@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#061c18">
+<meta name="color-scheme" content="dark">
+<meta name="author" content="Alen Peric">
+<title>FlyCraft: Putting a Fruit-Fly Brain in Minecraft | LIGMA.BLOG</title>
+<meta name="description" content="A simulated fruit-fly connectome meets Minecraft: first-person vision, reward loopholes, crafting, shelter, and what the tests actually showed.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="LIGMA.BLOG">
+<meta property="og:locale" content="en_CA">
+<meta property="og:title" content="FlyCraft: Putting a Fruit-Fly Brain in Minecraft">
+<meta property="og:description" content="A simulated fruit-fly connectome meets Minecraft: first-person vision, reward loopholes, crafting, shelter, and what the tests actually showed.">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+:root{
+  --bg:#061c18;--bg-deep:#03110f;--surface:#0a2822;--surface-raised:#0d332b;
+  --paper:#eef5ef;--ink:#f2f6f1;--muted:#a8bdb3;--muted-dark:#587067;
+  --gold:#deb968;--gold-bright:#f0d68d;--opal:#6fd1b5;
+  --line:rgba(222,185,104,.25);--line-soft:rgba(255,255,255,.1);
+  --shadow:0 24px 80px rgba(0,0,0,.27);--radius:18px;--page:min(1180px,calc(100% - 40px));--reading:760px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{
+  min-height:100vh;margin:0;overflow-x:hidden;
+  background:
+    radial-gradient(circle at 85% 4%,rgba(111,209,181,.11),transparent 28rem),
+    radial-gradient(circle at 12% 48%,rgba(222,185,104,.07),transparent 34rem),
+    linear-gradient(155deg,var(--bg) 0%,var(--bg-deep) 100%);
+  color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+body:before{position:fixed;z-index:-1;inset:-20%;content:"";pointer-events:none;opacity:.34;
+  background:linear-gradient(115deg,transparent 43%,rgba(111,209,181,.08) 44%,transparent 45%),
+             linear-gradient(25deg,transparent 58%,rgba(222,185,104,.06) 59%,transparent 60%);
+  background-size:34rem 34rem,42rem 42rem;animation:drift 32s linear infinite}
+@keyframes drift{to{transform:translate3d(8rem,5rem,0)}}
+::selection{background:var(--gold);color:#10241f}
+a{color:inherit}
+.skip-link{position:fixed;z-index:1000;top:10px;left:10px;padding:10px 14px;border-radius:8px;background:var(--gold);color:#10241f;font-weight:700;transform:translateY(-160%)}
+.skip-link:focus{transform:translateY(0)}
+.preview-banner{position:sticky;z-index:120;top:0;text-align:center;padding:7px 12px;background:linear-gradient(90deg,#f0d68d,#6fd1b5);color:#061c18;font:700 .72rem/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.1em;text-transform:uppercase}
+.site-header{position:sticky;z-index:100;top:28px;display:flex;width:100%;min-height:74px;margin:0;padding-inline:max(20px,calc((100% - 1180px)/2));align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:rgba(6,28,24,.87);backdrop-filter:blur(18px)}
+.brand{display:inline-flex;align-items:center;gap:12px;text-decoration:none}
+.brand-avatar{display:grid;width:36px;height:36px;border:1px solid rgba(240,214,141,.6);border-radius:50%;place-items:center;background:radial-gradient(circle at 35% 30%,#6fd1b5,#0d332b 58%,#03110f);color:#f0d68d;font:800 .85rem ui-monospace,monospace}
+.brand-copy{display:grid;gap:2px}
+.brand strong{color:var(--gold-bright);font:700 .9rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em}
+.brand small{color:var(--muted);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase}
+.site-nav{display:flex;align-items:center;gap:26px}
+.site-nav a{color:var(--muted);font:500 .76rem ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.05em;text-decoration:none;text-transform:uppercase}
+.site-nav a:hover{color:var(--gold-bright)}
+.reading-progress{position:fixed;z-index:130;top:28px;left:0;width:100%;height:2px}
+.reading-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--opal),var(--gold-bright))}
+.article-masthead{width:min(980px,calc(100% - 40px));margin:0 auto;padding:76px 0 54px;border-bottom:1px solid var(--line)}
+.article-meta,.results-kicker{margin:0 0 18px;color:var(--gold);font:500 .75rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase}
+.article-masthead h1{max-width:950px;margin:0;font-size:clamp(2.45rem,6.7vw,5.8rem);font-weight:650;letter-spacing:-.065em;line-height:.98}
+.article-standfirst{max-width:760px;margin:26px 0 0;color:var(--muted);font-size:clamp(1rem,2vw,1.18rem);line-height:1.7}
+.article-shell{width:min(var(--reading),calc(100% - 40px));margin:0 auto;padding:58px 0 74px}
+.blog-post{color:#dae7df;font-size:1.02rem;line-height:1.82}
+.blog-post h2,.blog-post h3{color:var(--ink);font-weight:610;letter-spacing:-.035em;line-height:1.2}
+.blog-post h2{margin:54px 0 20px;font-size:clamp(1.9rem,4.2vw,3rem)}
+.blog-post h3{margin:46px 0 16px;font-size:clamp(1.35rem,2.8vw,1.8rem)}
+.blog-post p,.blog-post ul,.blog-post ol,.blog-post pre,.blog-post blockquote{margin-top:0;margin-bottom:24px}
+.blog-post strong{color:var(--ink);font-weight:650}
+.blog-post a{color:var(--gold-bright);text-decoration-color:rgba(240,214,141,.35);text-underline-offset:.2em}
+.blog-post code{border-radius:5px;background:rgba(111,209,181,.085);color:#b7ebdc;font: .9em ui-monospace,SFMono-Regular,Menlo,monospace}
+.blog-post pre{position:relative;overflow-x:auto;padding:24px;border:1px solid rgba(111,209,181,.18);border-radius:12px;background:#020c0a;box-shadow:inset 0 1px rgba(255,255,255,.025);color:#cdebe0;font:.82rem/1.62 ui-monospace,SFMono-Regular,Menlo,monospace}
+.copy-btn{position:absolute;right:10px;top:10px;padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--gold-bright);cursor:pointer;font:.65rem ui-monospace,monospace;text-transform:uppercase}
+.callout,blockquote{margin:30px 0;padding:20px 24px;border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;background:rgba(222,185,104,.055);color:#d9e7df}
+.meme-panel{margin:42px 0}
+.meme-panel svg{display:block;width:100%;height:auto;border:1px solid rgba(225,195,111,.34);border-radius:12px;box-shadow:var(--shadow);background:#03110f}
+.meme-panel figcaption{margin:12px 0 0;color:var(--muted);font:.72rem/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;text-align:center}
+.results-panel{margin:36px 0 42px;padding:26px;border:1px solid rgba(225,195,111,.32);border-radius:14px;background:linear-gradient(135deg,rgba(222,185,104,.09),transparent 42%),rgba(7,35,29,.76);box-shadow:var(--shadow)}
+.results-kicker{margin-bottom:8px!important;color:var(--gold-bright);font-size:.68rem}
+.results-panel h2{margin:0 0 22px!important;font-size:clamp(1.4rem,3.4vw,2rem)!important}
+.results-grid{display:grid;margin:0 0 18px;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line-soft);border-left:1px solid var(--line-soft)}
+.results-grid div{padding:15px;border-right:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+.results-grid dt{color:var(--muted);font:.68rem/1.4 ui-monospace,monospace;letter-spacing:.04em;text-transform:uppercase}
+.results-grid dd{margin:5px 0 0;color:var(--ink);font-weight:650}
+.results-note{margin-bottom:0!important;color:#a9bdb5;font-size:.82rem}
+.industry-section{margin:54px 0 42px}
+.implication-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.implication-grid article{padding:22px;border:1px solid var(--line-soft);border-radius:12px;background:rgba(7,35,29,.58)}
+.implication-grid h3{margin:0 0 12px!important;color:var(--gold-bright)!important;font:.78rem/1.4 ui-monospace,monospace!important;letter-spacing:.08em!important;text-transform:uppercase}
+.implication-grid p{margin-bottom:0;color:#c8d8d1;font-size:.9rem;line-height:1.7}
+.timeline{display:grid;gap:1px;margin:32px 0 42px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:14px;overflow:hidden}
+.step{display:grid;grid-template-columns:90px 1fr;gap:18px;padding:20px;background:rgba(7,35,29,.88)}
+.step b{color:var(--gold-bright);font:.72rem ui-monospace,monospace;text-transform:uppercase}
+.step p{margin:0;color:#c8d8d1}
+.sources-list{padding:0;list-style:none}
+.sources-list li{padding:16px 0;border-bottom:1px solid var(--line-soft)}
+.article-pagination{display:grid;width:min(980px,calc(100% - 40px));margin:0 auto 86px;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.article-pagination a{display:grid;min-height:118px;padding:24px;align-content:center;gap:8px;text-decoration:none}
+.article-pagination a+a{border-left:1px solid var(--line-soft);text-align:right}
+.article-pagination small{color:var(--gold);font:.68rem ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase}
+.article-pagination span{color:var(--ink);font-size:.92rem;line-height:1.4}
+.site-footer{width:var(--page);margin:0 auto;padding:34px 0 42px;border-top:1px solid var(--line)}
+.footer-top{display:flex;align-items:center;justify-content:space-between;gap:28px}
+.footer-mark{color:var(--gold-bright);font:500 .78rem ui-monospace,monospace;letter-spacing:.1em}
+.footer-links{display:flex;flex-wrap:wrap;gap:22px}
+.footer-links a{color:var(--muted);font:.72rem ui-monospace,monospace;text-decoration:none;text-transform:uppercase}
+.footer-note{max-width:870px;margin:24px 0 0;color:#789087;font-size:.7rem;line-height:1.65}
+@media(max-width:700px){
+  .site-header{top:28px;min-height:66px;padding-inline:14px}.brand small{display:none}.site-nav{gap:12px}.site-nav a{font-size:.64rem}
+  .article-masthead{padding-top:54px}.results-grid,.implication-grid,.article-pagination{grid-template-columns:1fr}
+  .article-pagination a+a{border-left:0;border-top:1px solid var(--line-soft);text-align:left}.step{grid-template-columns:1fr}
+}
+figure img{display:block;width:100%;height:auto}.cheatsheet-card{min-width:0}.cheatsheet-card pre{max-width:100%;overflow-x:auto}
+</style>
+
+<style id="flycraftCheatsheetStyle">
+.cheatsheet-panel{
+  margin-top:3rem;
+  padding:1.25rem;
+  border:1px solid rgba(222,185,104,.35);
+  border-radius:14px;
+  background:rgba(6,28,24,.72);
+}
+.cheatsheet-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1rem;
+  margin:1rem 0 1.25rem;
+}
+.cheatsheet-card{
+  padding:1rem;
+  border:1px solid rgba(111,209,181,.22);
+  border-radius:10px;
+  background:rgba(3,17,15,.72);
+}
+.cheatsheet-card h3{
+  margin-top:0;
+}
+.cheatsheet-card pre{
+  margin-bottom:0;
+  overflow:auto;
+}
+.download-box{
+  margin-top:1.4rem;
+  padding:1.25rem;
+  border:1px solid rgba(111,209,181,.35);
+  border-radius:12px;
+  background:rgba(3,17,15,.85);
+  text-align:center;
+}
+.flycraft-download-btn{
+  display:inline-block;
+  margin-top:.65rem;
+  padding:.82rem 1.15rem;
+  border:1px solid #deb968;
+  border-radius:8px;
+  color:#061c18 !important;
+  background:#deb968;
+  font-weight:700;
+  text-decoration:none !important;
+  letter-spacing:.02em;
+}
+.flycraft-download-btn:hover{
+  filter:brightness(1.06);
+}
+.download-note{
+  margin:.65rem auto 0;
+  max-width:720px;
+  color:var(--muted);
+  font-size:.92rem;
+}
+@media (max-width:800px){
+  .cheatsheet-grid{
+    grid-template-columns:1fr;
+  }
+}
+figure img{display:block;width:100%;height:auto}.cheatsheet-card{min-width:0}.cheatsheet-card pre{max-width:100%;overflow-x:auto}
+</style>
+
+<link rel="canonical" href="https://ligma.blog/post10/">
+<link rel="alternate" hreflang="en-CA" href="https://ligma.blog/post10/">
+<link rel="alternate" type="application/rss+xml" title="LIGMA.BLOG RSS" href="https://ligma.blog/feed.xml">
+<link rel="icon" type="image/png" sizes="64x64" href="../img/favicon-64.png">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<meta property="og:url" content="https://ligma.blog/post10/">
+<meta property="og:image" content="https://ligma.blog/post10/img/og-flycraft.png">
+<meta property="og:image:secure_url" content="https://ligma.blog/post10/img/og-flycraft.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="FlyCraft: a simulated fruit-fly connectome meets Minecraft">
+<meta name="twitter:title" content="FlyCraft: Putting a Fruit-Fly Brain in Minecraft">
+<meta name="twitter:description" content="A simulated fruit-fly connectome meets Minecraft: first-person vision, reward loopholes, crafting, shelter, and what the tests actually showed.">
+<meta name="twitter:image" content="https://ligma.blog/post10/img/og-flycraft.png">
+<meta name="twitter:image:alt" content="FlyCraft: a simulated fruit-fly connectome meets Minecraft">
+<meta property="article:published_time" content="2026-09-20T00:00:00Z">
+<meta property="article:section" content="AI experiments">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VMD9STL32Q"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-VMD9STL32Q');</script>
+<script src="../assets/blog.js" defer></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "BlogPosting", "@id": "https://ligma.blog/post10/#article", "url": "https://ligma.blog/post10/", "headline": "FlyCraft: Putting a Fruit-Fly Brain in Minecraft", "description": "A simulated fruit-fly connectome meets Minecraft: first-person vision, reward loopholes, crafting, shelter, and what the tests actually showed.", "datePublished": "2026-09-20", "dateModified": "2026-09-20", "inLanguage": "en-CA", "isAccessibleForFree": true, "image": "https://ligma.blog/post10/img/og-flycraft.png", "mainEntityOfPage": "https://ligma.blog/post10/", "author": {"@type": "Person", "name": "Alen Peric", "url": "https://alenperic.com/"}, "publisher": {"@type": "Person", "name": "Alen Peric", "url": "https://alenperic.com/"}, "isPartOf": {"@id": "https://ligma.blog/#blog"}}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "LIGMA.BLOG", "item": "https://ligma.blog/"}, {"@type": "ListItem", "position": 2, "name": "FlyCraft: Putting a Fruit-Fly Brain in Minecraft", "item": "https://ligma.blog/post10/"}]}]}</script>
+</head>
+<body class="article-page">
+
+<a class="skip-link" href="#article">Skip to article</a>
+<header class="site-header">
+  <a class="brand" href="../" aria-label="LIGMA.BLOG home">
+    <span class="brand-avatar">AP</span>
+    <span class="brand-copy"><strong>LIGMA.BLOG</strong><small>Alen Peric · Field notes</small></span>
+  </a>
+  <nav class="site-nav" aria-label="Primary navigation">
+    <a href="../#articles">Articles</a>
+    <a href="https://alenperic.com/" target="_blank" rel="noopener">AlenPeric.com ↗</a>
+  </nav>
+</header>
+<div class="reading-progress" aria-hidden="true"><span></span></div>
+
+<main id="article">
+<section class="article-masthead">
+  <p class="article-meta">AI experiments // <time datetime="2026-09-20">September 2026</time> // 14 min read</p>
+  <h1>FlyCraft: Putting a Fruit-Fly Brain in Minecraft</h1>
+  <p class="article-standfirst">I gave a 166,700-neuron fruit-fly connectome a Minecraft body, started teaching it survival, added first-person vision, and then spent a surprising amount of time discovering that dirt can become a crafter if your renderer is lying to you.</p>
+</section>
+
+<div class="article-shell">
+<article class="blog-post">
+<!-- ARTICLE CONTENT START -->
+
+<p>The experiment started with a question that was equal parts neuroscience, reinforcement learning, and terrible judgment: <strong>what happens if I put a simulated fruit-fly brain inside Minecraft and just let it live there?</strong></p>
+
+<p>I had already been playing with <a href="https://github.com/alextitonis/fly.ai" target="_blank" rel="noopener noreferrer">fly.ai</a>, which can run the MaleCNS connectome as a fixed neural system. On my server, the simulation comes up as <strong>166,700 neurons and 25,582,938 connections</strong> on CUDA. Those are the loaded model’s counts, not 25 million individually simulated synapses. <a href="https://male-cns.janelia.org/" target="_blank" rel="noopener noreferrer">MaleCNS</a> maps the male fly’s central nervous system; fly.ai uses simplified spiking units and connectome-derived weights rather than a complete biological emulation. That was interesting on its own, but staring at firing neurons in a dashboard eventually creates the same problem every homelab project creates: sooner or later I need to connect it to something objectively unnecessary.</p>
+
+<p>Minecraft was perfect. It already had a world, physics, navigation, resources, day/night cycles, hunger, hostile mobs, crafting, death, exploration, and enough long-term progression to make “get good” measurable. More importantly, I could join the same server from my gaming PC and watch this simulated nervous system make questionable life choices in real time.</p>
+
+<figure class="meme-panel">
+<svg viewBox="0 0 1200 675" role="img" aria-label="Diagram of Minecraft pixels flowing through a fly connectome and back into the game">
+  <defs>
+    <linearGradient id="a" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#03110f"/><stop offset="1" stop-color="#0a2822"/></linearGradient>
+    <marker id="arr" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto"><path d="M0 0L10 4L0 8Z" fill="#f0d68d"/></marker>
+  </defs>
+  <rect width="1200" height="675" rx="26" fill="url(#a)"/>
+  <g opacity=".14" stroke="#6fd1b5"><path d="M0 150h1200M0 300h1200M0 450h1200"/><path d="M200 0v675M400 0v675M600 0v675M800 0v675M1000 0v675"/></g>
+  <text x="70" y="80" fill="#f0d68d" font-family="monospace" font-size="24" letter-spacing="4">FLYBRAIN // MINECRAFT</text>
+  <text x="70" y="118" fill="#a8bdb3" font-family="sans-serif" font-size="20">Stage 4: visual input, behaviour out</text>
+  <g font-family="monospace" text-anchor="middle">
+    <g transform="translate(70 230)"><rect width="220" height="170" rx="18" fill="#0d332b" stroke="#6fd1b5"/><text x="110" y="52" fill="#6fd1b5" font-size="21">MINECRAFT</text><text x="110" y="90" fill="#f2f6f1" font-size="18">256 × 144</text><text x="110" y="121" fill="#a8bdb3" font-size="17">first-person pixels</text></g>
+    <g transform="translate(360 230)"><rect width="220" height="170" rx="18" fill="#0d332b" stroke="#deb968"/><text x="110" y="52" fill="#f0d68d" font-size="21">FLY EYES</text><text x="110" y="90" fill="#f2f6f1" font-size="18">edges · motion</text><text x="110" y="121" fill="#a8bdb3" font-size="17">visual salience</text></g>
+    <g transform="translate(650 195)"><circle cx="120" cy="120" r="112" fill="#0d332b" stroke="#6fd1b5"/><circle cx="120" cy="120" r="76" fill="none" stroke="#6fd1b5" opacity=".35"/><g fill="#6fd1b5"><circle cx="96" cy="84" r="6"/><circle cx="143" cy="82" r="5"/><circle cx="83" cy="123" r="4"/><circle cx="120" cy="118" r="7"/><circle cx="157" cy="127" r="5"/><circle cx="104" cy="155" r="5"/><circle cx="139" cy="158" r="6"/></g><text x="120" y="205" fill="#f0d68d" font-size="17">166,700 neurons</text></g>
+    <g transform="translate(955 230)"><rect width="175" height="170" rx="18" fill="#0d332b" stroke="#deb968"/><text x="87" y="52" fill="#f0d68d" font-size="21">POLICY</text><text x="87" y="90" fill="#f2f6f1" font-size="18">readout + Q</text><text x="87" y="121" fill="#a8bdb3" font-size="17">→ action</text></g>
+  </g>
+  <g fill="none" stroke="#f0d68d" stroke-width="4" marker-end="url(#arr)"><path d="M290 315h56"/><path d="M580 315h58"/><path d="M884 315h58"/></g>
+  <path d="M1045 420C1000 560 780 575 590 555C350 530 180 480 180 412" fill="none" stroke="#6fd1b5" stroke-width="3" stroke-dasharray="10 9"/>
+  <text x="600" y="618" fill="#6fd1b5" font-family="monospace" font-size="18" text-anchor="middle">Mineflayer body → world changes → new pixels → repeat</text>
+</svg>
+<figcaption>The architecture, minus several hours of me asking why the camera was not listening.</figcaption>
+</figure>
+
+<h2>Stage 1: give the fly a body</h2>
+
+<p>The first version was intentionally simple. I spun up a Paper 1.21.11 server locally, connected a <a href="https://github.com/PrismarineJS/mineflayer" target="_blank" rel="noopener noreferrer">Mineflayer</a> client named <code>FlyBrain</code>, and used Mineflayer as the motor layer. The experiment did not need the connectome to learn how TCP works, how Minecraft's protocol works, or how to translate “go left” into exactly the right packet sequence. It only needed to produce behaviour.</p>
+
+<pre><code>Minecraft state
+      ↓
+sensory encoding
+      ↓
+MaleCNS connectome
+      ↓
+descending-neuron activity
+      ↓
+learned readout
+      ↓
+Mineflayer motor layer
+      ↓
+Minecraft</code></pre>
+
+<p>The first lesson was basically kindergarten: follow me. I supplied the relative position of my player, stimulated the fly's sensory channels, and recorded the resulting descending-neuron activity. A teacher generated simple movement labels while a readout learned the mapping.</p>
+
+<p>Once that worked, I had a fly-brain-controlled player following me around Minecraft. This was the point where the project stopped being a neural visualization and became a very weird agent.</p>
+
+<figure class="meme-panel">
+<svg viewBox="0 0 1200 675" role="img" aria-label="Meme about a fly learning Minecraft">
+  <rect width="1200" height="675" rx="26" fill="#03110f"/>
+  <rect x="65" y="72" width="1070" height="530" rx="22" fill="#0a2822" stroke="#deb968"/>
+  <text x="100" y="145" fill="#f0d68d" font-family="monospace" font-size="27">DAY 1 OF TEACHING A FLY MINECRAFT</text>
+  <text x="100" y="230" fill="#f2f6f1" font-family="sans-serif" font-size="42" font-weight="700">me:</text>
+  <text x="225" y="230" fill="#a8bdb3" font-family="sans-serif" font-size="38">please follow me</text>
+  <text x="100" y="350" fill="#f2f6f1" font-family="sans-serif" font-size="42" font-weight="700">fly:</text>
+  <text x="225" y="350" fill="#6fd1b5" font-family="sans-serif" font-size="38">stares directly into the sun</text>
+  <text x="100" y="500" fill="#f2f6f1" font-family="sans-serif" font-size="42" font-weight="700">me, 3 hours later:</text>
+  <text x="100" y="556" fill="#f0d68d" font-family="sans-serif" font-size="34">this is scientifically valuable</text>
+</svg>
+<figcaption>Peer review pending.</figcaption>
+</figure>
+
+<h2>Stage 2: stop making me babysit it</h2>
+
+<p>Following me was cute, but it meant the fly was basically a biological Bluetooth accessory. I wanted it to keep doing things when nobody else was online.</p>
+
+<p>The first big design decision was to split <strong>behaviour selection</strong> from <strong>motor execution</strong>. The teacher or downstream policy would select “explore,” “collect,” “evade,” or “progress,” with the learned policy using activity from MaleCNS. Mineflayer's pathfinder would figure out how legs, jumping, terrain, and obstacles translate that into Minecraft movement.</p>
+
+<div class="callout"><strong>Important distinction:</strong> the fly does not pathfind by solving blocks one at a time in its connectome. The connectome participates in deciding what kind of behaviour to execute. Mineflayer acts more like the lower-level motor system.</div>
+
+<p>This immediately fixed one of the funniest early failure modes: the connectome would confidently output <code>explore</code> hundreds of times while the character stood perfectly still, holding an item and looking at the sky. The brain was making a decision. The body was just terrible at having a body.</p>
+
+<div class="timeline">
+  <div class="step"><b>Lesson 01</b><p>Follow a player and map sensory state to simple movement.</p></div>
+  <div class="step"><b>Lesson 02</b><p>Explore autonomously even when no human player is connected.</p></div>
+  <div class="step"><b>Lesson 03</b><p>Collect dropped items, seek trees, eat when hungry, and evade threats.</p></div>
+  <div class="step"><b>Lesson 04</b><p>Turn progression into a persistent goal instead of a single action.</p></div>
+</div>
+
+<h2>Stage 3: survival, progression, memory, and actual consequences</h2>
+
+<p>At this point I stopped treating Minecraft as a demo and started treating it as an environment. I reset the server to Survival on Normal difficulty, enabled limited crafting, and gave the agent a progression target: eventually produce a diamond pickaxe and diamond armour from a fresh world.</p>
+
+<p>The progression path looked roughly like this:</p>
+
+<pre><code>wood
+ ↓
+planks + sticks
+ ↓
+crafting table
+ ↓
+wooden pickaxe
+ ↓
+stone
+ ↓
+stone pickaxe
+ ↓
+furnace
+ ↓
+iron
+ ↓
+iron pickaxe
+ ↓
+diamonds
+ ↓
+diamond pickaxe
+ ↓
+diamond armour</code></pre>
+
+<p>That required persistent memory. The fly now keeps track of deaths, lifetime, travelled distance, unique chunks, progression milestones, buildings, and cumulative reward. The readout and policy are periodically checkpointed, and telemetry is written to SQLite and CSV so an overnight run produces something better than “I think it looked smarter.”</p>
+
+<section class="results-panel" aria-labelledby="instrument-title">
+  <p class="results-kicker">Experiment instrumentation // overnight-safe</p>
+  <h2 id="instrument-title">What the system records</h2>
+  <dl class="results-grid">
+    <div><dt>Neural system</dt><dd>166,700 neurons</dd></div>
+    <div><dt>Connections</dt><dd>25,582,938</dd></div>
+    <div><dt>Learning phases</dt><dd>Teacher → Hybrid → RL</dd></div>
+    <div><dt>Telemetry</dt><dd>SQLite + CSV</dd></div>
+    <div><dt>Recovery</dt><dd>systemd watchdogs</dd></div>
+    <div><dt>Storage</dt><dd>retention + free-space guard</dd></div>
+  </dl>
+  <p class="results-note">The connectome remains fixed. What learns is the downstream readout and reward-driven policy over the neural state.</p>
+</section>
+
+<p>The training data is also capped and rebalanced. Otherwise an autonomous agent that spends most of its time walking would create an ocean of <code>explore</code> samples and drown out rarer but much more important experiences like eating or escaping danger.</p>
+
+<p>I added a reward model so the experiment could eventually move beyond imitation. The intent was straightforward: reinforce useful progress and make damage and death expensive. The implementation was less straightforward. As the overnight run would demonstrate, a rising reward counter can also mean I have successfully taught an insect to exploit my accounting.</p>
+
+<h3>Teaching it about animals without giving it a cow dictionary</h3>
+
+<p>This was one of the parts I cared about most. I did not want to hard-code <code>cow = food</code>, <code>pig = food</code>, <code>chicken = food</code>. That would work, but the interesting part disappears immediately.</p>
+
+<p>The intended approach is for passive creatures to become visual experience clusters. When the fly is well fed, it can observe unfamiliar creatures. When hunger becomes severe, foraging becomes available. The intended next step is to associate interaction outcomes with similar visual experiences later. In the current candidate, creature values remain neutral because food provenance is not yet tracked; assigning a whole transition’s reward to whatever creature happened to be visible would repeat the attribution mistake.</p>
+
+<pre><code>proposed creature-value loop (not validated)
+
+unknown visual creature pattern
+           ↓
+observe / interact
+           ↓
+outcome
+           ↓
+reward
+           ↓
+value attached to that visual cluster</code></pre>
+
+<p>The same idea extends to cooking. Raw edible inventory objects can be tested in a furnace, and successful cooking can be recorded. The current candidate’s explicit hunger-sensitive reward comes from useful food acquisition and verified eating; I have not demonstrated that it independently learned a nutritional ranking. It is still using Minecraft's mechanics as the environment, but it is not being handed a prose guide to steak.</p>
+
+<h2>Stage 4: give it eyes</h2>
+
+<p>The biggest upgrade was adding first-person vision to the neural input. Minecraft state still supports the teacher, reward calculation, and motor routines; this is a hybrid agent, not an end-to-end pixels-only player. Hunger and other structured signals are also encoded into neural stimulation.</p>
+
+<p>Earlier versions received convenient structured information: target angle, target distance, hostile nearby, item nearby. That was useful for proving the control loop, but it was also a huge shortcut. The agent did not need to see Minecraft; I was basically whispering object labels into its nervous system.</p>
+
+<p>Stage 4 uses a headless <a href="https://github.com/PrismarineJS/prismarine-viewer" target="_blank" rel="noopener noreferrer">Prismarine Viewer</a> renderer to generate a 256×144 first-person frame. The image is processed into luminance, edges, motion, spatial salience, symmetry, balance, and a compact visual descriptor. Those features are converted into visual blobs and fed through the fly's eye model before MaleCNS advances.</p>
+
+<pre><code>first-person JPEG
+      ↓
+luminance + edges + motion
+      ↓
+spatial salience sectors
+      ↓
+fly Eyes()
+      ↓
+visual neurons
+      ↓
+MaleCNS
+      ↓
+descending-neuron trace
+      ↓
+behaviour policy</code></pre>
+
+<p>The live camera pipeline does not archive raw frames to disk. The most recent JPEG is held in memory for processing and for the dashboard's live visual feed. This matters because “teach the fly to see” should not accidentally become “fill a 512 GB SSD with Minecraft screenshots by breakfast.”</p>
+
+<figure class="meme-panel">
+<svg viewBox="0 0 1200 675" role="img" aria-label="Meme showing a storage warning">
+  <rect width="1200" height="675" rx="26" fill="#03110f"/>
+  <text x="70" y="90" fill="#f0d68d" font-family="monospace" font-size="24">STORAGE DESIGN REVIEW</text>
+  <rect x="90" y="150" width="1020" height="380" rx="18" fill="#0a2822" stroke="#6fd1b5"/>
+  <text x="140" y="235" fill="#f2f6f1" font-family="sans-serif" font-size="34">Option A</text>
+  <text x="360" y="235" fill="#a8bdb3" font-family="sans-serif" font-size="30">Save every visual frame forever</text>
+  <text x="970" y="235" fill="#e98d8d" font-family="monospace" font-size="28">NO</text>
+  <line x1="140" y1="290" x2="1060" y2="290" stroke="#ffffff" opacity=".12"/>
+  <text x="140" y="365" fill="#f2f6f1" font-family="sans-serif" font-size="34">Option B</text>
+  <text x="360" y="365" fill="#a8bdb3" font-family="sans-serif" font-size="30">Keep latest frame in RAM</text>
+  <text x="970" y="365" fill="#6fd1b5" font-family="monospace" font-size="28">YES</text>
+  <text x="140" y="470" fill="#a8bdb3" font-family="monospace" font-size="22">91% disk utilization has entered the chat</text>
+</svg>
+<figcaption>A rare moment where the 42 GB of remaining disk space provided adult supervision.</figcaption>
+</figure>
+
+<h2>I also gave the fly hobbies</h2>
+<p>Pure survival was starting to feel too utilitarian, so I added something less defensible: architecture.</p>
+<p>The first version paid a tiny aesthetic reward for attractive scenes. Symmetry, balance, novelty, the usual things you might put in a property listing. The problem is that looking at a nice building and building a nice building are very different accomplishments.</p>
+<p>The revised candidate removes the free reward for looking. It tracks blocks the bot actually places, checks that a shelter has a roof and a valid structure, and rewards verified completion. A completed shelter earns 12 points, with a small 2-point symmetry bonus and a separate one-time reward for using shelter at night. An existing block does not count as something the fly built.</p>
+<p>I also added collecting and storing resources, with bounded rewards for increasing useful stock and depositing surplus. Taking something out of a chest and putting it back cannot keep earning the same stock bonus. Building has its own payoff so the intended destination is an actual structure, rather than nineteen chests full of architectural ambition.</p>
+<div class="callout">The current building design is a small scripted shelter. The checks and rewards are implemented, but the short benchmark runs produced zero completed buildings. This is a starting definition of useful construction, not evidence that the fly has developed architectural taste.</div>
+
+<section class="industry-section" aria-labelledby="why-title">
+  <p class="results-kicker">Why this is interesting // beyond the meme</p>
+  <h2 id="why-title">What the experiment is actually testing</h2>
+  <div class="implication-grid">
+    <article>
+      <h3>Embodied connectomes</h3>
+      <p>A simulation based on a fixed biological connectome can act as a reservoir inside a larger embodied agent stack. The useful question is not whether it becomes “a human brain,” but whether its dynamics provide separable state that downstream learning can exploit.</p>
+    
+
+
+</article>
+    <article>
+      <h3>Perception bottlenecks</h3>
+      <p>Replacing symbolic labels with rendered pixels makes the task dramatically less convenient. It lets me test whether visual structure contributes useful neural state, while keeping the structured assistance elsewhere in the system explicit.</p>
+    </article>
+    <article>
+      <h3>Hybrid agent design</h3>
+      <p>The project ended up looking less like one giant model and more like a nervous system: visual processing, a central connectome, descending activity, learned policy, motor primitives, memory, and environmental feedback.</p>
+    </article>
+    <article>
+      <h3>Measurable weirdness</h3>
+      <p>The SQLite telemetry means every funny story can be checked later: how long it survived, what it learned, what killed it, how often it built, whether reward improved, and where progression stalled.</p>
+    </article>
+  </div>
+</section>
+
+<h2>The dashboard became part of the experiment</h2>
+
+<p>I modified the original fly.ai dashboard so the live connectome and the fly's actual first-person Minecraft vision can sit beside each other. That turned out to be one of the best debugging tools in the project.</p>
+
+<p>I can now watch a rendered scene, see the visual frame counter advance, inspect the current aesthetic score, watch neurons fire, and see the chosen behaviour at the same time. If the agent suddenly spends ten minutes running from nothing, the dashboard makes it much easier to tell whether the problem is perception, learned policy, or Minecraft's motor layer deciding a flower is an insurmountable geological event.</p>
+
+<figure class="meme-panel">
+<a href="img/flycraft-dashboard-debug.png" target="_blank" rel="noopener"><img src="img/flycraft-dashboard-debug.png" width="1971" height="1280" alt="FlyCraft dashboard during debugging: connectome activity and teacher telemetry are visible, while the Minecraft camera panel reads VISION OFFLINE." loading="lazy" decoding="async"></a>
+<figcaption>Actual dashboard screenshot from the camera-port debugging stage. The connectome panel was visible while the browser feed was offline; direct LAN vision access was restored afterward. Click to view full size.</figcaption>
+</figure>
+
+<h2>What I deliberately did not claim</h2>
+
+<p>It is tempting to anthropomorphize the whole thing because that is half the fun, but the boundaries matter.</p>
+
+<p>This experiment does not establish human-like understanding of Minecraft. Mineflayer still handles low-level locomotion and block interaction. Minecraft's registries still expose mechanics to the body layer. The connectome is not being biologically rewired. Its neural dynamics are being used as a reservoir, while learned readouts and an RL policy operate downstream.</p>
+
+<p>That distinction is exactly why I like the experiment. It lets me keep asking a narrow question: <strong>does routing embodied perception through this fixed connectome produce useful state for behaviour learning?</strong></p>
+
+<p>And because the world can now run unattended—with automatic respawn, watchdogs, checkpoints, telemetry, capped replay buffers, and storage protection—I can investigate that with measurements instead of vibes. Establishing an advantage from the connectome would still require comparisons with simpler or randomized reservoirs.</p>
+
+
+<h2>The overnight run found a loophole</h2>
+<p>The infrastructure had a very good night. The policy had a very specific interpretation of success.</p>
+<p>Across 11,866 behaviour samples, <code>evade</code> accounted for 7,618, or about 64.2%. It earned an average reward of +0.0669, while <code>explore</code> averaged −0.1633 and <code>progress</code> −0.1422. Meanwhile, the bot had reached zero food, roughly 0.71 HP, 73 deaths, and zero buildings. Total reward was still above 4,250.</p>
+<blockquote>I had built a system where running away from the task was more profitable than doing the task. The fly had read the compensation plan.</blockquote>
+<p>Those counts are observation samples, not a precise breakdown of time spent on each action. But the direction was clear enough: the reward function was paying for the wrong thing. Successfully scheduling an escape was being treated as an accomplishment, even when there was no useful outcome.</p>
+<h3>Pay for outcomes</h3>
+<p>I backed up the working setup and moved the changes into a separate candidate, with a disposable Minecraft 1.21.11 world on another port. The reward changes were deliberately concrete:</p>
+<ul>
+<li><strong>Survival has teeth.</strong> Death now costs 60 points, damage is penalized, and starvation accumulates a cost over elapsed time. Respawning cannot masquerade as successfully eating.</li>
+<li><strong>Running away is not a salary.</strong> Moving or scheduling <code>evade</code> earns no action bonus. Positive escape reward requires an observed nearby threat and a safe outcome, rather than distance travelled alone. That is still a proxy for avoiding damage, not proof of what would have happened without the escape.</li>
+<li><strong>Progression pays for milestones.</strong> Wood, planks, a crafting table, tools, and stone receive meaningful one-time rewards, with milestone memory surviving restarts.</li>
+<li><strong>Food matters when it is needed.</strong> Useful food acquisition and verified eating are rewarded in context, with stronger pressure when hunger is low.</li>
+<li><strong>Busy is not productive.</strong> Prolonged lack of progress incurs a time-based penalty, including when the bot alternates between actions instead of repeating one label. The current implementation exempts shelter and follow actions.</li>
+<li><strong>Resources need a purpose.</strong> Useful collection, storage, completed construction, and shelter use have separate checks. Recycling the same inventory or repeatedly counting the same building cannot manufacture progress.</li>
+</ul>
+<p>The learning code also stops bootstrapping future value across death, uses elapsed time in discounting, and allows larger negative learning updates so a serious failure is not flattened into a tiny correction. The candidate starts with separate learning state rather than inheriting the policy that discovered the evade loophole.</p>
+<h3>The fly did not discover 1,266 species</h3>
+<p>The same overnight run produced 1,266 creature clusters, with reference similarity still at zero. The descriptor was effectively clustering the scene around a creature: terrain, camera angle, lighting, and possibly the renderer’s question-mark blocks. I had accidentally built a biodiversity survey of camera movement.</p>
+<p>The candidate computes the descriptor from a centred crop aimed at the observed object, caps the cluster count at 128, and starts with fresh creature memory. A regression test checks that changing pixels outside the crop does not change the descriptor. Automatic creature observation is gated behind the experimental crop flag, and the observation cooldown starts when the attempt begins, so a failed approach cannot keep selecting observation forever.</p>
+<p>The crop path stays disabled in the current live tests while rendering and targeting remain unvalidated. That narrows the descriptor’s scope; it is not object segmentation, and background inside the crop can still affect it. Reliable creature recognition has not yet been demonstrated.</p>
+<h2>What actually improved</h2>
+<p>The first short candidate run earned milestones through a stone pickaxe, then spent most of its samples observing and eventually drowned. A second run recorded zero deaths and no sampled starvation over roughly five minutes, but 976 of its 977 observations said <code>progress</code>. It was stuck trying to smelt iron. A different action label can still hide the same lack of progress.</p>
+<p>I added a water safety override that cancels the current activity and tries to surface when air is low, plus a higher pathfinding cost for water. It is a scripted safeguard, not learned swimming. The second run recorded zero interventions, so its zero-death result does not establish that the guard saved it.</p>
+<p>The smelting stall exposed a body problem: the bot had raw iron, planks for fuel, and a furnace in its inventory. Furnace placement failures were being swallowed. The station patch searches more valid positions, approaches stations, verifies actual placement, and logs failed attempts. The next live run placed a furnace, then moved through <code>craft_iron_pickaxe</code> to <code>gather_diamond</code>.</p>
+<p>By that point, all 26 Node regression tests and the earlier five Python tests had passed. The checks cover reward loopholes, terminal learning behaviour, crop isolation, shelter validation, station handling, and the water override. They are useful engineering checks. They are not a Minecraft competence score.</p>
+<div class="callout"><strong>The result so far:</strong> the candidate has demonstrated early progression and recovery from the furnace stall in <code>TEACHER</code> mode. The short benchmarks do not establish improved autonomous RL behaviour, reliable building, or sustained survival. A scripted teacher will not change its choices merely because I made those choices more expensive.</div>
+<h2>Enough debugging for one post</h2>
+<p>The rest was ordinary homelab plumbing: observation flow control, file ownership, process supervision, and getting headless WebGL to behave. The dashboard and camera now work directly on my LAN. The last camera issue was particularly dignified: the dashboard expected port 8090, the candidate HTTP feed defaulted to 8190, and 8189 was an entirely different internal receiver. Neurons were firing. Ports were not agreeing.</p>
+<p>Rendering remains the unfinished part. The test server and protocol data use Minecraft 1.21.11, but the installed visual assets resolve to 1.21.8. Question-mark blocks and missing entity-model errors remain. I have not upgraded everything to the newest Minecraft release or downgraded the original world. The live camera works; that does not make every pixel correct.</p>
+<p>I am cutting the survival-patching diary off here. The useful next result is a controlled comparison of the learned policy against the teacher and a simple baseline, using progression, deaths, hunger, repetition, and completed structures. More reward points on their own have already failed that test.</p>
+<blockquote>I started by putting a fruit-fly connectome in Minecraft. I ended up auditing the incentive structure of an insect. This feels like a reasonable use of a GPU.</blockquote>
+<section class="cheatsheet-panel" id="cheatsheet">
+<h2>Current test setup</h2>
+<p>The original setup remains separate. This is the candidate used for the short tests and the current interactive run; it is an experimental build, not a finished autonomous player.</p>
+<div class="cheatsheet-grid">
+<div class="cheatsheet-card"><h3>Candidate files</h3><pre>~/flybrain-v4-candidate/
+  minecraft_survival_brain_v4.py
+  fly_survival_v4.js
+  reward_v4.js
+  water_guard_v4.js
+  summarize_run.py
+  tests/</pre></div>
+<div class="cheatsheet-card"><h3>Ports</h3><pre>25566  Test Minecraft (loopback)
+8866   Brain WebSocket (loopback)
+8877   Dashboard (LAN)
+8189   Internal camera TCP (loopback)
+8090   Camera HTTP / MJPEG (LAN)
+
+FLY_VISION_HTTP_PORT=8090</pre></div>
+<div class="cheatsheet-card"><h3>Experiment state</h3><pre>FLY_EXPERIMENT_DIR:
+~/flybrain-v4-candidate/test-data/brain
+
+Body state:
+~/flybrain-v4-candidate/test-data/
+  fly_state-run3.json
+
+Transition log:
+  fly_state-run3.json.transitions.jsonl</pre></div>
+<div class="cheatsheet-card"><h3>Run boundaries</h3><p>Candidate runs use tmux with a 30-minute body timeout for the interactive test. JSONL transitions complement the brain telemetry. The latest run resumes prior state, and human interaction can affect its results; it is not a fresh independent benchmark.</p><p>The candidate uses <code>FLY_ALLOW_UNVALIDATED_RENDERER=1</code> for the known renderer mismatch and keeps <code>FLY_ENABLE_EXPERIMENTAL_CROPS=0</code>.</p></div>
+</div>
+<p><strong>Reproducibility status:</strong> the upstream tools are linked below. A complete packaged release of my modified experiment is not included with this post.</p>
+</section>
+
+<h2 class="sources-heading">Sources &amp; tools</h2>
+<p>The upstream links below document the tools and model. Run counts, rewards, and test outcomes above come from my local logs and candidate code; they are experiment observations, not independently replicated findings.</p>
+<ul class="sources-list">
+<li><strong>MaleCNS</strong> — the underlying male central nervous system connectome and dataset documentation. <a href="https://male-cns.janelia.org/" target="_blank" rel="noopener noreferrer">Janelia ↗</a></li>
+  <li><strong>fly.ai</strong> — connectome simulation and MaleCNS tooling. <a href="https://github.com/alextitonis/fly.ai" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+  <li><strong>Mineflayer</strong> — Minecraft bot/client framework used as the body and interaction layer. <a href="https://github.com/PrismarineJS/mineflayer" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+  <li><strong>mineflayer-pathfinder</strong> — low-level navigation and movement goals. <a href="https://github.com/PrismarineJS/mineflayer-pathfinder" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+  <li><strong>Prismarine Viewer</strong> — headless first-person renderer used for Stage 4 visual input. The experiment patches the 1.21.11 viewer slot because the installed release otherwise falls back to older 1.21.x render assets. <a href="https://github.com/PrismarineJS/prismarine-viewer" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+  <li><strong>Paper</strong> — Minecraft Java server used for the experiment world. <a href="https://papermc.io/" target="_blank" rel="noopener noreferrer">PaperMC ↗</a></li>
+</ul>
+
+
+
+<!-- ARTICLE CONTENT END -->
+</article>
+</div>
+
+<nav class="article-pagination" aria-label="Article navigation">
+  <a href="../post9/"><small>Previous</small><span>Your identity. Their AI agent.</span></a>
+  <a href="../#articles"><small>Explore</small><span>All field notes →</span></a>
+</nav>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <span class="footer-mark">LIGMA.BLOG // © 2026 ALEN PERIC</span>
+    <nav class="footer-links" aria-label="Footer navigation">
+      <a href="../#articles">Archive</a>
+      <a href="https://alenperic.com/" target="_blank" rel="noopener">Homepage</a>
+      <a href="https://www.linkedin.com/in/alen-peric/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/alenperic" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+  <p class="footer-note"><strong>Privacy note:</strong> This static publication has no accounts or comments. Google Analytics may use cookies or similar browser storage to measure readership. Research and analysis are personal and do not represent current or former employers.</p>
+</footer>
+
+
+</body>
+</html>
